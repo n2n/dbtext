@@ -1,7 +1,7 @@
 <?php
 namespace dbtext\text;
 
-use dbtext\storage\DbTextCollectionManager;
+use dbtext\storage\DbtextCollectionManager;
 use n2n\l10n\N2nLocale;
 use n2n\persistence\orm\annotation\AnnoManyToOne;
 use n2n\persistence\orm\annotation\AnnoTable;
@@ -102,7 +102,7 @@ class TextT extends ObjectAdapter implements Translatable {
 		$this->str = $str;
 	}
 
-	private function _postUpdate(DbTextCollectionManager $dbTextCollectionManager) {
-		$dbTextCollectionManager->clearCache($this->text->getGroup()->getNamespace());
+	private function _postUpdate(DbtextCollectionManager $dbtextCollectionManager) {
+		$dbtextCollectionManager->clearCache($this->text->getGroup()->getNamespace());
 	}
 }

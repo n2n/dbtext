@@ -26,7 +26,7 @@ class GroupData extends ObjectAdapter {
 	 * @param string $namespace
 	 * @param \string[][] $data
 	 */
-	public function __construct($namespace, array $data = null) {
+	public function __construct($namespace, array $data = array()) {
 		$this->namespace = $namespace;
 		$this->data = $data;
 	}
@@ -41,39 +41,26 @@ class GroupData extends ObjectAdapter {
 	 * @return string
 	 */
 	public function t(string $id, N2nLocale ...$n2nLocales): string {
-
 		if (!isset($this->data[$id])) {
-			$this->add($id);
+			return $id;
 		}
 
-		$dataN2nLocales = array();
-		$stages = array(self::STAGE_LOCALE_ID, self::STAGE_LOCALE_LANG_ID, self::STAGE_LOCALE_FALLBACK);
-		foreach ($stages as $stage) {
-			foreach ($n2nLocales as $n2nLocale) {
-				foreach ($this->data[$id] as $n2nLocaleId => $data) {
-					if (!isset($dataN2nLocales[$n2nLocaleId])) {
-						$dataN2nLocales[$n2nLocaleId] = N2nLocale::build($n2nLocaleId);
-					}
+		array_push($n2nLocales, N2nLocale::getFallback());
 
-					$dataN2nLocale = $dataN2nLocales[$n2nLocaleId];
-					switch ($stage) {
-						case self::STAGE_LOCALE_ID:
-							if ($dataN2nLocale->getId() === $n2nLocale->getId()) {
-								return $this->data[$id][$n2nLocaleId];
-							}
-							break;
-						case self::STAGE_LOCALE_LANG_ID:
-							if ($dataN2nLocale->getLanguageId() === $n2nLocale->getLanguageId()) {
-								return $this->data[$id][$n2nLocaleId];
-							}
-							break;
-						case self::STAGE_LOCALE_FALLBACK:
-							if ($dataN2nLocale->getLanguageId() === N2nLocale::getFallback()->getLanguageId()) {
-								return $this->data[$id][$n2nLocaleId];
-							}
-							break;
-					}
-				}
+		foreach ($n2nLocales as $n2nLocale) {
+			$n2nLocaleId = $n2nLocale->getId();
+			if (isset($this->data[$id][$n2nLocaleId])) {
+				return $this->data[$id][$n2nLocaleId];
+			}
+
+			// if no region id than locale id and language id are the same.
+			if (null === $n2nLocale->getRegionId()) {
+				continue;
+			}
+
+			$langId = $n2nLocale->getLanguageId();
+			if (isset($this->data[$id][$langId])) {
+				return $this->data[$id][$langId];
 			}
 		}
 
@@ -86,7 +73,7 @@ class GroupData extends ObjectAdapter {
 	 * @param string $id
 	 * @return bool
 	 */
-	public function has(string $id): boolean {
+	public function has(string $id) {
 		return isset($this->data[$id]);
 	}
 
@@ -145,5 +132,9 @@ class GroupData extends ObjectAdapter {
 	 */
 	public function setData(array $data) {
 		$this->data = $data;
+	}
+
+	public function getListeners() {
+		return $this->listeners;
 	}
 }

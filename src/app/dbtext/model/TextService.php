@@ -1,27 +1,27 @@
 <?php
 namespace dbtext\model;
 
-use dbtext\storage\DbTextCollectionManager;
+use dbtext\storage\DbtextCollectionManager;
 use n2n\context\RequestScoped;
 use n2n\core\container\N2nContext;
 use n2n\l10n\N2nLocale;
 
 class TextService implements RequestScoped {
 	/**
-	 * @var DbTextCollection[]
+	 * @var DbtextCollection[]
 	 */
-	private $groupTexts;
+	private $dbtextCollections;
 	/**
-	 * @var DbTextCollectionManager $ctm
+	 * @var DbtextCollectionManager $tcm
 	 */
-	private $ctm;
+	private $tcm;
 
-	private function _init(DbTextCollectionManager $groupTextManager, N2nContext $n2nContext) {
-		$this->ctm = $groupTextManager;
+	private function _init(DbtextCollectionManager $tcm) {
+		$this->tcm = $tcm;
 	}
 
 	/**
-	 * @see DbTextCollection::t()
+	 * @see DbtextCollection::t()
 	 * @param string $namespace
 	 * @param string $id
 	 * @param array|null $args
@@ -29,15 +29,15 @@ class TextService implements RequestScoped {
 	 * @return string
 	 */
 	public function t(string $namespace, string $id, array $args = null, N2nLocale ...$n2nLocale): string {
-		if ($this->groupTexts[$namespace] === null) {
-			$this->groupTexts[$namespace] = $this->ct($namespace);
+		if (!isset($this->dbtextCollections[$namespace])) {
+			$this->dbtextCollections[$namespace] = $this->tc($namespace);
 		}
 
-		return $this->groupTexts[$namespace]->t($id, $args, ...$n2nLocale);
+		return $this->dbtextCollections[$namespace]->t($id, $args, ...$n2nLocale);
 	}
 
 	/**
-	 * @see DbTextCollection::tf()
+	 * @see DbtextCollection::tf()
 	 * @param string $namespace
 	 * @param string $id
 	 * @param array|null $args
@@ -45,32 +45,29 @@ class TextService implements RequestScoped {
 	 * @return string
 	 */
 	public function tf(string $namespace, string $id, array $args = null, N2nLocale ...$n2nLocale): string {
-		if ($this->groupTexts[$namespace] === null) {
-			$this->groupTexts[$namespace] = $this->ct($namespace);
+		if (!isset($this->dbtextCollections[$namespace]) && count($n2nLocale) === 0) {
+			$this->dbtextCollections[$namespace] = $this->tc($namespace);
 		}
 
-		return $this->groupTexts[$namespace]->tf($id, $args, ...$n2nLocale);
+		return $this->dbtextCollections[$namespace]->tf($id, $args, ...$n2nLocale);
 	}
 
 	/**
 	 * Finds fitting {@see TextCollection}
 	 *
 	 * @param string $namespace
-	 * @return TranslatedDbTextCollection
+	 * @return DbtextCollection
 	 */
-	public function tc(string $namespace, N2nLocale ...$n2nLocales): DbTextCollection {
-		if ($this->groupTexts[$namespace] !== null) {
-			return $this->groupTexts[$namespace];
+	public function tc(string $namespace, N2nLocale ...$n2nLocales): DbtextCollection {
+		if (!isset($this->dbtextCollections[$namespace])) {
+			$this->dbtextCollections[$namespace] = new BasicDbtextCollection($this->tcm->getGroupData($namespace));
 		}
 
-		$groupData = $this->ctm->getGroupData($namespace);
-
-		$this->groupTexts[$namespace] = new BasicDbTextCollection($groupData);
-		if (count($n2nLocales) === 0) {
-			return $this->groupTexts[$namespace];
+		if (empty($n2nLocales)) {
+			return $this->dbtextCollections[$namespace];
 		}
 
-		return new TranslatedDbTextCollection($this->groupTexts[$namespace], $n2nLocales);
+		return new TranslatedDbtextCollection($this->dbtextCollections[$namespace], $n2nLocales);
 	}
 
 	/**
@@ -80,6 +77,6 @@ class TextService implements RequestScoped {
 	 * @param string $namespace
 	 */
 	public function clearCache(string $namespace = null) {
-
+		$this->tcm->clearCache($namespace);
 	}
 }

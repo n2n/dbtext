@@ -1,6 +1,6 @@
 <?php
 namespace dbtext\exception;
 
-class PrintFException extends \Exception {
+class PrintFException extends \RuntimeException {
 
 }

@@ -1,10 +1,11 @@
 <?php
 namespace dbtext\text;
 
-use dbtext\storage\DbTextCollectionManager;
+use dbtext\storage\DbtextCollectionManager;
 use n2n\persistence\orm\annotation\AnnoId;
 use n2n\persistence\orm\annotation\AnnoOneToMany;
 use n2n\persistence\orm\CascadeType;
+use n2n\persistence\orm\FetchType;
 use n2n\reflection\annotation\AnnoInit;
 use n2n\reflection\ObjectAdapter;
 use n2n\persistence\orm\annotation\AnnoTable;
@@ -17,7 +18,7 @@ class Group extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
 		$ai->c(new AnnoTable('dbtext_text_group'));
 		$ai->p('namespace', new AnnoId(false));
-		$ai->p('texts', new AnnoOneToMany(Text::getClass(), 'group', CascadeType::ALL));
+		$ai->p('texts', new AnnoOneToMany(Text::getClass(), 'group', CascadeType::ALL, FetchType::LAZY));
 	}
 
 	/**
@@ -82,7 +83,11 @@ class Group extends ObjectAdapter {
 		$this->texts = $texts;
 	}
 
-	private function _postUpdate(DbTextCollectionManager $groupTextManager) {
-		$groupTextManager->clearCache($this->namespace);
+	public function addText(Text $text) {
+		$this->texts[] = $text;
+	}
+
+	private function _postUpdate(DbtextCollectionManager $textCollectionManager) {
+		$textCollectionManager->clearCache($this->namespace);
 	}
 }

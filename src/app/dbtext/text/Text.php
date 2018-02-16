@@ -1,7 +1,7 @@
 <?php
 namespace dbtext\text;
 
-use dbtext\storage\DbTextCollectionManager;
+use dbtext\storage\DbtextCollectionManager;
 use n2n\persistence\orm\annotation\AnnoId;
 use n2n\persistence\orm\annotation\AnnoManyToOne;
 use n2n\persistence\orm\annotation\AnnoOneToMany;
@@ -37,7 +37,6 @@ class Text extends ObjectAdapter {
 	private $group;
 
 	/**
-	 * Text constructor.
 	 * @param string $id
 	 * @param TextT[] $textTs
 	 */
@@ -89,7 +88,7 @@ class Text extends ObjectAdapter {
 		$this->group = $group;
 	}
 
-	private function _postUpdate(DbTextCollectionManager $dbTextCollectionManager) {
-		$dbTextCollectionManager->clearCache($this->group->getNamespace());
+	private function _postUpdate(DbtextCollectionManager $dbtextCollectionManager) {
+		$dbtextCollectionManager->clearCache($this->group->getNamespace());
 	}
 }

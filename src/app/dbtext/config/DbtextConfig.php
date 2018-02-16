@@ -1,7 +1,7 @@
 <?php
 namespace dbtext\config;
 
-class DbTextConfig {
+class DbtextConfig {
 	private $createOnRequest = true;
 
 	/**

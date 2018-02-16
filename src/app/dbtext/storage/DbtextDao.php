@@ -7,7 +7,7 @@ use n2n\context\RequestScoped;
 use n2n\core\container\TransactionManager;
 use n2n\persistence\orm\EntityManager;
 
-class DbTextDao implements RequestScoped {
+class DbtextDao implements RequestScoped {
 	/**
 	 * @var EntityManager $em;
 	 */
@@ -30,26 +30,33 @@ class DbTextDao implements RequestScoped {
 	 * @param string $id
 	 */
 	public function insertId(string $namespace, string $id) {
-		$group = $this->getCategory($namespace);
-		$text = new Text($id, $group);
-		$texts = (array) $group->getTexts();
-		array_push($texts, $text);
-		$group->setTexts($texts);
-		$t = $this->tm->createTransaction();
+		$tx = $this->tm->createTransaction();
+
+		if (0 < (int) $this->em->createCriteria()
+				->select('COUNT(1)')
+				->from(Text::getClass(), 't')
+				->where(array('t.id' => $id, 't.group.namespace' => $namespace))->endClause()
+				->toQuery()->fetchSingle()) {
+			return;
+		}
+
+		$text = new Text($id, $this->getOrCreateGroup($namespace));
 		$this->em->persist($text);
-		$t->commit();
+
+		$tx->commit();
 	}
 
 	/**
 	 * @param string $namespace
 	 */
 	public function getGroupData(string $namespace) {
-		$result = $this->em->createNqlCriteria('SELECT  t.id, t.textTs.n2nLocale, t.textTs.str 
+		$result = $this->em->createNqlCriteria('
+				SELECT  t.id, t.textTs.n2nLocale, t.textTs.str 
 				FROM Text t 
 				WHERE t.group.namespace = :ns',
 				array('ns' => $namespace))->toQuery()->fetchArray();
 
-		if (count($result) === 0) {
+		if (empty($result)) {
 			return new GroupData($namespace);
 		}
 
@@ -63,9 +70,8 @@ class DbTextDao implements RequestScoped {
 	 * @param string $namespace
 	 * @return Group
 	 */
-	private function getCategory(string $namespace): Group {
-		$group = $this->em->createSimpleCriteria(Group::getClass(), array('namespace' => $namespace))
-				->toQuery()->fetchSingle();
+	private function getOrCreateGroup(string $namespace): Group {
+		$group = $this->em->find(Group::getClass(), $namespace);
 
 		if (null !== $group) {
 			return $group;
@@ -90,7 +96,8 @@ class DbTextDao implements RequestScoped {
 				$formedResult[$item[0]] = array();
 			}
 
-			if ($item[1] === null && $item[2] === null) continue;
+			if ($item[2] === null) continue;
+
 			$formedResult[$item[0]][(string) $item[1]] = $item[2];
 		}
 

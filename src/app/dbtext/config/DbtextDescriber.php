@@ -6,19 +6,19 @@ use n2n\core\module\ConfigDescriberAdapter;
 use n2n\util\config\Attributes;
 use n2n\web\dispatch\mag\MagDispatchable;
 
-class DbTextDescriber extends ConfigDescriberAdapter {
+class DbtextDescriber extends ConfigDescriberAdapter {
 	const ATTR_CREATE_ON_REQUEST_KEY = 'createOnRequest';
 	const ATTR_CREATE_ON_REQUEST_DEFAULT = true;
 
 	/**
 	 * @see \n2n\core\module\DescriberAdapter::createCustomConfig()
 	 *
-	 * @return \dbtext\config\DbTextConfig
+	 * @return \dbtext\config\DbtextConfig
 	 */
-	public function buildCustomConfig(): DbTextConfig {
+	public function buildCustomConfig(): DbtextConfig {
 		$attributes = $this->readCustomAttributes();
 
-		$dbConfig = new DbTextConfig();
+		$dbConfig = new DbtextConfig();
 		$dbConfig->setCreateOnRequest($attributes->getBool(self::ATTR_CREATE_ON_REQUEST_KEY, false,
 				self::ATTR_CREATE_ON_REQUEST_DEFAULT));
 
