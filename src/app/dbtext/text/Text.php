@@ -1,6 +1,7 @@
 <?php
 namespace dbtext\text;
 
+use dbtext\storage\DbTextCollectionManager;
 use n2n\persistence\orm\annotation\AnnoId;
 use n2n\persistence\orm\annotation\AnnoManyToOne;
 use n2n\persistence\orm\annotation\AnnoOneToMany;
@@ -18,8 +19,8 @@ class Text extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
 		$ai->c(new AnnoTable('dbtext_text_text'));
 		$ai->p('id', new AnnoId(false));
-		$ai->p('category', new AnnoManyToOne(Category::getClass(),CascadeType::NONE));
-		$ai->p('textTs', new AnnoOneToMany(TextT::getClass(), 'text', CascadeType::ALL, FetchType::LAZY));
+		$ai->p('group', new AnnoManyToOne(Group::getClass(),CascadeType::NONE));
+		$ai->p('textTs', new AnnoOneToMany(TextT::getClass(), 'text', CascadeType::ALL, FetchType::LAZY, true));
 	}
 
 	/**
@@ -31,25 +32,25 @@ class Text extends ObjectAdapter {
 	 */
 	private $textTs;
 	/**
-	 * @var Category $category
+	 * @var Group $group
 	 */
-	private $category;
+	private $group;
 
 	/**
 	 * Text constructor.
 	 * @param string $id
 	 * @param TextT[] $textTs
 	 */
-	public function __construct(string $id = null, Category $category = null, array $textTs = null) {
+	public function __construct(string $id = null, Group $group = null, array $textTs = null) {
 		$this->id = $id;
 		$this->textTs = $textTs;
-		$this->category = $category;
+		$this->group = $group;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getId(): string {
+	public function getId() {
 		return $this->id;
 	}
 
@@ -63,32 +64,32 @@ class Text extends ObjectAdapter {
 	/**
 	 * @return TextT[]
 	 */
-	public function getTextTs(): array {
+	public function getTextTs() {
 		return $this->textTs;
 	}
 
 	/**
 	 * @param TextT[] $textTs
 	 */
-	public function setTextTs(array $textTs) {
+	public function setTextTs(\ArrayObject $textTs) {
 		$this->textTs = $textTs;
 	}
 
 	/**
-	 * @return Category
+	 * @return Group
 	 */
-	public function getCategory(): Category {
-		return $this->category;
+	public function getGroup() {
+		return $this->group;
 	}
 
 	/**
-	 * @param Category $category
+	 * @param Group $group
 	 */
-	public function setCategory(Category $category) {
-		$this->category = $category;
+	public function setGroup(Group $group) {
+		$this->group = $group;
 	}
 
-	private function _postUpdate(CategoryTextManager $categoryTextManager) {
-		$categoryTextManager->clearCache($this->category->getNamespace());
+	private function _postUpdate(DbTextCollectionManager $dbTextCollectionManager) {
+		$dbTextCollectionManager->clearCache($this->group->getNamespace());
 	}
 }

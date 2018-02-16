@@ -1,27 +1,27 @@
 <?php
 namespace dbtext\model;
 
-use dbtext\storage\CategoryData;
+use dbtext\storage\GroupData;
 use n2n\l10n\N2nLocale;
 
-class TranslatedCategoryText implements CategoryText {
+class TranslatedDbTextCollection implements DbTextCollection {
 	/**
 	 * @var N2nLocale[] $preferedN2nLocales
 	 */
 	private $preferedN2nLocales;
 
 	/**
-	 * @var CategoryText
+	 * @var DbTextCollection
 	 */
 	private $decorated;
 
 	/**
-	 * @param CategoryText $categoryText
+	 * @param DbTextCollection $groupText
 	 * @param array $preferedN2nLocales
 	 */
-	public function __construct(CategoryText $categoryText, array $preferedN2nLocales) {
+	public function __construct(DbTextCollection $groupText, array $preferedN2nLocales) {
 		$this->preferedN2nLocales = $preferedN2nLocales;
-		$this->decorated = $categoryText;
+		$this->decorated = $groupText;
 	}
 
 	/**

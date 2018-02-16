@@ -20,7 +20,7 @@ class DbTextDescriber extends ConfigDescriberAdapter {
 
 		$dbConfig = new DbTextConfig();
 		$dbConfig->setCreateOnRequest($attributes->getBool(self::ATTR_CREATE_ON_REQUEST_KEY, false,
-			self::ATTR_CREATE_ON_REQUEST_DEFAULT));
+				self::ATTR_CREATE_ON_REQUEST_DEFAULT));
 
 		return $dbConfig;
 	}

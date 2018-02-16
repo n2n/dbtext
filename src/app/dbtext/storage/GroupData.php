@@ -1,12 +1,10 @@
 <?php
 namespace dbtext\storage;
 
-use n2n\core\N2N;
 use n2n\l10n\N2nLocale;
 use n2n\reflection\ObjectAdapter;
-use n2n\util\ex\NotYetImplementedException;
 
-class CategoryData extends ObjectAdapter {
+class GroupData extends ObjectAdapter {
 	const STAGE_LOCALE_LANG_ID = 'id';
 	const STAGE_LOCALE_ID = 'localeId';
 	const STAGE_LOCALE_FALLBACK = 'fallback';
@@ -20,12 +18,11 @@ class CategoryData extends ObjectAdapter {
 	 */
 	private $data;
 	/**
-	 * @var CategoryDataListener[]
+	 * @var GroupDataListener[]
 	 */
 	private $listeners = array();
 
 	/**
-	 * CategoryData constructor.
 	 * @param string $namespace
 	 * @param \string[][] $data
 	 */
@@ -90,7 +87,7 @@ class CategoryData extends ObjectAdapter {
 	 * @return bool
 	 */
 	public function has(string $id): boolean {
-		throw new NotYetImplementedException('categoryData -> has()');
+		return isset($this->data[$id]);
 	}
 
 	/**
@@ -107,16 +104,16 @@ class CategoryData extends ObjectAdapter {
 	}
 
 	/**
-	 * @param CategoryDataListener $listener
+	 * @param GroupDataListener $listener
 	 */
-	public function registerListener(CategoryDataListener $listener) {
+	public function registerListener(GroupDataListener $listener) {
 		$this->listeners[] = $listener;
 	}
 
 	/**
-	 * @param CategoryDataListener $listener
+	 * @param GroupDataListener $listener
 	 */
-	public function unregisterListener(CategoryDataListener $listener) {
+	public function unregisterListener(GroupDataListener $listener) {
 		$this->listeners = array_filter($this->listeners, function($a) use($listener) {
 			return $a !== $listener;
 		});

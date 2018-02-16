@@ -1,13 +1,13 @@
 <?php
 namespace dbtext\storage;
 
-use dbtext\text\Category;
+use dbtext\text\Group;
 use dbtext\text\Text;
 use n2n\context\RequestScoped;
 use n2n\core\container\TransactionManager;
 use n2n\persistence\orm\EntityManager;
 
-class CategoryTextDao implements RequestScoped {
+class DbTextDao implements RequestScoped {
 	/**
 	 * @var EntityManager $em;
 	 */
@@ -30,11 +30,11 @@ class CategoryTextDao implements RequestScoped {
 	 * @param string $id
 	 */
 	public function insertId(string $namespace, string $id) {
-		$category = $this->getCategory($namespace);
-		$text = new Text($id, $category);
-		$texts = (array) $category->getTexts();
+		$group = $this->getCategory($namespace);
+		$text = new Text($id, $group);
+		$texts = (array) $group->getTexts();
 		array_push($texts, $text);
-		$category->setTexts($texts);
+		$group->setTexts($texts);
 		$t = $this->tm->createTransaction();
 		$this->em->persist($text);
 		$t->commit();
@@ -43,46 +43,46 @@ class CategoryTextDao implements RequestScoped {
 	/**
 	 * @param string $namespace
 	 */
-	public function getCategoryData(string $namespace) {
+	public function getGroupData(string $namespace) {
 		$result = $this->em->createNqlCriteria('SELECT  t.id, t.textTs.n2nLocale, t.textTs.str 
 				FROM Text t 
-				WHERE t.category.namespace = :ns',
+				WHERE t.group.namespace = :ns',
 				array('ns' => $namespace))->toQuery()->fetchArray();
 
 		if (count($result) === 0) {
-			return new CategoryData($namespace);
+			return new GroupData($namespace);
 		}
 
-		return new CategoryData($namespace, $this->formCategoryDataResult($result));
+		return new GroupData($namespace, $this->formGroupDataResult($result));
 	}
 
 	/**
-	 * Gets category if exists.
+	 * Gets group if exists.
 	 * If Category does not exist a new one is created.
 	 *
 	 * @param string $namespace
-	 * @return Category
+	 * @return Group
 	 */
-	private function getCategory(string $namespace): Category {
-		$category = $this->em->createSimpleCriteria(Category::getClass(), array('namespace' => $namespace))
+	private function getCategory(string $namespace): Group {
+		$group = $this->em->createSimpleCriteria(Group::getClass(), array('namespace' => $namespace))
 				->toQuery()->fetchSingle();
 
-		if (null !== $category) {
-			return $category;
+		if (null !== $group) {
+			return $group;
 		}
 
-		$category = new Category($namespace);
+		$group = new Group($namespace);
 		$t = $this->tm->createTransaction();
-		$this->em->persist($category);
+		$this->em->persist($group);
 		$t->commit();
-		return $category;
+		return $group;
 	}
 
 	/**
 	 * @param array $result
 	 * @return array
 	 */
-	private function formCategoryDataResult(array $result) {
+	private function formGroupDataResult(array $result) {
 		$formedResult = array();
 
 		foreach ($result as $i => $item) {

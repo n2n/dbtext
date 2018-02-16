@@ -1,9 +1,9 @@
 <?php
 namespace dbtext;
 
-use dbtext\model\CategoryText;
+use dbtext\model\DbTextCollection;
 use dbtext\model\TextService;
-use dbtext\text\Category;
+use dbtext\text\Group;
 use n2n\impl\web\ui\view\html\HtmlSnippet;
 use n2n\web\ui\UiComponent;
 use n2n\web\ui\view\View;
@@ -26,7 +26,7 @@ class TextHtmlBuilder {
 	}
 
 	/**
-	 * text outputs {@see self::getText()}
+	 * Outputs {@see self::getText()}
 	 *
 	 * @param string $id
 	 * @param array $args
@@ -38,7 +38,7 @@ class TextHtmlBuilder {
 	/**
 	 * getText finds fitting {@see TextT} and returns a {@see UiComponent} with a modified version of {@see TextT::$str}.
 	 *
-	 * @see CategoryText::t()
+	 * @see DbTextCollection::t()
 	 * @param string $id
 	 * @param array $args
 	 * @return UiComponent
@@ -48,7 +48,7 @@ class TextHtmlBuilder {
 	}
 
 	/**
-	 * text outputs {@see self::getTextF()}
+	 * Outputs {@see self::getTextF()}
 	 *
 	 * @param string $id
 	 * @param array $args
@@ -60,7 +60,7 @@ class TextHtmlBuilder {
 	/**
 	 * getTextF finds fitting {@see TextT} and returns a {@see UiComponent} with a modified version of {@see TextT::$str}.
 	 *
-	 * @see CategoryText::tf()
+	 * @see DbTextCollection::tf()
 	 * @param string $id
 	 * @param array $args
 	 * @return UiComponent

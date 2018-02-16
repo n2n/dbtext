@@ -1,14 +1,16 @@
 <?php
 namespace dbtext\text;
 
+use dbtext\storage\DbTextCollectionManager;
 use n2n\l10n\N2nLocale;
 use n2n\persistence\orm\annotation\AnnoManyToOne;
 use n2n\persistence\orm\annotation\AnnoTable;
 use n2n\persistence\orm\CascadeType;
 use n2n\reflection\annotation\AnnoInit;
 use n2n\reflection\ObjectAdapter;
+use rocket\impl\ei\component\prop\translation\Translatable;
 
-class TextT extends ObjectAdapter {
+class TextT extends ObjectAdapter implements Translatable {
 	private static function _annos(AnnoInit $ai) {
 		$ai->c(new AnnoTable('dbtext_text_text_t'));
 		$ai->p('text', new AnnoManyToOne(Text::getClass(), CascadeType::NONE));
@@ -20,7 +22,7 @@ class TextT extends ObjectAdapter {
 	 * @param string $str
 	 * @param Text $text
 	 */
-	public function __construct($id, N2nLocale $n2nLocale, $str, Text $text) {
+	public function __construct(int $id = null, N2nLocale $n2nLocale = null, string $str = null, Text $text = null) {
 		$this->id = $id;
 		$this->n2nLocale = $n2nLocale;
 		$this->str = $str;
@@ -47,7 +49,7 @@ class TextT extends ObjectAdapter {
 	/**
 	 * @return int
 	 */
-	public function getId(): int {
+	public function getId() {
 		return $this->id;
 	}
 
@@ -61,7 +63,7 @@ class TextT extends ObjectAdapter {
 	/**
 	 * @return N2nLocale
 	 */
-	public function getN2nLocale(): N2nLocale {
+	public function getN2nLocale() {
 		return $this->n2nLocale;
 	}
 
@@ -75,7 +77,7 @@ class TextT extends ObjectAdapter {
 	/**
 	 * @return Text
 	 */
-	public function getText(): Text {
+	public function getText() {
 		return $this->text;
 	}
 
@@ -89,18 +91,18 @@ class TextT extends ObjectAdapter {
 	/**
 	 * @return string
 	 */
-	public function getStr(): string {
+	public function getStr() {
 		return $this->str;
 	}
 
 	/**
 	 * @param string $str
 	 */
-	public function setStr(string $str) {
+	public function setStr($str) {
 		$this->str = $str;
 	}
 
-	private function _postUpdate(CategoryTextManager $categoryTextManager) {
-		$categoryTextManager->clearCache($this->text->getCategory()->getNamespace());
+	private function _postUpdate(DbTextCollectionManager $dbTextCollectionManager) {
+		$dbTextCollectionManager->clearCache($this->text->getGroup()->getNamespace());
 	}
 }

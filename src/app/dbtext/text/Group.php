@@ -1,7 +1,7 @@
 <?php
 namespace dbtext\text;
 
-use dbtext\storage\CategoryTextManager;
+use dbtext\storage\DbTextCollectionManager;
 use n2n\persistence\orm\annotation\AnnoId;
 use n2n\persistence\orm\annotation\AnnoOneToMany;
 use n2n\persistence\orm\CascadeType;
@@ -13,11 +13,11 @@ use n2n\persistence\orm\annotation\AnnoTable;
  * Represents the namespace texts belong to.
  * @package dbtext\text
  */
-class Category extends ObjectAdapter {
+class Group extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
-		$ai->c(new AnnoTable('dbtext_text_category'));
+		$ai->c(new AnnoTable('dbtext_text_group'));
 		$ai->p('namespace', new AnnoId(false));
-		$ai->p('texts', new AnnoOneToMany(Text::getClass(), 'category', CascadeType::ALL));
+		$ai->p('texts', new AnnoOneToMany(Text::getClass(), 'group', CascadeType::ALL));
 	}
 
 	/**
@@ -34,38 +34,37 @@ class Category extends ObjectAdapter {
 	private $texts;
 
 	/**
-	 * Category constructor.
 	 * @param string $namespace
 	 */
-	public function __construct(string $namespace = null) {
+	public function __construct($namespace = null) {
 		$this->namespace = $namespace;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getNamespace(): string {
+	public function getNamespace() {
 		return $this->namespace;
 	}
 
 	/**
 	 * @param string $namespace
 	 */
-	public function setNamespace(string $namespace) {
+	public function setNamespace($namespace) {
 		$this->namespace = $namespace;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getLabel(): string {
+	public function getLabel() {
 		return $this->label;
 	}
 
 	/**
 	 * @param string $label
 	 */
-	public function setLabel(string $label) {
+	public function setLabel($label) {
 		$this->label = $label;
 	}
 
@@ -79,11 +78,11 @@ class Category extends ObjectAdapter {
 	/**
 	 * @param Text[] $texts
 	 */
-	public function setTexts(array $texts) {
+	public function setTexts($texts) {
 		$this->texts = $texts;
 	}
 
-	private function _postUpdate(CategoryTextManager $categoryTextManager) {
-		$categoryTextManager->clearCache($this->namespace);
+	private function _postUpdate(DbTextCollectionManager $groupTextManager) {
+		$groupTextManager->clearCache($this->namespace);
 	}
 }
