@@ -19,7 +19,7 @@
     "require": {
         "php": ">=7.0",
         "n2n/n2n-composer-module-installer": "master-dev",
-        "n2n/rocket": "master-dev"
+        "n2n/rocket": "2.0.0"
     },
     "autoload": {
         "psr-4": {
