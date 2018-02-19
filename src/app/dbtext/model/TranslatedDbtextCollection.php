@@ -26,14 +26,14 @@ class TranslatedDbtextCollection implements DbtextCollection {
 	/**
 	 * @inheritdoc
 	 */
-	public function t(string $id, array $args, N2nLocale ...$n2nLocales): string {
+	public function t(string $id, array $args = null, N2nLocale ...$n2nLocales): string {
 		return $this->decorated->t($id, $args, $this->preferedN2nLocales);
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function tf(string $id, array $args, N2nLocale ...$n2nLocales): string {
+	public function tf(string $id, array $args = null, N2nLocale ...$n2nLocales): string {
 		return $this->decorated->tf($id, $args, $this->preferedN2nLocales);
 	}
 }

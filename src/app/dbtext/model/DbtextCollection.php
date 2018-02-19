@@ -13,7 +13,7 @@ interface DbtextCollection {
 	 * @param N2nLocale[] ...$n2nLocales
 	 * @return string
 	 */
-	public function t(string $id, array $args, N2nLocale ...$n2nLocales): string;
+	public function t(string $id, array $args = null, N2nLocale ...$n2nLocales): string;
 
 	/**
 	 * Finds most fitting {@see TextT} by locales provided and returns modified {@see TextT::$str}.
@@ -24,5 +24,5 @@ interface DbtextCollection {
 	 * @param N2nLocale[] ...$n2nLocales
 	 * @return string
 	 */
-	public function tf(string $id, array $args, N2nLocale ...$n2nLocales): string;
+	public function tf(string $id, array $args = null, N2nLocale ...$n2nLocales): string;
 }
