@@ -18,8 +18,6 @@
     ],
     "require": {
         "php": ">=7.0",
-        "n2n/n2n-composer-module-installer": "*",
-        "n2n/rocket": "*"
     },
     "autoload": {
         "psr-4": {
