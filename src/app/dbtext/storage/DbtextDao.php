@@ -27,20 +27,20 @@ class DbtextDao implements RequestScoped {
 
 	/**
 	 * @param string $namespace
-	 * @param string $id
+	 * @param string $key
 	 */
-	public function insertId(string $namespace, string $id) {
+	public function insertKey(string $namespace, string $key) {
 		$tx = $this->tm->createTransaction();
 
 		if (0 < (int) $this->em->createCriteria()
 				->select('COUNT(1)')
 				->from(Text::getClass(), 't')
-				->where(array('t.id' => $id, 't.group.namespace' => $namespace))->endClause()
+				->where(array('t.key' => $key, 't.group.namespace' => $namespace))->endClause()
 				->toQuery()->fetchSingle()) {
 			return;
 		}
 
-		$text = new Text($id, $this->getOrCreateGroup($namespace));
+		$text = new Text(null, $key, $this->getOrCreateGroup($namespace));
 		$this->em->persist($text);
 
 		$tx->commit();
@@ -51,7 +51,7 @@ class DbtextDao implements RequestScoped {
 	 */
 	public function getGroupData(string $namespace) {
 		$result = $this->em->createNqlCriteria('
-				SELECT  t.id, t.textTs.n2nLocale, t.textTs.str 
+				SELECT  t.key, t.textTs.n2nLocale, t.textTs.str 
 				FROM Text t 
 				WHERE t.group.namespace = :ns',
 				array('ns' => $namespace))->toQuery()->fetchArray();

@@ -21,19 +21,19 @@ class BasicDbtextCollection implements DbtextCollection {
 	/**
 	 * @inheritdoc
 	 */
-	public function t(string $id, array $args = null, N2nLocale ...$n2nLocales): string {
-		if (!$this->groupData->has($id)) {
-			$this->groupData->add($id);
+	public function t(string $key, array $args = null, N2nLocale ...$n2nLocales): string {
+		if (!$this->groupData->has($key)) {
+			$this->groupData->add($key);
 		}
 		
-		return TextCollection::fillArgs($this->groupData->t($id, ...$n2nLocales), $args);
+		return TextCollection::fillArgs($this->groupData->t($key, ...$n2nLocales), $args);
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function tf(string $id, array $args = null, N2nLocale ...$n2nLocales): string {
-		$text = $this->groupData->t($id, ...$n2nLocales);
+	public function tf(string $key, array $args = null, N2nLocale ...$n2nLocales): string {
+		$text = $this->groupData->t($key, ...$n2nLocales);
 
 		$text = @sprintf($text, ...$args);
 
@@ -41,6 +41,6 @@ class BasicDbtextCollection implements DbtextCollection {
 			return $text;
 		}
 
-		return $id;
+		return $key;
 	}
 }

@@ -9,81 +9,27 @@
             "fields": {
                 "namespace": {
                     "class": "rocket\\impl\\ei\\component\\prop\\string\\StringEiProp",
-                    "props": {
-                        "displayInOverview": true,
-                        "displayInDetailView": true,
-                        "displayInEditView": true,
-                        "displayInAddView": true,
-                        "constant": false,
-                        "readOnly": false,
-                        "mandatory": true,
-                        "draftable": false,
-                        "maxlength": null,
-                        "multiline": false
-                    },
+                    "props": [],
                     "label": "Namespace",
                     "objectProperty": "namespace",
                     "entityProperty": "namespace"
                 },
                 "label": {
                     "class": "rocket\\impl\\ei\\component\\prop\\string\\StringEiProp",
-                    "props": {
-                        "displayInOverview": true,
-                        "displayInDetailView": true,
-                        "displayInEditView": true,
-                        "displayInAddView": true,
-                        "constant": false,
-                        "readOnly": false,
-                        "mandatory": false,
-                        "draftable": false,
-                        "maxlength": null,
-                        "multiline": false
-                    },
+                    "props": [],
                     "label": "Label",
                     "objectProperty": "label",
                     "entityProperty": "label"
                 },
                 "texts": {
                     "class": "rocket\\impl\\ei\\component\\prop\\relation\\OneToManySelectEiProp",
-                    "props": {
-                        "displayInOverview": true,
-                        "displayInDetailView": true,
-                        "displayInEditView": true,
-                        "displayInAddView": true,
-                        "constant": false,
-                        "readOnly": true,
-                        "draftable": false,
-                        "embeddedAddEnabled": false,
-                        "filtered": true,
-                        "hiddenIfTargetEmpty": false
-                    },
+                    "props": [],
                     "label": "Texts",
                     "objectProperty": "texts",
                     "entityProperty": "texts"
                 }
             },
-            "commands": {
-                "overviewEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\OverviewEiCommand",
-                    "props": []
-                },
-                "detailEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\DetailEiCommand",
-                    "props": []
-                },
-                "editEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\EditEiCommand",
-                    "props": []
-                },
-                "addEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\AddEiCommand",
-                    "props": []
-                },
-                "deleteEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\DeleteEiCommand",
-                    "props": []
-                }
-            },
+            "commands": [],
             "defaultMaskId": null
         },
         "dbtext-text": {
@@ -93,88 +39,29 @@
             "label": "Text",
             "pluralLabel": "Texts",
             "fields": {
-                "id": {
-                    "class": "rocket\\impl\\ei\\component\\prop\\numeric\\IntegerEiProp",
-                    "props": {
-                        "displayInOverview": true,
-                        "displayInDetailView": true,
-                        "displayInEditView": false,
-                        "displayInAddView": false,
-                        "constant": false,
-                        "readOnly": false,
-                        "mandatory": true,
-                        "draftable": false,
-                        "minValue": "0",
-                        "maxValue": "4294967295"
-                    },
-                    "label": "Id",
-                    "objectProperty": "id",
-                    "entityProperty": "id"
+                "key": {
+                    "class": "rocket\\impl\\ei\\component\\prop\\string\\StringEiProp",
+                    "props": [],
+                    "label": "Key",
+                    "objectProperty": "key",
+                    "entityProperty": "key"
                 },
                 "textTs": {
                     "class": "rocket\\impl\\ei\\component\\prop\\translation\\TranslationEiProp",
-                    "props": {
-                        "draftable": false,
-                        "useSystemN2nLocales": true,
-                        "systenN2nLocaleDefs": [
-                            {
-                                "id": "de_CH",
-                                "mandatory": false,
-                                "label": null
-                            },
-                            {
-                                "id": "fr_CH",
-                                "mandatory": false,
-                                "label": null
-                            },
-                            {
-                                "id": "it_CH",
-                                "mandatory": false,
-                                "label": null
-                            },
-                            {
-                                "id": "rm_CH",
-                                "mandatory": false,
-                                "label": null
-                            },
-                            {
-                                "id": "mn",
-                                "mandatory": false,
-                                "label": null
-                            }
-                        ],
-                        "customN2nLocaleDefs": [],
-                        "min": "0"
-                    },
+                    "props": [],
                     "label": "Text Ts",
                     "objectProperty": "textTs",
                     "entityProperty": "textTs"
+                },
+                "group": {
+                    "class": "rocket\\impl\\ei\\component\\prop\\relation\\ManyToOneSelectEiProp",
+                    "props": [],
+                    "label": "Group",
+                    "objectProperty": "group",
+                    "entityProperty": "group"
                 }
             },
-            "commands": {
-                "overviewEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\OverviewEiCommand",
-                    "props": {
-                        "pageSize": "30"
-                    }
-                },
-                "detailEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\DetailEiCommand",
-                    "props": []
-                },
-                "editEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\EditEiCommand",
-                    "props": []
-                },
-                "addEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\AddEiCommand",
-                    "props": []
-                },
-                "deleteEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\DeleteEiCommand",
-                    "props": []
-                }
-            },
+            "commands": [],
             "defaultMaskId": null
         },
         "dbtext-text-t": {
@@ -184,49 +71,29 @@
             "label": "Text T",
             "pluralLabel": "Text Ts",
             "fields": {
+                "n2nLocale": {
+                    "class": "rocket\\impl\\ei\\component\\prop\\l10n\\N2nLocaleEiProp",
+                    "props": [],
+                    "label": "N2n Locale",
+                    "objectProperty": "n2nLocale",
+                    "entityProperty": "n2nLocale"
+                },
                 "str": {
                     "class": "rocket\\impl\\ei\\component\\prop\\string\\StringEiProp",
-                    "props": {
-                        "displayInOverview": true,
-                        "displayInDetailView": true,
-                        "displayInEditView": true,
-                        "displayInAddView": true,
-                        "constant": false,
-                        "readOnly": false,
-                        "mandatory": false,
-                        "draftable": false,
-                        "maxlength": null,
-                        "multiline": false
-                    },
+                    "props": [],
                     "label": "Str",
                     "objectProperty": "str",
                     "entityProperty": "str"
+                },
+                "text": {
+                    "class": "rocket\\impl\\ei\\component\\prop\\relation\\ManyToOneSelectEiProp",
+                    "props": [],
+                    "label": "Text",
+                    "objectProperty": "text",
+                    "entityProperty": "text"
                 }
             },
-            "commands": {
-                "overviewEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\OverviewEiCommand",
-                    "props": {
-                        "pageSize": "30"
-                    }
-                },
-                "detailEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\DetailEiCommand",
-                    "props": []
-                },
-                "editEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\EditEiCommand",
-                    "props": []
-                },
-                "addEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\AddEiCommand",
-                    "props": []
-                },
-                "deleteEiCommand": {
-                    "class": "rocket\\impl\\ei\\component\\command\\common\\DeleteEiCommand",
-                    "props": []
-                }
-            },
+            "commands": [],
             "defaultMaskId": null
         }
     },

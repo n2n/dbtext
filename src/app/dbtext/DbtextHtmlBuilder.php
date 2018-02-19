@@ -33,30 +33,37 @@ class DbtextHtmlBuilder {
 	 */
 	private $textService;
 
-	public function __construct(HtmlView $view) {
+	/**
+	 * 
+	 * @var string
+	 */
+	private $namespace;
+	
+	public function __construct(HtmlView $view, string $namespace = null) {
 		$this->view = $view;
 		$this->textService = $view->lookup(TextService::class);
+		$this->namespace = $namespace ?? $this->view->getModuleNamespace();
 	}
 
 	/**
 	 * Outputs {@see self::getT()}
 	 *
-	 * @param string $id
+	 * @param string $key
 	 * @param array $args
 	 */
-	public function t(string $id, array $args = null, array $replacements = null) {
-		$this->view->out($this->getT($id, $args, $replacements));
+	public function t(string $key, array $args = null, array $replacements = null, string $namespace = null) {
+		$this->view->out($this->getT($key, $args, $replacements, $namespace));
 	}
 
 	/**
 	 * Uses {@see DbtextCollection::t()} to determine the correct translation and returns it as an {@see UiComponent}.
 	 *
-	 * @param string $id
+	 * @param string $key
 	 * @param array $args
 	 * @return UiComponent
 	 */
-	public function getT(string $id, array $args = null, array $replacements = null) {
-		$translatedText = $this->textService->t($this->view->getModuleNamespace(), $id, $args, $this->view->getN2nLocale());
+	public function getT(string $key, array $args = null, array $replacements = null, string $namespace = null) {
+		$translatedText = $this->textService->t($namespace ?? $this->namespace, $key, $args, $this->view->getN2nLocale());
 		$replacedText = HtmlBuilderMeta::replace($translatedText, $replacements, $this->view);
 		return new Raw($replacedText);
 	}
@@ -64,22 +71,22 @@ class DbtextHtmlBuilder {
 	/**
 	 * Outputs {@see self::getTf()}
 	 *
-	 * @param string $id
+	 * @param string $key
 	 * @param array $args
 	 */
-	public function tf(string $id, array $args = null) {
-		$this->view->out($this->getTf($id, $args));
+	public function tf(string $key, array $args = null, array $replacements = null, string $namespace = null) {
+		$this->view->out($this->getTf($key, $args, $replacements, $namespace));
 	}
 
 	/**
 	 * Uses {@see DbtextCollection::tf()} to determine the correct translation and returns it as an {@see UiComponent}.
 	 *
-	 * @param string $id
+	 * @param string $key
 	 * @param array $args
 	 * @return UiComponent
 	 */
-	public function getTf(string $id, array $args = null) {
-		$translatedText = $this->textService->tf($this->view->getModuleNamespace());
+	public function getTf(string $key, array $args = null, array $replacements = null, string $namespace = null) {
+		$translatedText = $this->textService->tf($namespace ?? $this->namespace, $key, $args, $this->view->getN2nLocale());
 		$replacedText = HtmlBuilderMeta::replace($translatedText, $textHtml, $this->view);
 		return new Raw($replacedText);
 	}

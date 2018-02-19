@@ -98,11 +98,11 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	}
 
 	/**
-	 * @param string $id
+	 * @param string $key
 	 * @param GroupData $groupData
 	 */
-	public function idAdded(string $id, GroupData $groupData) {
-		$this->dbtextDao->insertId($groupData->getNamespace(), $id);
+	public function keyAdded(string $key, GroupData $groupData) {
+		$this->dbtextDao->insertKey($groupData->getNamespace(), $key);
 		$this->clearCache($groupData->getNamespace());
 	}
 }

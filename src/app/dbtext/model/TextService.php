@@ -22,33 +22,33 @@ class TextService implements RequestScoped {
 	/**
 	 * @see DbtextCollection::t()
 	 * @param string $namespace
-	 * @param string $id
+	 * @param string $key
 	 * @param array|null $args
 	 * @param N2nLocale[] ...$n2nLocale
 	 * @return string
 	 */
-	public function t(string $namespace, string $id, array $args = null, N2nLocale ...$n2nLocale): string {
+	public function t(string $namespace, string $key, array $args = null, N2nLocale ...$n2nLocale): string {
 		if (!isset($this->dbtextCollections[$namespace])) {
 			$this->dbtextCollections[$namespace] = $this->tc($namespace);
 		}
 
-		return $this->dbtextCollections[$namespace]->t($id, $args, ...$n2nLocale);
+		return $this->dbtextCollections[$namespace]->t($key, $args, ...$n2nLocale);
 	}
 
 	/**
 	 * @see DbtextCollection::tf()
 	 * @param string $namespace
-	 * @param string $id
+	 * @param string $key
 	 * @param array|null $args
 	 * @param N2nLocale[] ...$n2nLocale
 	 * @return string
 	 */
-	public function tf(string $namespace, string $id, array $args = null, N2nLocale ...$n2nLocale): string {
+	public function tf(string $namespace, string $key, array $args = null, N2nLocale ...$n2nLocale): string {
 		if (!isset($this->dbtextCollections[$namespace]) && count($n2nLocale) === 0) {
 			$this->dbtextCollections[$namespace] = $this->tc($namespace);
 		}
 
-		return $this->dbtextCollections[$namespace]->tf($id, $args, ...$n2nLocale);
+		return $this->dbtextCollections[$namespace]->tf($key, $args, ...$n2nLocale);
 	}
 
 	/**

@@ -21,11 +21,12 @@ CREATE TABLE IF NOT EXISTS `dbtext_text_group` (
 -- Daten Export vom Benutzer nicht ausgewählt
 -- Exportiere Struktur von Tabelle n2n_rocket_playground.dbtext_text_text
 CREATE TABLE IF NOT EXISTS `dbtext_text_text` (
-  `id` varchar(255) NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) DEFAULT NULL,
   `group_namespace` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `dbtext_text_text_index_1` (`group_namespace`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- Daten Export vom Benutzer nicht ausgewählt
 -- Exportiere Struktur von Tabelle n2n_rocket_playground.dbtext_text_text_t
@@ -33,10 +34,10 @@ CREATE TABLE IF NOT EXISTS `dbtext_text_text_t` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `n2n_locale` varchar(12) DEFAULT NULL,
   `str` varchar(255) DEFAULT NULL,
-  `text_id` varchar(255) DEFAULT NULL,
+  `text_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `dbtext_text_text_t_index_1` (`text_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Daten Export vom Benutzer nicht ausgewählt
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

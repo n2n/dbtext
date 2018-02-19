@@ -3,9 +3,9 @@ namespace dbtext\storage;
 
 interface GroupDataListener {
 	/**
-	 * @param string $id
+	 * @param string $key
 	 * @param GroupData $groupData
 	 * @return mixed
 	 */
-	public function idAdded(string $id, GroupData $groupData);
+	public function keyAdded(string $key, GroupData $groupData);
 }

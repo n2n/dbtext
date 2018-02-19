@@ -5,10 +5,6 @@ use n2n\l10n\N2nLocale;
 use n2n\reflection\ObjectAdapter;
 
 class GroupData extends ObjectAdapter {
-	const STAGE_LOCALE_LANG_ID = 'id';
-	const STAGE_LOCALE_ID = 'localeId';
-	const STAGE_LOCALE_FALLBACK = 'fallback';
-
 	/**
 	 * @var string $namespace
 	 */
@@ -34,23 +30,23 @@ class GroupData extends ObjectAdapter {
 	/**
 	 * Finds most fitting {@see TextT::$str} for given n2nLocales.
 	 * In case no fitting {@see TextT::$str} is found the fallback n2nLocale is used.
-	 * If there is not even a fallback {@see TextT::$str} then the  id is returned.
+	 * If there is not even a fallback {@see TextT::$str} then the  key is returned.
 	 *
-	 * @param $id
+	 * @param $key
 	 * @param N2nLocale[] ...$n2nLocales
 	 * @return string
 	 */
-	public function t(string $id, N2nLocale ...$n2nLocales): string {
-		if (!isset($this->data[$id])) {
-			return $id;
+	public function t(string $key, N2nLocale ...$n2nLocales): string {
+		if (!isset($this->data[$key])) {
+			return $key;
 		}
 
 		array_push($n2nLocales, N2nLocale::getFallback());
 
 		foreach ($n2nLocales as $n2nLocale) {
 			$n2nLocaleId = $n2nLocale->getId();
-			if (isset($this->data[$id][$n2nLocaleId])) {
-				return $this->data[$id][$n2nLocaleId];
+			if (isset($this->data[$key][$n2nLocaleId])) {
+				return $this->data[$key][$n2nLocaleId];
 			}
 
 			// if no region id than locale id and language id are the same.
@@ -59,34 +55,34 @@ class GroupData extends ObjectAdapter {
 			}
 
 			$langId = $n2nLocale->getLanguageId();
-			if (isset($this->data[$id][$langId])) {
-				return $this->data[$id][$langId];
+			if (isset($this->data[$key][$langId])) {
+				return $this->data[$key][$langId];
 			}
 		}
 
-		return $id;
+		return $key;
 	}
 
 	/**
 	 * This method checks if there is a dataset with given id.
 	 *
-	 * @param string $id
+	 * @param string $key
 	 * @return bool
 	 */
-	public function has(string $id) {
-		return isset($this->data[$id]);
+	public function has(string $key) {
+		return isset($this->data[$key]);
 	}
 
 	/**
-	 * This method adds a dataset with given id
+	 * This method adds a dataset with given key
 	 *
-	 * @param string $id
+	 * @param string $key
 	 */
-	public function add(string $id) {
-		$this->data[$id] = array();
+	public function add(string $key) {
+		$this->data[$key] = array();
 
 		foreach ($this->listeners as $listener) {
-			$listener->idAdded($id, $this);
+			$listener->keyAdded($key, $this);
 		}
 	}
 
