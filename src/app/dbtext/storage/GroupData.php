@@ -24,7 +24,7 @@ class GroupData extends ObjectAdapter {
 
 	/**
 	 * @param string $namespace
-	 * @param \string[][] $data
+	 * @param string[][] $data
 	 */
 	public function __construct($namespace, array $data = array()) {
 		$this->namespace = $namespace;
@@ -121,14 +121,14 @@ class GroupData extends ObjectAdapter {
 	}
 
 	/**
-	 * @return \string[][]
+	 * @return string[][]
 	 */
 	public function getData(): array {
 		return $this->data;
 	}
 
 	/**
-	 * @param \string[][] $data
+	 * @param string[][] $data
 	 */
 	public function setData(array $data) {
 		$this->data = $data;

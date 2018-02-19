@@ -11,8 +11,6 @@ class DbtextDescriber extends ConfigDescriberAdapter {
 	const ATTR_CREATE_ON_REQUEST_DEFAULT = true;
 
 	/**
-	 * @see \n2n\core\module\DescriberAdapter::createCustomConfig()
-	 *
 	 * @return \dbtext\config\DbtextConfig
 	 */
 	public function buildCustomConfig(): DbtextConfig {

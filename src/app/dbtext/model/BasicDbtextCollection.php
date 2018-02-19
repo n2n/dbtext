@@ -1,10 +1,7 @@
 <?php
 namespace dbtext\model;
 
-use dbtext\DbtextUtils;
-use dbtext\exception\PrintFException;
 use dbtext\storage\GroupData;
-use n2n\core\err\WarningError;
 use n2n\l10n\N2nLocale;
 use n2n\l10n\TextCollection;
 

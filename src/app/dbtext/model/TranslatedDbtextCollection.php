@@ -1,7 +1,6 @@
 <?php
 namespace dbtext\model;
 
-use dbtext\storage\GroupData;
 use n2n\l10n\N2nLocale;
 
 class TranslatedDbtextCollection implements DbtextCollection {

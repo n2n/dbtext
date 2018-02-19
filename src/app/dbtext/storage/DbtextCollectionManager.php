@@ -2,11 +2,8 @@
 namespace dbtext\storage;
 
 use dbtext\config\DbtextConfig;
-use dbtext\exception\CachingException;
-use dbtext\exception\CorruptedCacheException;
 use n2n\context\RequestScoped;
 use n2n\core\container\N2nContext;
-use n2n\core\container\TransactionManager;
 use n2n\util\cache\CacheStore;
 use n2n\util\cache\CorruptedCacheStoreException;
 

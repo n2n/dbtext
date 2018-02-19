@@ -3,7 +3,6 @@ namespace dbtext\model;
 
 use dbtext\storage\DbtextCollectionManager;
 use n2n\context\RequestScoped;
-use n2n\core\container\N2nContext;
 use n2n\l10n\N2nLocale;
 
 class TextService implements RequestScoped {
