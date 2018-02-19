@@ -2,22 +2,27 @@
     "name": "n2n/dbtext",
     "type": "n2n-module",
     "description": "translates textblocks from db",
-    "keywords": ["cms","translation","n2n"],
+    "keywords": ["translation","n2n"],
     "homepage": "https://n2n.rocks/",
     "license": "GPL-3.0-or-later",
     "authors": [
         {
+            "name": "Nikolai Schmid",
+            "email": "schmid@hnm.ch",
+            "homepage": "https://www.schmid.guru/"
+        },
+        {
             "name": "Andreas von Burg",
             "email": "a@von-burg.net",
             "homepage": "https://www.von-burg.net/"
-        },
-        {
-            "name": "Nikolai Schmid",
-            "email": "schmid@hnm.ch"
         }
     ],
     "require": {
-        "php": ">=7.0"
+        "php": ">=7.0",
+        "n2n/n2n-composer-module-installer": "master-dev",
+        "n2n/n2n": "master-dev",
+        "n2n/n2n-l10n": "master-dev",
+        "n2n/n2n-orm": "master-dev"
     },
     "autoload": {
         "psr-4": {
