@@ -11,26 +11,26 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Exportiere Struktur von Tabelle n2n_rocket_playground.dbtext_text_group
-CREATE TABLE IF NOT EXISTS `dbtext_text_group` (
+-- Exportiere Struktur von Tabelle n2n_rocket_playground.dbtext_group
+CREATE TABLE IF NOT EXISTS `dbtext_group` (
   `namespace` varchar(255) NOT NULL,
   `label` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`namespace`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Daten Export vom Benutzer nicht ausgewählt
--- Exportiere Struktur von Tabelle n2n_rocket_playground.dbtext_text_text
-CREATE TABLE IF NOT EXISTS `dbtext_text_text` (
+-- Exportiere Struktur von Tabelle n2n_rocket_playground.dbtext_text
+CREATE TABLE IF NOT EXISTS `dbtext_text` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(255) DEFAULT NULL,
   `group_namespace` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `dbtext_text_text_index_1` (`group_namespace`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- Daten Export vom Benutzer nicht ausgewählt
--- Exportiere Struktur von Tabelle n2n_rocket_playground.dbtext_text_text_t
-CREATE TABLE IF NOT EXISTS `dbtext_text_text_t` (
+-- Exportiere Struktur von Tabelle n2n_rocket_playground.dbtext_text_t
+CREATE TABLE IF NOT EXISTS `dbtext_text_t` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `n2n_locale` varchar(12) DEFAULT NULL,
   `str` varchar(255) DEFAULT NULL,
