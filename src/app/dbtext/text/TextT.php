@@ -11,7 +11,7 @@ use rocket\impl\ei\component\prop\translation\Translatable;
 
 class TextT extends ObjectAdapter implements Translatable {
 	private static function _annos(AnnoInit $ai) {
-		$ai->c(new AnnoTable('dbtext_text_text_t'));
+		$ai->c(new AnnoTable('dbtext_text_t'));
 		$ai->p('text', new AnnoManyToOne(Text::getClass()));
 	}
 	
