@@ -22,7 +22,7 @@
         "n2n/n2n-composer-module-installer": "master-dev",
         "n2n/n2n": "master-dev",
         "n2n/n2n-l10n": "master-dev",
-        "n2n/n2n-orm": "master-dev"
+        "n2n/n2n-persistence": "master-dev"
     },
     "autoload": {
         "psr-4": {
