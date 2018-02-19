@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `dbtext_text` (
   `key` varchar(255) DEFAULT NULL,
   `group_namespace` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `dbtext_text_text_index_1` (`group_namespace`)
+  KEY `dbtext_text_index_1` (`group_namespace`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- Daten Export vom Benutzer nicht ausgewählt
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `dbtext_text_t` (
   `str` varchar(255) DEFAULT NULL,
   `text_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `dbtext_text_text_t_index_1` (`text_id`)
+  KEY `dbtext_text_t_index_1` (`text_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Daten Export vom Benutzer nicht ausgewählt

@@ -2,12 +2,12 @@
 namespace dbtext\text;
 
 use dbtext\storage\DbtextCollectionManager;
-use n2n\persistence\orm\CascadeType;
 use n2n\persistence\orm\annotation\AnnoManyToOne;
 use n2n\persistence\orm\annotation\AnnoOneToMany;
 use n2n\persistence\orm\annotation\AnnoTable;
-use n2n\reflection\ObjectAdapter;
+use n2n\persistence\orm\CascadeType;
 use n2n\reflection\annotation\AnnoInit;
+use n2n\reflection\ObjectAdapter;
 
 /**
  * Text holds Translations {@see TextT}.
@@ -15,7 +15,7 @@ use n2n\reflection\annotation\AnnoInit;
  */
 class Text extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
-		$ai->c(new AnnoTable('dbtext_text_text'));
+		$ai->c(new AnnoTable('dbtext_text'));
 		$ai->p('textTs', new AnnoOneToMany(TextT::getClass(), 'text', CascadeType::ALL, null, true));
 		$ai->p('group', new AnnoManyToOne(Group::getClass()));
 	}

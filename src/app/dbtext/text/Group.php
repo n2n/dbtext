@@ -16,7 +16,7 @@ use n2n\persistence\orm\annotation\AnnoTable;
  */
 class Group extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
-		$ai->c(new AnnoTable('dbtext_text_group'));
+		$ai->c(new AnnoTable('dbtext_group'));
 		$ai->p('namespace', new AnnoId(false));
 		$ai->p('texts', new AnnoOneToMany(Text::getClass(), 'group', CascadeType::ALL, FetchType::LAZY));
 	}
@@ -39,6 +39,7 @@ class Group extends ObjectAdapter {
 	 */
 	public function __construct($namespace = null) {
 		$this->namespace = $namespace;
+		$this->label = $namespace;
 	}
 
 	/**
