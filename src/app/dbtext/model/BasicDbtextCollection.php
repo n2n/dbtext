@@ -25,7 +25,7 @@ class BasicDbtextCollection implements DbtextCollection {
 		if (!$this->groupData->has($id)) {
 			$this->groupData->add($id);
 		}
-
+		
 		return TextCollection::fillArgs($this->groupData->t($id, ...$n2nLocales), $args);
 	}
 

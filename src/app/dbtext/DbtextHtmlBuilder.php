@@ -2,9 +2,10 @@
 namespace dbtext;
 
 use dbtext\model\TextService;
-use n2n\impl\web\ui\view\html\HtmlSnippet;
 use n2n\impl\web\ui\view\html\HtmlView;
 use n2n\web\ui\UiComponent;
+use n2n\impl\web\ui\view\html\HtmlBuilderMeta;
+use n2n\web\ui\Raw;
 
 /**
  * <p>Use this html builder for easy access to {@see TextService} in html views.</p>
@@ -43,8 +44,8 @@ class DbtextHtmlBuilder {
 	 * @param string $id
 	 * @param array $args
 	 */
-	public function t(string $id, array $args = null) {
-		$this->view->out($this->getT($id, $args));
+	public function t(string $id, array $args = null, array $replacements = null) {
+		$this->view->out($this->getT($id, $args, $replacements));
 	}
 
 	/**
@@ -54,9 +55,10 @@ class DbtextHtmlBuilder {
 	 * @param array $args
 	 * @return UiComponent
 	 */
-	public function getT(string $id, array $args = null) {
-		return new HtmlSnippet($this->textService->t($this->view->getModuleNamespace(), $id, $args,
-				$this->view->getN2nLocale()));
+	public function getT(string $id, array $args = null, array $replacements = null) {
+		$translatedText = $this->textService->t($this->view->getModuleNamespace(), $id, $args, $this->view->getN2nLocale());
+		$replacedText = HtmlBuilderMeta::replace($translatedText, $replacements, $this->view);
+		return new Raw($replacedText);
 	}
 
 	/**
@@ -77,7 +79,8 @@ class DbtextHtmlBuilder {
 	 * @return UiComponent
 	 */
 	public function getTf(string $id, array $args = null) {
-		return new HtmlSnippet($this->textService->tf($this->view->getModuleNamespace(), $id, $args,
-				$this->view->getN2nLocale()));
+		$translatedText = $this->textService->tf($this->view->getModuleNamespace());
+		$replacedText = HtmlBuilderMeta::replace($translatedText, $textHtml, $this->view);
+		return new Raw($replacedText);
 	}
 }
