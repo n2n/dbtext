@@ -101,7 +101,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * @param string $key
 	 * @param GroupData $groupData
 	 */
-	public function keyAdded(string $key, GroupData $groupData) {
+	public function idAdded(string $key, GroupData $groupData) {
 		$this->dbtextDao->insertKey($groupData->getNamespace(), $key);
 		$this->clearCache($groupData->getNamespace());
 	}
