@@ -7,6 +7,10 @@ use n2n\core\container\N2nContext;
 use n2n\util\cache\CacheStore;
 use n2n\util\cache\CorruptedCacheStoreException;
 
+/**
+ * {@see GroupData} that is used by the dbtext module is managed here.
+ * @package dbtext\storage
+ */
 class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	const NS = 'dbtext';
 	const APP_CACHE_PREFIX = 'dbtext_group_data_';
@@ -35,7 +39,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	}
 
 	/**
-	 * Finds GroupData by
+	 * {@see GroupData} stored in cache or database can be found.
 	 *
 	 * @param string $namespace
 	 * @return GroupData
@@ -58,6 +62,13 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 		return $this->groupDatas[$namespace];
 	}
 
+	/**
+	 * Finds cached {@see GroupData} by given namespace.
+	 * If dbtext cache of namespace is corrupt it is cleared.
+	 *
+	 * @param string $namespace
+	 * @return GroupData|mixed|null
+	 */
 	private function readCachedGroupData(string $namespace) {
 		$groupData = null;
 		try {
@@ -101,7 +112,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * @param string $key
 	 * @param GroupData $groupData
 	 */
-	public function idAdded(string $key, GroupData $groupData) {
+	public function keyAdded(string $key, GroupData $groupData) {
 		$this->dbtextDao->insertKey($groupData->getNamespace(), $key);
 		$this->clearCache($groupData->getNamespace());
 	}

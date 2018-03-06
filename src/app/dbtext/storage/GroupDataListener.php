@@ -7,5 +7,5 @@ interface GroupDataListener {
 	 * @param GroupData $groupData
 	 * @return mixed
 	 */
-	public function idAdded(string $key, GroupData $groupData);
+	public function keyAdded(string $key, GroupData $groupData);
 }
