@@ -82,7 +82,7 @@ class GroupData extends ObjectAdapter {
 		$this->data[$key] = array();
 
 		foreach ($this->listeners as $listener) {
-			$listener->idAdded($key, $this);
+			$listener->keyAdded($key, $this);
 		}
 	}
 

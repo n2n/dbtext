@@ -34,15 +34,21 @@ class DbtextHtmlBuilder {
 	private $textService;
 
 	/**
+	 * @var DbtextHtmlBuilderMeta
+	 */
+	private $meta;
+
+	/**
 	 * 
 	 * @var string
 	 */
 	private $namespace;
 	
-	public function __construct(HtmlView $view, string $namespace = null) {
+	public function __construct(HtmlView $view, array $namespaces = array(), array $n2nLocales = array()) {
 		$this->view = $view;
 		$this->textService = $view->lookup(TextService::class);
 		$this->namespace = $namespace ?? $this->view->getModuleNamespace();
+		$this->meta = new DbtextHtmlBuilderMeta($namespaces, $n2nLocales);
 	}
 
 	/**
