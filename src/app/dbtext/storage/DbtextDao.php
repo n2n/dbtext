@@ -31,18 +31,18 @@ class DbtextDao implements RequestScoped {
 	 */
 	public function insertKey(string $namespace, string $key) {
 		$tx = $this->tm->createTransaction();
-
+		
 		if (0 < (int) $this->em->createCriteria()
 				->select('COUNT(1)')
 				->from(Text::getClass(), 't')
 				->where(array('t.key' => $key, 't.group.namespace' => $namespace))->endClause()
 				->toQuery()->fetchSingle()) {
+			$tx->commit();	
 			return;
 		}
-
-		$text = new Text(null, $key, $this->getOrCreateGroup($namespace));
+		
+		$text = new Text($key, $this->getOrCreateGroup($namespace));
 		$this->em->persist($text);
-
 		$tx->commit();
 	}
 

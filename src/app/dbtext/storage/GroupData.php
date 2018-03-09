@@ -28,11 +28,10 @@ class GroupData extends ObjectAdapter {
 	}
 
 	/**
-	 * Finds most fitting {@see TextT::$str} for given n2nLocales.
-	 * In case no fitting {@see TextT::$str} is found the fallback n2nLocale is used.
-	 * If there is not even a fallback {@see TextT::$str} then the  key is returned.
+	 * Finds {@see TextT::$str} for given n2nLocales.
+	 * key returned if no fitting {@see TextT::$str} found.
 	 *
-	 * @param $key
+	 * @param string $key
 	 * @param N2nLocale[] ...$n2nLocales
 	 * @return string
 	 */
@@ -64,7 +63,7 @@ class GroupData extends ObjectAdapter {
 	}
 
 	/**
-	 * This method checks if there is a dataset with given id.
+	 * Use to check key available in {@see Group}.
 	 *
 	 * @param string $key
 	 * @return bool
@@ -74,13 +73,13 @@ class GroupData extends ObjectAdapter {
 	}
 
 	/**
-	 * This method adds a dataset with given key
+	 * Method adds key to {@see GroupData::$data} and triggers {@see GroupDataListener::keyAdded() listeners}.
 	 *
 	 * @param string $key
 	 */
 	public function add(string $key) {
 		$this->data[$key] = array();
-
+		
 		foreach ($this->listeners as $listener) {
 			$listener->keyAdded($key, $this);
 		}
@@ -130,6 +129,9 @@ class GroupData extends ObjectAdapter {
 		$this->data = $data;
 	}
 
+	/**
+	 * @return GroupDataListener[]
+	 */
 	public function getListeners() {
 		return $this->listeners;
 	}

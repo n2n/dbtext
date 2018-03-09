@@ -24,14 +24,17 @@ class DbtextHtmlBuilderMeta {
 	}
 
 	/**
+	 * Use this method to add namespaces where textblock keys will be searched.
+	 * 
 	 * @param string $namespace
 	 * @param bool $prepend
 	 */
 	public function assignNamespace(string $namespace, $prepend = false) {
 		if ($prepend) {
-			$this->namespaces = array($namespace) + $this->namespaces;
+			array_unshift($this->namespaces, $namespace);
+			return;
 		}
-
+		
 		array_push($this->namespaces, $namespace);
 	}
 
@@ -48,7 +51,8 @@ class DbtextHtmlBuilderMeta {
 	 */
 	public function assignN2nLocale(N2nLocale $n2nLocale, $prepend = false) {
 		if ($prepend) {
-			$this->n2nLocales = array($n2nLocale) + $this->n2nLocales;
+			array_unshift($this->n2nLocales, $n2nLocale);
+			return;
 		}
 
 		array_push($this->n2nLocales, $n2nLocale);
@@ -59,5 +63,13 @@ class DbtextHtmlBuilderMeta {
 	 */
 	public function assignN2nLocales(N2nLocale ...$n2nLocales) {
 		$this->n2nLocales = $n2nLocales;
+	}
+	
+	public function getNamespaces() {
+		return $this->namespaces;
+	}
+	
+	public function getN2nLocales() {
+		return $this->n2nLocales;
 	}
 }
