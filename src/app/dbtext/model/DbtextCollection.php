@@ -32,4 +32,5 @@ interface DbtextCollection {
 	 * @param string $key
 	 * @return bool
 	 */
+	public function has(string $key): bool;
 }
