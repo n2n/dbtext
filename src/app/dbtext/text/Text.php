@@ -41,8 +41,7 @@ class Text extends ObjectAdapter {
 	 * @param int $id
 	 * @param TextT[] $textTs
 	 */
-	public function __construct(int $id = null, string $key = null, Group $group = null, array $textTs = null) {
-		$this->id = $id;
+	public function __construct(string $key = null, Group $group = null, array $textTs = null) {
 		$this->key = $key;
 		$this->textTs = $textTs;
 		$this->group = $group;

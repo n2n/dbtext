@@ -7,6 +7,9 @@ use n2n\core\container\N2nContext;
 use n2n\util\cache\CacheStore;
 use n2n\util\cache\CorruptedCacheStoreException;
 
+/**
+ * Manages data for dbtext module.
+ */
 class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	const NS = 'dbtext';
 	const APP_CACHE_PREFIX = 'dbtext_group_data_';
@@ -35,7 +38,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	}
 
 	/**
-	 * Finds GroupData by
+	 * {@see GroupData} stored in cache or database can be found.
 	 *
 	 * @param string $namespace
 	 * @return GroupData
@@ -50,7 +53,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 			$this->groupDatas[$namespace] = $this->dbtextDao->getGroupData($namespace);
 			$this->writeToAppCache($this->groupDatas[$namespace]);
 		}
-
+		
 		if ($this->moduleConfig->isCreateOnRequest()) {
 			$this->groupDatas[$namespace]->registerListener($this);
 		}
@@ -58,6 +61,38 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 		return $this->groupDatas[$namespace];
 	}
 
+	/**
+	 * If no namespace is provided, the whole dbtext cache is cleared.
+	 * 
+	 * @param string $namespace
+	 */
+	public function clearCache(string $namespace = null) {
+		if (null !== $namespace) {
+			$this->cacheStore->remove(self::APP_CACHE_PREFIX . $namespace, array());
+			return;
+		}
+		
+		$this->cacheStore->clear();
+	}
+	
+	/**
+	 * Adds a {@see Text} to {@see Group} then clears cache for {@see Group::$groupdata::namespace}.
+	 * 
+	 * @param string $key
+	 * @param GroupData $groupData
+	 */
+	public function keyAdded(string $key, GroupData $groupData) {
+		$this->dbtextDao->insertKey($groupData->getNamespace(), $key);
+		$this->clearCache($groupData->getNamespace());
+	}
+	
+	/**
+	 * Finds cached {@see GroupData} by given namespace.
+	 * If dbtext cache of namespace is corrupt it is cleared.
+	 *
+	 * @param string $namespace
+	 * @return GroupData|mixed|null
+	 */
 	private function readCachedGroupData(string $namespace) {
 		$groupData = null;
 		try {
@@ -82,27 +117,5 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 			throw new \InvalidArgumentException('GroupData cannot have registered listeners while caching');
 		}
 		$this->cacheStore->store(self::APP_CACHE_PREFIX . $groupData->getNamespace(), array(), $groupData);
-	}
-
-	/**
-	 * If no namespace is given, the whole dbtext cache is cleared.
-	 * @param string $namespace
-	 */
-	public function clearCache(string $namespace = null) {
-		if (null !== $namespace) {
-			$this->cacheStore->remove(self::APP_CACHE_PREFIX . $namespace, array());
-			return;
-		}
-
-		$this->cacheStore->clear();
-	}
-
-	/**
-	 * @param string $key
-	 * @param GroupData $groupData
-	 */
-	public function keyAdded(string $key, GroupData $groupData) {
-		$this->dbtextDao->insertKey($groupData->getNamespace(), $key);
-		$this->clearCache($groupData->getNamespace());
 	}
 }
