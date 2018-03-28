@@ -1,11 +1,12 @@
 {
-    "specs": {
+    "types": {
         "dbtext-group": {
-            "type": "entity",
+            "nature": "entity",
             "entity": "dbtext\\text\\Group",
             "dataSourceName": null,
             "label": "Group",
             "pluralLabel": "Groups",
+            "iconType": null,
             "fields": {
                 "label": {
                     "class": "rocket\\impl\\ei\\component\\prop\\string\\StringEiProp",
@@ -86,14 +87,17 @@
                     "props": []
                 }
             },
-            "defaultMaskId": null
+            "partialControlOrder": [],
+            "overallControlOrder": [],
+            "entryControlOrder": []
         },
         "dbtext-text": {
-            "type": "entity",
+            "nature": "entity",
             "entity": "dbtext\\text\\Text",
             "dataSourceName": null,
             "label": "Text",
             "pluralLabel": "Texts",
+            "iconType": null,
             "fields": {
                 "key": {
                     "class": "rocket\\impl\\ei\\component\\prop\\string\\StringEiProp",
@@ -177,14 +181,17 @@
                     "props": []
                 }
             },
-            "defaultMaskId": null
+            "partialControlOrder": [],
+            "overallControlOrder": [],
+            "entryControlOrder": []
         },
         "dbtext-text-t": {
-            "type": "entity",
+            "nature": "entity",
             "entity": "dbtext\\text\\TextT",
             "dataSourceName": null,
             "label": "Text T",
             "pluralLabel": "Text Ts",
+            "iconType": null,
             "fields": {
                 "str": {
                     "class": "rocket\\impl\\ei\\component\\prop\\string\\StringEiProp",
@@ -229,11 +236,13 @@
                     "props": []
                 }
             },
-            "defaultMaskId": null
+            "partialControlOrder": [],
+            "overallControlOrder": [],
+            "entryControlOrder": []
         }
     },
-    "eiMasks": [],
-    "menuItems": {
+    "eiTypeExtensions": [],
+    "launchPads": {
         "dbtext-group": [],
         "dbtext-text": []
     }
