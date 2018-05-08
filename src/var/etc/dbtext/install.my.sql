@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `dbtext_text` (
 CREATE TABLE IF NOT EXISTS `dbtext_text_t` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `n2n_locale` varchar(12) DEFAULT NULL,
-  `str` varchar(255) DEFAULT NULL,
+  `str` varchar(8191) DEFAULT NULL,
   `text_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `dbtext_text_text_t_index_1` (`text_id`)

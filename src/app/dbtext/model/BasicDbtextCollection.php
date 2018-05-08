@@ -28,6 +28,10 @@ class BasicDbtextCollection implements DbtextCollection {
 		if (!$this->has($key)) {
 			$this->groupData->add($key);
 		}
+
+		if (!$this->groupData->equalsPlaceholders($key, $args)) {
+			$this->groupData->changePlaceholders($key, $args);
+		}
 		
 		return TextCollection::fillArgs($this->groupData->t($key, ...$n2nLocales), $args);
 	}
@@ -37,7 +41,7 @@ class BasicDbtextCollection implements DbtextCollection {
 	 */
 	public function tf(string $key, array $args = null, N2nLocale ...$n2nLocales): string {
 		if (!$this->has($key)) {
-			$this->groupData->add($key);
+			$this->groupData->add($key, $args);
 		}
 		
 		$text = $this->groupData->t($key, ...$n2nLocales);

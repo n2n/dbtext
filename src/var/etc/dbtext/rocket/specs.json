@@ -117,6 +117,24 @@
                     "objectProperty": "key",
                     "entityProperty": "key"
                 },
+                "placeholders": {
+					"class": "dbtext\\PlaceholderEiProp",
+                    "props": {
+                        "displayInOverview": true,
+                        "displayInDetailView": true,
+                        "displayInEditView": true,
+                        "displayInAddView": true,
+                        "constant": false,
+                        "readOnly": true,
+                        "mandatory": true,
+                        "draftable": false,
+                        "maxlength": "255",
+                        "multiline": false
+                    },
+                    "label": "Platzhalter",
+                    "objectProperty": "placeholders",
+                    "entityProperty": "placeholders"
+                },
                 "textTs": {
                     "class": "rocket\\impl\\ei\\component\\prop\\translation\\TranslationEiProp",
                     "props": {
@@ -204,7 +222,7 @@
                         "readOnly": false,
                         "mandatory": false,
                         "draftable": false,
-                        "maxlength": "255",
+                        "maxlength": "8191",
                         "multiline": true
                     },
                     "label": "Str",

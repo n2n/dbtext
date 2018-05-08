@@ -5,6 +5,8 @@ use n2n\l10n\N2nLocale;
 use n2n\reflection\ObjectAdapter;
 
 class GroupData extends ObjectAdapter {
+	const PLACEHOLDER_JSON_KEY = 'placeholderJsons';
+
 	/**
 	 * @var string $namespace
 	 */
@@ -79,9 +81,18 @@ class GroupData extends ObjectAdapter {
 	 */
 	public function add(string $key) {
 		$this->data[$key] = array();
-		
+		$this->data[self::PLACEHOLDER_JSON_KEY][$key] = '[]';
+
 		foreach ($this->listeners as $listener) {
 			$listener->keyAdded($key, $this);
+		}
+	}
+
+	public function changePlaceholders(string $key, array $placeholders = null) {
+		$this->data[self::PLACEHOLDER_JSON_KEY][$key] = $placeholders;
+
+		foreach ($this->listeners as $listener) {
+			$listener->placeholdersChanged($key, $this->getNamespace(), $placeholders);
 		}
 	}
 
@@ -134,5 +145,10 @@ class GroupData extends ObjectAdapter {
 	 */
 	public function getListeners() {
 		return $this->listeners;
+	}
+
+	public function equalsPlaceholders(string $key, array $args = null) {
+		if (null === $args && null === $this->data[GroupData::PLACEHOLDER_JSON_KEY][$key]) return true;
+		return $args === $this->data[GroupData::PLACEHOLDER_JSON_KEY][$key];
 	}
 }

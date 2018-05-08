@@ -4,6 +4,7 @@ namespace dbtext\storage;
 use dbtext\config\DbtextConfig;
 use n2n\context\RequestScoped;
 use n2n\core\container\N2nContext;
+use n2n\core\N2N;
 use n2n\util\cache\CacheStore;
 use n2n\util\cache\CorruptedCacheStoreException;
 
@@ -54,7 +55,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 			$this->writeToAppCache($this->groupDatas[$namespace]);
 		}
 		
-		if ($this->moduleConfig->isCreateOnRequest()) {
+		if ($this->moduleConfig->isModifyOnRequest()) {
 			$this->groupDatas[$namespace]->registerListener($this);
 		}
 
@@ -81,11 +82,15 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * @param string $key
 	 * @param GroupData $groupData
 	 */
-	public function keyAdded(string $key, GroupData $groupData) {
-		$this->dbtextDao->insertKey($groupData->getNamespace(), $key);
+	public function keyAdded(string $key, GroupData $groupData, array $args = null) {
+		$this->dbtextDao->insertKey($groupData->getNamespace(), $key, $args);
 		$this->clearCache($groupData->getNamespace());
 	}
-	
+
+	public function placeholdersChanged(string $key, string $ns, array $args = null) {
+		$this->dbtextDao->changePlaceholders($key, $ns, $args);
+	}
+
 	/**
 	 * Finds cached {@see GroupData} by given namespace.
 	 * If dbtext cache of namespace is corrupt it is cleared.
@@ -94,6 +99,9 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * @return GroupData|mixed|null
 	 */
 	private function readCachedGroupData(string $namespace) {
+		// Due to confusion, no cached items are returned during development
+		if (N2N::isDevelopmentModeOn()) return null;
+
 		$groupData = null;
 		try {
 			$cacheItem = $this->cacheStore->get(self::APP_CACHE_PREFIX . $namespace, array());

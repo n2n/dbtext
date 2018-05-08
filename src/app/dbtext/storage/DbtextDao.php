@@ -29,7 +29,7 @@ class DbtextDao implements RequestScoped {
 	 * @param string $namespace
 	 * @param string $key
 	 */
-	public function insertKey(string $namespace, string $key) {
+	public function insertKey(string $namespace, string $key, array $args = null) {
 		$tx = $this->tm->createTransaction();
 		
 		if (0 < (int) $this->em->createCriteria()
@@ -41,9 +41,13 @@ class DbtextDao implements RequestScoped {
 			return;
 		}
 		
-		$text = new Text($key, $this->getOrCreateGroup($namespace));
+		$text = new Text($key, $this->getOrCreateGroup($namespace), $args);
 		$this->em->persist($text);
 		$tx->commit();
+	}
+
+	public function persistText(Text $text) {
+		$this->em->persist($text);
 	}
 
 	/**
@@ -51,7 +55,7 @@ class DbtextDao implements RequestScoped {
 	 */
 	public function getGroupData(string $namespace) {
 		$result = $this->em->createNqlCriteria('
-				SELECT  t.key, t.textTs.n2nLocale, t.textTs.str 
+				SELECT  t.key, t.textTs.n2nLocale, t.textTs.str, t.placeholders
 				FROM Text t 
 				WHERE t.group.namespace = :ns',
 				array('ns' => $namespace))->toQuery()->fetchArray();
@@ -59,8 +63,10 @@ class DbtextDao implements RequestScoped {
 		if (empty($result)) {
 			return new GroupData($namespace);
 		}
+		$data = $this->formGroupDataResult($result);
+		$data[GroupData::PLACEHOLDER_JSON_KEY] = $this->formPlaceholdersFromResult($result);
 
-		return new GroupData($namespace, $this->formGroupDataResult($result));
+		return new GroupData($namespace, $data);
 	}
 
 	/**
@@ -84,6 +90,22 @@ class DbtextDao implements RequestScoped {
 		return $group;
 	}
 
+	public function changePlaceholders(string $key, string $ns, array $args = null) {
+		$tx = $this->tm->createTransaction();
+
+		$text = $this->em->createSimpleCriteria(Text::getClass(),
+				array('key' => $key, 'group' => $this->em->find(Group::getClass(), $ns)))->toQuery()->fetchSingle();
+
+		if (null !== $args) {
+			$text->setPlaceholders($args);
+		} else {
+			$text->setPlaceholders([]);
+		}
+
+		$this->em->persist($text);
+		$tx->commit();
+	}
+
 	/**
 	 * @param array $result
 	 * @return array
@@ -99,6 +121,24 @@ class DbtextDao implements RequestScoped {
 			if ($item[2] === null) continue;
 
 			$formedResult[$item[0]][(string) $item[1]] = $item[2];
+		}
+
+		return $formedResult;
+	}
+
+	/**
+	 * @param array $result
+	 * @return array
+	 */
+	private function formPlaceholdersFromResult(array $result) {
+		$formedResult = array();
+
+		foreach ($result as $i => $item) {
+			if (!isset($formedResult[$item[0]])) {
+				$formedResult[$item[0]] = array();
+			}
+
+			$formedResult[$item[0]] = $item[3];
 		}
 
 		return $formedResult;

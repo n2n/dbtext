@@ -1,7 +1,7 @@
 <?php
 namespace dbtext;
 
-use dbtext\model\TextService;
+use dbtext\model\DbtextService;
 use n2n\impl\web\ui\view\html\HtmlView;
 use n2n\web\ui\UiComponent;
 use n2n\impl\web\ui\view\html\HtmlBuilderMeta;
@@ -30,7 +30,7 @@ class DbtextHtmlBuilder {
 	private $view;
 
 	/**
-	 * @var TextService $textService
+	 * @var DbtextService $textService
 	 */
 	private $textService;
 
@@ -46,7 +46,7 @@ class DbtextHtmlBuilder {
 	 */
 	public function __construct(HtmlView $view, array $namespaces = array(), array $n2nLocales = array()) {
 		$this->view = $view;
-		$this->textService = $view->lookup(TextService::class);
+		$this->textService = $view->lookup(DbtextService::class);
 		
 		if (empty($namespaces)) {
 			$namespaces[] = $this->view->getModuleNamespace();
@@ -87,7 +87,7 @@ class DbtextHtmlBuilder {
 		if (empty($namespaces)) {
 			$namespaces = $this->meta->getNamespaces();
 		}
-		
+
 		$translatedText = $this->textService->t($namespaces, $key, $args, ...$this->meta->getN2nLocales());
 		$replacedText = HtmlBuilderMeta::replace($translatedText, $replacements, $this->view);
 		return new Raw($replacedText);
