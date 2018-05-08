@@ -67,7 +67,7 @@ class DbtextHtmlBuilder {
 	 * @param array $args
 	 */
 	public function t(string $key, array $args = null, array $replacements = null, string ...$namespaces) {
-		$this->view->out($this->getT($key, $args, $replacements, ...$namespaces));
+		$this->view->out($this->view->getHtmlBuilder()->escBr($this->getT($key, $args, $replacements, ...$namespaces)));
 	}
 
 	/**

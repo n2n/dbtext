@@ -20,7 +20,7 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 
 		$placeholderTexts = array();
 		foreach ($text->getPlaceholders() as $placeholderName => $value) {
-			$placeholderTexts[] = $placeholderName . '("' . $value . '")';
+			$placeholderTexts[] = $placeholderName . ' ("' . $value . '")';
 		}
 
 		return implode(', ', $placeholderTexts);

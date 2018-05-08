@@ -118,18 +118,12 @@
                     "entityProperty": "key"
                 },
                 "placeholders": {
-					"class": "dbtext\\PlaceholderEiProp",
+                    "class": "dbtext\\PlaceholderEiProp",
                     "props": {
                         "displayInOverview": true,
                         "displayInDetailView": true,
                         "displayInEditView": true,
-                        "displayInAddView": true,
-                        "constant": false,
-                        "readOnly": true,
-                        "mandatory": true,
-                        "draftable": false,
-                        "maxlength": "255",
-                        "multiline": false
+                        "displayInAddView": true
                     },
                     "label": "Platzhalter",
                     "objectProperty": "placeholders",
@@ -199,6 +193,18 @@
                     "props": []
                 }
             },
+            "bulkyOrder": [
+                {
+                    "label": null,
+                    "type": null,
+                    "guiIdPath": "textTs.str"
+                },
+                {
+                    "label": null,
+                    "type": null,
+                    "guiIdPath": "placeholders"
+                }
+            ],
             "partialControlOrder": [],
             "overallControlOrder": [],
             "entryControlOrder": []
@@ -225,7 +231,7 @@
                         "maxlength": "8191",
                         "multiline": true
                     },
-                    "label": "Str",
+                    "label": "Text",
                     "objectProperty": "str",
                     "entityProperty": "str"
                 }
