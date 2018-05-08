@@ -24,7 +24,7 @@ class Text extends ObjectAdapter {
 	 * @var int
 	 */
 	private $id;
-	/**
+/**
 	 * @var string
 	 */
 	private $key;
@@ -32,6 +32,14 @@ class Text extends ObjectAdapter {
 	 * @var TextT[] $textTs
 	 */
 	private $textTs;
+/**
+	 * The available Placeholders that were found.
+	 * Placeholders are updated when found only if
+	 * the config specifies modifyOnRequest = true.
+	 *
+	 * @var string $placeholders
+	 */
+	private $placeholders;
 /**
 	 * @var Group $group
 	 */
@@ -41,7 +49,7 @@ class Text extends ObjectAdapter {
 	 * @param int $id
 	 * @param TextT[] $textTs
 	 */
-	public function __construct(string $key = null, Group $group = null, array $textTs = null) {
+	public function __construct(string $key = null, Group $group = null, array $args = null, array $textTs = null) {
 		$this->key = $key;
 		$this->textTs = $textTs;
 		$this->group = $group;
@@ -50,20 +58,32 @@ class Text extends ObjectAdapter {
 	private function _postUpdate(DbtextCollectionManager $dbtextCollectionManager) {
 		$dbtextCollectionManager->clearCache($this->group->getNamespace());
 	}
-	
+
+	/**
+	 * @return int
+	 */
 	public function getId() {
 		return $this->id;
 	}
-	
+
+	/**
+	 * @param int $id
+	 */
 	public function setId(int $id) {
 		$this->id = $id;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getKey() {
 		return $this->key;
 	}
 
-	public function setKey($key) {
+	/**
+	 * @param string $key
+	 */
+	public function setKey(string $key = null) {
 		$this->key = $key;
 	}
 
@@ -79,6 +99,20 @@ class Text extends ObjectAdapter {
 	 */
 	public function setTextTs(\ArrayObject $textTs) {
 		$this->textTs = $textTs;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getPlaceholders() {
+		return json_decode($this->placeholders, true);
+	}
+
+	/**
+	 * @param array $placeholderJson
+	 */
+	public function setPlaceholders(array $placeholders) {
+		$this->placeholders = json_encode($placeholders);
 	}
 
 	/**

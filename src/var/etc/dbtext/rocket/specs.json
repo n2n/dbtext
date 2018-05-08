@@ -117,6 +117,18 @@
                     "objectProperty": "key",
                     "entityProperty": "key"
                 },
+                "placeholders": {
+                    "class": "dbtext\\PlaceholderEiProp",
+                    "props": {
+                        "displayInOverview": true,
+                        "displayInDetailView": true,
+                        "displayInEditView": true,
+                        "displayInAddView": true
+                    },
+                    "label": "Platzhalter",
+                    "objectProperty": "placeholders",
+                    "entityProperty": "placeholders"
+                },
                 "textTs": {
                     "class": "rocket\\impl\\ei\\component\\prop\\translation\\TranslationEiProp",
                     "props": {
@@ -181,6 +193,18 @@
                     "props": []
                 }
             },
+            "bulkyOrder": [
+                {
+                    "label": null,
+                    "type": null,
+                    "guiIdPath": "textTs.str"
+                },
+                {
+                    "label": null,
+                    "type": null,
+                    "guiIdPath": "placeholders"
+                }
+            ],
             "partialControlOrder": [],
             "overallControlOrder": [],
             "entryControlOrder": []
@@ -204,10 +228,10 @@
                         "readOnly": false,
                         "mandatory": false,
                         "draftable": false,
-                        "maxlength": "255",
+                        "maxlength": "8191",
                         "multiline": true
                     },
-                    "label": "Str",
+                    "label": "Text",
                     "objectProperty": "str",
                     "entityProperty": "str"
                 }

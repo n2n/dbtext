@@ -17,7 +17,7 @@ class DbtextDescriber extends ConfigDescriberAdapter {
 		$attributes = $this->readCustomAttributes();
 
 		$dbConfig = new DbtextConfig();
-		$dbConfig->setCreateOnRequest($attributes->getBool(self::ATTR_CREATE_ON_REQUEST_KEY, false,
+		$dbConfig->setModifyOnRequest($attributes->getBool(self::ATTR_CREATE_ON_REQUEST_KEY, false,
 				self::ATTR_CREATE_ON_REQUEST_DEFAULT));
 
 		return $dbConfig;
