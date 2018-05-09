@@ -125,7 +125,7 @@
                         "displayInEditView": true,
                         "displayInAddView": true
                     },
-                    "label": "Platzhalter",
+                    "label": "verfügbare Textbausteine",
                     "objectProperty": "placeholders",
                     "entityProperty": "placeholders"
                 },
@@ -231,7 +231,7 @@
                         "maxlength": "8191",
                         "multiline": true
                     },
-                    "label": "Text",
+                    "label": "Übersetzung",
                     "objectProperty": "str",
                     "entityProperty": "str"
                 }
