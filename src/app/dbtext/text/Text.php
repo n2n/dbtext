@@ -39,7 +39,7 @@ class Text extends ObjectAdapter {
 	 *
 	 * @var string $placeholders
 	 */
-	private $placeholders;
+	private $placeholders = '[]';
 /**
 	 * @var Group $group
 	 */
