@@ -6,6 +6,7 @@ use n2n\impl\web\ui\view\html\HtmlElement;
 use n2n\impl\web\ui\view\html\HtmlView;
 use n2n\l10n\TextCollection;
 use n2n\reflection\CastUtils;
+use n2n\web\ui\Raw;
 use n2n\web\ui\UiComponent;
 use rocket\ei\util\model\Eiu;
 use rocket\impl\ei\component\prop\adapter\DisplayableEiPropAdapter;
@@ -22,6 +23,8 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 		CastUtils::assertTrue($text instanceof Text);
 
 		$placeholders = $text->getPlaceholders();
+
+		if ($placeholders === null) return new Raw($dtc->t('dbtext_no_placeholders_text'));
 
 		if ($eiu->gui()->isCompact()) {
 			return implode(', ', array_keys($placeholders));
