@@ -24,7 +24,7 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 
 		$placeholders = $text->getPlaceholders();
 
-		if ($placeholders === null) return new Raw($dtc->t('dbtext_no_placeholders_text'));
+		if ($placeholders === null || count($placeholders) === 0) return new Raw($dtc->t('dbtext_no_placeholders_text'));
 
 		if ($eiu->gui()->isCompact()) {
 			return implode(', ', array_keys($placeholders));
