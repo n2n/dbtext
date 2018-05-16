@@ -55,7 +55,7 @@ class DbtextDao implements RequestScoped {
 	 */
 	public function getGroupData(string $namespace) {
 		$result = $this->em->createNqlCriteria('
-				SELECT  t.key, t.textTs.n2nLocale, t.textTs.str, t.placeholders
+				SELECT  t.key, t.textTs.n2nLocale, t.textTs.str, t.placeholdersJson
 				FROM Text t 
 				WHERE t.group.namespace = :ns',
 				array('ns' => $namespace))->toQuery()->fetchArray();
