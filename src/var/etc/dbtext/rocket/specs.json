@@ -125,9 +125,7 @@
                         "displayInEditView": true,
                         "displayInAddView": true
                     },
-                    "label": "verfügbare Textbausteine",
-                    "objectProperty": "placeholders",
-                    "entityProperty": "placeholders"
+                    "label": "verfügbare Textbausteine"
                 },
                 "textTs": {
                     "class": "rocket\\impl\\ei\\component\\prop\\translation\\TranslationEiProp",
@@ -231,7 +229,7 @@
                         "maxlength": "8191",
                         "multiline": true
                     },
-                    "label": "Übersetzung",
+                    "label": "\u00dcbersetzung",
                     "objectProperty": "str",
                     "entityProperty": "str"
                 }

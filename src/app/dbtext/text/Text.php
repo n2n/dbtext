@@ -2,6 +2,7 @@
 namespace dbtext\text;
 
 use dbtext\storage\DbtextCollectionManager;
+use n2n\persistence\orm\annotation\AnnoColumn;
 use n2n\persistence\orm\annotation\AnnoManyToOne;
 use n2n\persistence\orm\annotation\AnnoOneToMany;
 use n2n\persistence\orm\annotation\AnnoTable;
@@ -16,6 +17,7 @@ use n2n\reflection\ObjectAdapter;
 class Text extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
 		$ai->c(new AnnoTable('dbtext_text'));
+		$ai->p('placeholdersJson', new AnnoColumn('placeholders'));
 		$ai->p('textTs', new AnnoOneToMany(TextT::getClass(), 'text', CascadeType::ALL, null, true));
 		$ai->p('group', new AnnoManyToOne(Group::getClass()));
 	}
@@ -37,9 +39,9 @@ class Text extends ObjectAdapter {
 	 * Placeholders are updated when found only if
 	 * the config specifies modifyOnRequest = true.
 	 *
-	 * @var string $placeholders
+	 * @var string $placeholdersJson
 	 */
-	private $placeholders = '[]';
+	public $placeholdersJson;
 /**
 	 * @var Group $group
 	 */
@@ -105,14 +107,14 @@ class Text extends ObjectAdapter {
 	 * @return array
 	 */
 	public function getPlaceholders() {
-		return json_decode($this->placeholders, true);
+		return json_decode($this->placeholdersJson, true);
 	}
 
 	/**
-	 * @param array $placeholderJson
+	 * @param array $placeholdersJson
 	 */
-	public function setPlaceholders(array $placeholders) {
-		$this->placeholders = json_encode($placeholders);
+	public function setPlaceholders(array $placeholdersJson) {
+		$this->placeholdersJson = json_encode($placeholdersJson);
 	}
 
 	/**
