@@ -41,7 +41,7 @@ class Text extends ObjectAdapter {
 	 *
 	 * @var string $placeholdersJson
 	 */
-	public $placeholdersJson;
+	private $placeholdersJson;
 /**
 	 * @var Group $group
 	 */
