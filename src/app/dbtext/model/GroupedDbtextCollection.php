@@ -32,9 +32,7 @@ class GroupedDbtextCollection implements DbtextCollection {
 		if (empty($this->dbtextCollections)) {
 			return $key;
 		}
-		
-		
-		
+
 		$n2nLocales = [];
 		foreach ($passedN2nLocales as $passedN2nLocale) {
 			$n2nLocales[] = $passedN2nLocale;

@@ -79,14 +79,14 @@ class DbtextService implements RequestScoped {
 	 */
 	public function tc($ns, N2nLocale ...$n2nLocales): DbtextCollection {
 		if (!is_array($ns)) {
-			return $this->getOrCreateBasicDbCollection($ns);
+			return $this->getOrCreateBasicDbCollection($ns, ...$n2nLocales);
 		} elseif (count($ns) === 1) {
-			return $this->getOrCreateBasicDbCollection(reset($ns));
+			return $this->getOrCreateBasicDbCollection(reset($ns), ...$n2nLocales);
 		}
 		
 		$dbtextCollections = array();
 		foreach ($ns as $namespace) {
-			$dbtextCollections[] = $this->getOrCreateBasicDbCollection($namespace);
+			$dbtextCollections[] = $this->getOrCreateBasicDbCollection($namespace, ...$n2nLocales);
 		}
 
 		return new GroupedDbtextCollection($dbtextCollections, $n2nLocales);
@@ -101,9 +101,9 @@ class DbtextService implements RequestScoped {
 		$this->tcm->clearCache($namespace);
 	}
 
-	private function getOrCreateBasicDbCollection(string $namespace) {
+	private function getOrCreateBasicDbCollection(string $namespace, N2nLocale ...$n2nLocale) {
 		if (!isset($this->dbtextCollections[$namespace])) {
-			$this->dbtextCollections[$namespace] = new BasicDbtextCollection($this->tcm->getGroupData($namespace));
+			$this->dbtextCollections[$namespace] = new BasicDbtextCollection($this->tcm->getGroupData($namespace), ...$n2nLocale);
 		}
 
 		return $this->dbtextCollections[$namespace];
