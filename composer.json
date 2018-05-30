@@ -1,32 +1,35 @@
 {
-    "name": "n2n/dbtext",
-    "type": "n2n-module",
-    "description": "translates textblocks from db",
-    "keywords": ["translation","n2n"],
-    "homepage": "https://n2n.rocks/",
-    "license": "GPL-3.0-or-later",
     "authors": [
         {
-            "name": "Nikolai Schmid",
             "email": "schmid@hnm.ch",
-            "homepage": "https://www.schmid.guru/"
+            "homepage": "https://www.schmid.guru/",
+            "name": "Nikolai Schmid"
         },
         {
-            "name": "Andreas von Burg",
             "email": "a@von-burg.net",
-            "homepage": "https://www.von-burg.net/"
+            "homepage": "https://www.von-burg.net/",
+            "name": "Andreas von Burg"
         }
     ],
-    "require": {
-        "php": ">=7.0",
-        "n2n/n2n-composer-module-installer": "7.1.x-dev",
-        "n2n/n2n": "7.2.x-dev",
-        "n2n/n2n-l10n": "7.2.x-dev",
-        "n2n/n2n-persistence": "7.2.x-dev"
-    },
     "autoload": {
         "psr-4": {
             "dbtext\\": "src/app/dbtext"
         }
-    }
+    },
+    "description": "translates textblocks from db",
+    "homepage": "https://n2n.rocks/",
+    "keywords": [
+        "translation",
+        "n2n"
+    ],
+    "license": "GPL-3.0-or-later",
+    "name": "n2n/dbtext",
+    "require": {
+        "n2n/n2n": "^7.2.0-beta.3",
+        "n2n/n2n-composer-module-installer": "~7.1.0",
+        "n2n/n2n-l10n": "^7.2.0-beta.3",
+        "n2n/n2n-persistence": "^7.2.0-beta.3",
+        "php": ">=7.0"
+    },
+    "type": "n2n-module"
 }
