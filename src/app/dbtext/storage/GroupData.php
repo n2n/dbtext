@@ -25,10 +25,6 @@ class GroupData extends ObjectAdapter {
 	 * @param string[][] $data
 	 */
 	public function __construct($namespace, array $data = array()) {
-		if (!isset($data[self::PLACEHOLDER_JSON_KEY])) {
-			$data[self::PLACEHOLDER_JSON_KEY] = array();
-		}
-
 		$this->namespace = $namespace;
 		$this->data = $data;
 	}
@@ -152,7 +148,8 @@ class GroupData extends ObjectAdapter {
 	}
 
 	public function equalsPlaceholders(string $key, array $args = null) {
-		if (null === $args && null === $this->data[GroupData::PLACEHOLDER_JSON_KEY][$key]) return true;
-		return $args === $this->data[GroupData::PLACEHOLDER_JSON_KEY][$key];
+		if (!isset($this->data[self::PLACEHOLDER_JSON_KEY]) || !isset($this->data[self::PLACEHOLDER_JSON_KEY][$key])) return false;
+		if (null === $args && null === $this->data[self::PLACEHOLDER_JSON_KEY][$key]) return true;
+		return $args === $this->data[self::PLACEHOLDER_JSON_KEY][$key];
 	}
 }
