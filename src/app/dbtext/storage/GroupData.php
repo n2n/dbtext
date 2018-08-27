@@ -27,6 +27,11 @@ class GroupData extends ObjectAdapter {
 	public function __construct($namespace, array $data = array()) {
 		$this->namespace = $namespace;
 		$this->data = $data;
+
+		if (!isset($this->data[self::PLACEHOLDER_JSON_KEY])) {
+			$this->data[self::PLACEHOLDER_JSON_KEY] = array();
+		}
+
 	}
 
 	/**
