@@ -1,8 +1,6 @@
 <?php
 namespace dbtext\storage;
 
-use dbtext\text\Text;
-
 interface GroupDataListener {
 	/**
 	 * @param string $key

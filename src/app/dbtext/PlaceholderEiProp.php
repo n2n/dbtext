@@ -8,7 +8,7 @@ use n2n\l10n\TextCollection;
 use n2n\reflection\CastUtils;
 use n2n\web\ui\Raw;
 use n2n\web\ui\UiComponent;
-use rocket\ei\util\model\Eiu;
+use rocket\ei\util\Eiu;
 use rocket\impl\ei\component\prop\adapter\DisplayableEiPropAdapter;
 
 class PlaceholderEiProp extends DisplayableEiPropAdapter {
