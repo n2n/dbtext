@@ -4,6 +4,7 @@ namespace dbtext\model;
 use dbtext\storage\GroupData;
 use n2n\l10n\N2nLocale;
 use n2n\l10n\TextCollection;
+use n2n\util\StringUtils;
 
 /**
  * Manages {@see GroupData}.
@@ -41,7 +42,14 @@ class BasicDbtextCollection implements DbtextCollection {
 			$this->groupData->changePlaceholders($key, $args);
 		}
 
-		return TextCollection::fillArgs($this->groupData->t($key, ...$n2nLocales), $args);
+		
+		
+		$text = $this->groupData->find($key, ...$n2nLocales);
+		if ($text === null) {
+			return StringUtils::pretty(TextCollection::implode($key, $args));
+		}
+		
+		return TextCollection::fillArgs($text, $args);
 	}
 
 	/**
@@ -55,7 +63,10 @@ class BasicDbtextCollection implements DbtextCollection {
 			$this->groupData->add($key, $args);
 		}
 		
-		$text = $this->groupData->t($key, ...$n2nLocales);
+		$text = $this->groupData->find($key, ...$n2nLocales);
+		if ($text === null) {
+			return StringUtils::pretty(TextCollection::implode($key, $args));
+		}
 
 		$text = @sprintf($text, ...$args);
 
