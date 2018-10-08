@@ -36,15 +36,15 @@ class GroupData extends ObjectAdapter {
 
 	/**
 	 * Finds {@see TextT::$str} for given n2nLocales.
-	 * key returned if no fitting {@see TextT::$str} found.
+	 * null returned if no fitting {@see TextT::$str} found.
 	 *
 	 * @param string $key
 	 * @param N2nLocale[] ...$n2nLocales
-	 * @return string
+	 * @return string|null
 	 */
-	public function t(string $key, N2nLocale ...$n2nLocales): string {
+	public function find(string $key, N2nLocale ...$n2nLocales): ?string {
 		if (!isset($this->data[$key])) {
-			return $key;
+			return null;
 		}
 
 		array_push($n2nLocales, N2nLocale::getFallback());
@@ -66,7 +66,7 @@ class GroupData extends ObjectAdapter {
 			}
 		}
 
-		return $key;
+		return null;
 	}
 
 	/**
