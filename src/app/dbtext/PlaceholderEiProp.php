@@ -17,7 +17,7 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 	 * @param Eiu $eiu
 	 * @return UiComponent
 	 */
-	public function createOutputUiComponent(HtmlView $view, Eiu $eiu) {
+	public function createUiComponent(HtmlView $view, Eiu $eiu) {
 		$dtc = $eiu->dtc('dbtext');
 		$text = $eiu->entry()->getEntityObj();
 		CastUtils::assertTrue($text instanceof Text);
