@@ -5,7 +5,7 @@ use dbtext\text\Text;
 use n2n\impl\web\ui\view\html\HtmlElement;
 use n2n\impl\web\ui\view\html\HtmlView;
 use n2n\l10n\TextCollection;
-use n2n\reflection\CastUtils;
+use n2n\util\type\CastUtils;
 use n2n\web\ui\Raw;
 use n2n\web\ui\UiComponent;
 use rocket\ei\util\Eiu;
