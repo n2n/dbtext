@@ -3,7 +3,7 @@ namespace dbtext\config;
 
 use n2n\core\container\N2nContext;
 use n2n\core\module\ConfigDescriberAdapter;
-use n2n\util\config\Attributes;
+use n2n\config\Attributes;
 use n2n\web\dispatch\mag\MagDispatchable;
 
 class DbtextDescriber extends ConfigDescriberAdapter {
