@@ -83,4 +83,8 @@ class BasicDbtextCollection implements DbtextCollection {
 	public function has(string $key): bool {
 		return $this->groupData->has($key);
 	}
+	
+	public function getKeys(): array {
+		return $this->groupData->getKeys();
+	}
 }

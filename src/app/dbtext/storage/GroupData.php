@@ -5,6 +5,7 @@ use n2n\l10n\N2nLocale;
 use n2n\reflection\ObjectAdapter;
 
 class GroupData extends ObjectAdapter {
+	const TEXTS_KEY = 'texts';
 	const PLACEHOLDER_JSON_KEY = 'placeholderJsons';
 
 	/**
@@ -28,6 +29,10 @@ class GroupData extends ObjectAdapter {
 		$this->namespace = $namespace;
 		$this->data = $data;
 
+		if (!isset($this->data[self::TEXTS_KEY])) {
+			$this->data[self::TEXTS_KEY] = array();
+		}
+		
 		if (!isset($this->data[self::PLACEHOLDER_JSON_KEY])) {
 			$this->data[self::PLACEHOLDER_JSON_KEY] = array();
 		}
@@ -43,7 +48,7 @@ class GroupData extends ObjectAdapter {
 	 * @return string|null
 	 */
 	public function find(string $key, N2nLocale ...$n2nLocales): ?string {
-		if (!isset($this->data[$key])) {
+		if (!isset($this->data[self::TEXTS_KEY][$key])) {
 			return null;
 		}
 
@@ -51,8 +56,8 @@ class GroupData extends ObjectAdapter {
 
 		foreach ($n2nLocales as $n2nLocale) {
 			$n2nLocaleId = $n2nLocale->getId();
-			if (isset($this->data[$key][$n2nLocaleId])) {
-				return $this->data[$key][$n2nLocaleId];
+			if (isset($this->data[self::TEXTS_KEY][$key][$n2nLocaleId])) {
+				return $this->data[self::TEXTS_KEY][$key][$n2nLocaleId];
 			}
 
 			// if no region id than locale id and language id are the same.
@@ -61,8 +66,8 @@ class GroupData extends ObjectAdapter {
 			}
 
 			$langId = $n2nLocale->getLanguageId();
-			if (isset($this->data[$key][$langId])) {
-				return $this->data[$key][$langId];
+			if (isset($this->data[self::TEXTS_KEY][$key][$langId])) {
+				return $this->data[self::TEXTS_KEY][$key][$langId];
 			}
 		}
 
@@ -85,7 +90,7 @@ class GroupData extends ObjectAdapter {
 	 * @param string $key
 	 */
 	public function add(string $key) {
-		$this->data[$key] = array();
+		$this->data[self::TEXTS_KEY][$key] = array();
 		$this->data[self::PLACEHOLDER_JSON_KEY][$key] = '[]';
 
 		foreach ($this->listeners as $listener) {
@@ -145,6 +150,13 @@ class GroupData extends ObjectAdapter {
 		$this->data = $data;
 	}
 
+	/**
+	 * @return string[]
+	 */
+	public function getKeys() {
+		return array_keys($this->data[self::TEXTS_KEY]);
+	}
+	
 	/**
 	 * @return GroupDataListener[]
 	 */

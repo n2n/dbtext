@@ -63,7 +63,7 @@ class DbtextDao implements RequestScoped {
 		if (empty($result)) {
 			return new GroupData($namespace);
 		}
-		$data = $this->formGroupDataResult($result);
+		$data[GroupData::TEXTS_KEY] = $this->formGroupDataResult($result);
 		$data[GroupData::PLACEHOLDER_JSON_KEY] = $this->formPlaceholdersFromResult($result);
 
 		return new GroupData($namespace, $data);

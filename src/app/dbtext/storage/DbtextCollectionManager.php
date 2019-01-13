@@ -13,7 +13,7 @@ use n2n\util\cache\CorruptedCacheStoreException;
  */
 class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	const NS = 'dbtext';
-	const APP_CACHE_PREFIX = 'dbtext_group_data_';
+	const APP_CACHE_PREFIX = DbtextCollectionManager::class . '_';
 
 	/**
 	 * @var GroupData[] $groupDatas
