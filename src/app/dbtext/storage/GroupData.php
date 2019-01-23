@@ -169,6 +169,6 @@ class GroupData extends ObjectAdapter {
 			return false;
 		}
 		
-		return array_keys($args) == array_keys($this->data[self::PLACEHOLDER_JSON_KEY][$key]);
+		return array_keys($args) == array_keys((array) $this->data[self::PLACEHOLDER_JSON_KEY][$key]);
 	}
 }
