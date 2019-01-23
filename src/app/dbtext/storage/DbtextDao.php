@@ -90,19 +90,20 @@ class DbtextDao implements RequestScoped {
 		return $group;
 	}
 
-	public function changePlaceholders(string $key, string $ns, array $args = null) {
+	public function changePlaceholders(string $key, string $ns, array $args) {
 		$tx = $this->tm->createTransaction();
 
+		/**
+		 * @var Text $text
+		 */
 		$text = $this->em->createSimpleCriteria(Text::getClass(),
 				array('key' => $key, 'group' => $this->em->find(Group::getClass(), $ns)))->toQuery()->fetchSingle();
-
-		if (null !== $args) {
+		
+		if ($text !== null) {
 			$text->setPlaceholders($args);
-		} else {
-			$text->setPlaceholders([]);
+			$this->em->persist($text);
 		}
-
-		$this->em->persist($text);
+		
 		$tx->commit();
 	}
 

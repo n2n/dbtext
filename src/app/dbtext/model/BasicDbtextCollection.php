@@ -33,17 +33,14 @@ class BasicDbtextCollection implements DbtextCollection {
 	public function t(string $key, array $args = null, N2nLocale ...$n2nLocales): string {
 		$n2nLocales = array_merge($n2nLocales, $this->n2nLocales);
 		$n2nLocales[] = N2nLocale::getFallback();
-
+		$args = (array) $args;
+			
 		if (!$this->has($key)) {
-			$this->groupData->add($key);
-		}
-
-		if (!$this->groupData->equalsPlaceholders($key, $args)) {
+			$this->groupData->add($key, $args);
+		} else if (!$this->groupData->equalsPlaceholders($key, $args)) {
 			$this->groupData->changePlaceholders($key, $args);
 		}
 
-		
-		
 		$text = $this->groupData->find($key, ...$n2nLocales);
 		if ($text === null) {
 			return StringUtils::pretty(TextCollection::implode($key, $args));

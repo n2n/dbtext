@@ -89,9 +89,9 @@ class GroupData extends ObjectAdapter {
 	 *
 	 * @param string $key
 	 */
-	public function add(string $key) {
+	public function add(string $key, array $args = []) {
 		$this->data[self::TEXTS_KEY][$key] = array();
-		$this->data[self::PLACEHOLDER_JSON_KEY][$key] = '[]';
+		$this->data[self::PLACEHOLDER_JSON_KEY][$key] = $args;
 
 		foreach ($this->listeners as $listener) {
 			$listener->keyAdded($key, $this);
@@ -164,9 +164,11 @@ class GroupData extends ObjectAdapter {
 		return $this->listeners;
 	}
 
-	public function equalsPlaceholders(string $key, array $args = null) {
-		if (!isset($this->data[self::PLACEHOLDER_JSON_KEY]) || !isset($this->data[self::PLACEHOLDER_JSON_KEY][$key])) return false;
-		if (null === $args && null === $this->data[self::PLACEHOLDER_JSON_KEY][$key]) return true;
-		return $args === $this->data[self::PLACEHOLDER_JSON_KEY][$key];
+	public function equalsPlaceholders(string $key, array $args) {
+		if (!isset($this->data[self::PLACEHOLDER_JSON_KEY]) || !isset($this->data[self::PLACEHOLDER_JSON_KEY][$key])) {
+			return false;
+		}
+		
+		return array_keys($args) == array_keys($this->data[self::PLACEHOLDER_JSON_KEY][$key]);
 	}
 }
