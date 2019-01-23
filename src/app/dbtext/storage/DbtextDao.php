@@ -65,7 +65,7 @@ class DbtextDao implements RequestScoped {
 		}
 		$data[GroupData::TEXTS_KEY] = $this->formGroupDataResult($result);
 		$data[GroupData::PLACEHOLDER_JSON_KEY] = $this->formPlaceholdersFromResult($result);
-
+		
 		return new GroupData($namespace, $data);
 	}
 
@@ -139,9 +139,9 @@ class DbtextDao implements RequestScoped {
 				$formedResult[$item[0]] = array();
 			}
 
-			$formedResult[$item[0]] = $item[3];
+			$formedResult[$item[0]] = json_decode($item[3]);
 		}
-
+		
 		return $formedResult;
 	}
 }

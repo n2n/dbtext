@@ -48,7 +48,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 		if (isset($this->groupDatas[$namespace])) {
 			return $this->groupDatas[$namespace];
 		}
-
+		
 		$this->groupDatas[$namespace] = $this->readCachedGroupData($namespace);
 		if ($this->groupDatas[$namespace] === null) {
 			$this->groupDatas[$namespace] = $this->dbtextDao->getGroupData($namespace);

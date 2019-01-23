@@ -81,7 +81,7 @@ class GroupData extends ObjectAdapter {
 	 * @return bool
 	 */
 	public function has(string $key) {
-		return isset($this->data[$key]);
+		return isset($this->data[self::TEXTS_KEY][$key]);
 	}
 
 	/**
@@ -98,7 +98,7 @@ class GroupData extends ObjectAdapter {
 		}
 	}
 
-	public function changePlaceholders(string $key, array $placeholders = null) {
+	public function changePlaceholders(string $key, array $placeholders) {
 		$this->data[self::PLACEHOLDER_JSON_KEY][$key] = $placeholders;
 
 		foreach ($this->listeners as $listener) {
