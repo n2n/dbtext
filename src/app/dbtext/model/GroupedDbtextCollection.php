@@ -78,6 +78,10 @@ class GroupedDbtextCollection implements DbtextCollection {
 		return $key;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see \dbtext\model\DbtextCollection::has()
+	 */
 	public function has(string $key): bool {
 		foreach ($this->dbtextCollections as $dbtextCollection) {
 			if ($dbtextCollection->has($key)) {
@@ -86,5 +90,23 @@ class GroupedDbtextCollection implements DbtextCollection {
 		}
 
 		return false;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see \dbtext\model\DbtextCollection::getKeys()
+	 */
+	public function getKeys(): array {
+		if (1 == count($this->dbtextCollections)) {
+			return reset($this->dbtextCollections)->getKeys();
+		}
+		
+		$keys = array();
+		
+		foreach ($this->dbtextCollections as $dbtextCollection) {
+			array_push($keys, ...$dbtextCollection->getKeys());
+		}
+		
+		return array_unique($keys);;
 	}
 }

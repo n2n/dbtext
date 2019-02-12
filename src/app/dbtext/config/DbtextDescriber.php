@@ -3,7 +3,7 @@ namespace dbtext\config;
 
 use n2n\core\container\N2nContext;
 use n2n\core\module\ConfigDescriberAdapter;
-use n2n\util\config\Attributes;
+use n2n\util\type\attrs\Attributes;
 use n2n\web\dispatch\mag\MagDispatchable;
 
 class DbtextDescriber extends ConfigDescriberAdapter {
@@ -17,7 +17,7 @@ class DbtextDescriber extends ConfigDescriberAdapter {
 		$attributes = $this->readCustomAttributes();
 
 		$dbConfig = new DbtextConfig();
-		$dbConfig->setModifyOnRequest($attributes->getBool(self::ATTR_CREATE_ON_REQUEST_KEY, false,
+		$dbConfig->setModifyOnRequest($attributes->optBool(self::ATTR_CREATE_ON_REQUEST_KEY, 
 				self::ATTR_CREATE_ON_REQUEST_DEFAULT));
 
 		return $dbConfig;

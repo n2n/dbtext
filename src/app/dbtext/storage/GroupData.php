@@ -5,6 +5,7 @@ use n2n\l10n\N2nLocale;
 use n2n\reflection\ObjectAdapter;
 
 class GroupData extends ObjectAdapter {
+	const TEXTS_KEY = 'texts';
 	const PLACEHOLDER_JSON_KEY = 'placeholderJsons';
 
 	/**
@@ -28,6 +29,10 @@ class GroupData extends ObjectAdapter {
 		$this->namespace = $namespace;
 		$this->data = $data;
 
+		if (!isset($this->data[self::TEXTS_KEY])) {
+			$this->data[self::TEXTS_KEY] = array();
+		}
+		
 		if (!isset($this->data[self::PLACEHOLDER_JSON_KEY])) {
 			$this->data[self::PLACEHOLDER_JSON_KEY] = array();
 		}
@@ -43,7 +48,7 @@ class GroupData extends ObjectAdapter {
 	 * @return string|null
 	 */
 	public function find(string $key, N2nLocale ...$n2nLocales): ?string {
-		if (!isset($this->data[$key])) {
+		if (!isset($this->data[self::TEXTS_KEY][$key])) {
 			return null;
 		}
 
@@ -51,8 +56,8 @@ class GroupData extends ObjectAdapter {
 
 		foreach ($n2nLocales as $n2nLocale) {
 			$n2nLocaleId = $n2nLocale->getId();
-			if (isset($this->data[$key][$n2nLocaleId])) {
-				return $this->data[$key][$n2nLocaleId];
+			if (isset($this->data[self::TEXTS_KEY][$key][$n2nLocaleId])) {
+				return $this->data[self::TEXTS_KEY][$key][$n2nLocaleId];
 			}
 
 			// if no region id than locale id and language id are the same.
@@ -61,8 +66,8 @@ class GroupData extends ObjectAdapter {
 			}
 
 			$langId = $n2nLocale->getLanguageId();
-			if (isset($this->data[$key][$langId])) {
-				return $this->data[$key][$langId];
+			if (isset($this->data[self::TEXTS_KEY][$key][$langId])) {
+				return $this->data[self::TEXTS_KEY][$key][$langId];
 			}
 		}
 
@@ -76,7 +81,7 @@ class GroupData extends ObjectAdapter {
 	 * @return bool
 	 */
 	public function has(string $key) {
-		return isset($this->data[$key]);
+		return isset($this->data[self::TEXTS_KEY][$key]);
 	}
 
 	/**
@@ -84,16 +89,16 @@ class GroupData extends ObjectAdapter {
 	 *
 	 * @param string $key
 	 */
-	public function add(string $key) {
-		$this->data[$key] = array();
-		$this->data[self::PLACEHOLDER_JSON_KEY][$key] = '[]';
+	public function add(string $key, array $args = []) {
+		$this->data[self::TEXTS_KEY][$key] = array();
+		$this->data[self::PLACEHOLDER_JSON_KEY][$key] = $args;
 
 		foreach ($this->listeners as $listener) {
 			$listener->keyAdded($key, $this);
 		}
 	}
 
-	public function changePlaceholders(string $key, array $placeholders = null) {
+	public function changePlaceholders(string $key, array $placeholders) {
 		$this->data[self::PLACEHOLDER_JSON_KEY][$key] = $placeholders;
 
 		foreach ($this->listeners as $listener) {
@@ -146,15 +151,24 @@ class GroupData extends ObjectAdapter {
 	}
 
 	/**
+	 * @return string[]
+	 */
+	public function getKeys() {
+		return array_keys($this->data[self::TEXTS_KEY]);
+	}
+	
+	/**
 	 * @return GroupDataListener[]
 	 */
 	public function getListeners() {
 		return $this->listeners;
 	}
 
-	public function equalsPlaceholders(string $key, array $args = null) {
-		if (!isset($this->data[self::PLACEHOLDER_JSON_KEY]) || !isset($this->data[self::PLACEHOLDER_JSON_KEY][$key])) return false;
-		if (null === $args && null === $this->data[self::PLACEHOLDER_JSON_KEY][$key]) return true;
-		return $args === $this->data[self::PLACEHOLDER_JSON_KEY][$key];
+	public function equalsPlaceholders(string $key, array $args) {
+		if (!isset($this->data[self::PLACEHOLDER_JSON_KEY]) || !isset($this->data[self::PLACEHOLDER_JSON_KEY][$key])) {
+			return false;
+		}
+		
+		return array_keys($args) == array_keys((array) $this->data[self::PLACEHOLDER_JSON_KEY][$key]);
 	}
 }

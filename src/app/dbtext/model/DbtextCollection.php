@@ -33,4 +33,9 @@ interface DbtextCollection {
 	 * @return bool
 	 */
 	public function has(string $key): bool;
+	
+	/**
+	 * @return string[]
+	 */
+	public function getKeys(): array;
 }

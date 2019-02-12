@@ -40,7 +40,7 @@ class DbtextService implements RequestScoped {
 		if (empty($n2nLocales)) {
 			$n2nLocales[] = $this->n2nContext->getN2nLocale();
 		}
-
+		
 		if (!is_array($ns) && $this->dbtextCollections[$ns]) {
 			return $this->dbtextCollections[$ns]->t($key, $args, ...$n2nLocales);
 		}
@@ -78,6 +78,10 @@ class DbtextService implements RequestScoped {
 	 * @return DbtextCollection
 	 */
 	public function tc($ns, N2nLocale ...$n2nLocales): DbtextCollection {
+		if (empty($n2nLocales)) {
+			$n2nLocales[] = $this->n2nContext->getN2nLocale();
+		}
+		
 		if (!is_array($ns)) {
 			return $this->getOrCreateBasicDbCollection($ns, ...$n2nLocales);
 		} elseif (count($ns) === 1) {

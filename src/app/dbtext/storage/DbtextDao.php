@@ -63,9 +63,9 @@ class DbtextDao implements RequestScoped {
 		if (empty($result)) {
 			return new GroupData($namespace);
 		}
-		$data = $this->formGroupDataResult($result);
+		$data[GroupData::TEXTS_KEY] = $this->formGroupDataResult($result);
 		$data[GroupData::PLACEHOLDER_JSON_KEY] = $this->formPlaceholdersFromResult($result);
-
+		
 		return new GroupData($namespace, $data);
 	}
 
@@ -90,19 +90,20 @@ class DbtextDao implements RequestScoped {
 		return $group;
 	}
 
-	public function changePlaceholders(string $key, string $ns, array $args = null) {
+	public function changePlaceholders(string $key, string $ns, array $args) {
 		$tx = $this->tm->createTransaction();
 
+		/**
+		 * @var Text $text
+		 */
 		$text = $this->em->createSimpleCriteria(Text::getClass(),
 				array('key' => $key, 'group' => $this->em->find(Group::getClass(), $ns)))->toQuery()->fetchSingle();
-
-		if (null !== $args) {
+		
+		if ($text !== null) {
 			$text->setPlaceholders($args);
-		} else {
-			$text->setPlaceholders([]);
+			$this->em->persist($text);
 		}
-
-		$this->em->persist($text);
+		
 		$tx->commit();
 	}
 
@@ -138,9 +139,9 @@ class DbtextDao implements RequestScoped {
 				$formedResult[$item[0]] = array();
 			}
 
-			$formedResult[$item[0]] = $item[3];
+			$formedResult[$item[0]] = json_decode($item[3]);
 		}
-
+		
 		return $formedResult;
 	}
 }
