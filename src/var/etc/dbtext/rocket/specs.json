@@ -106,9 +106,9 @@
                         "displayInDetailView": true,
                         "displayInEditView": false,
                         "displayInAddView": true,
-                        "constant": false,
+                        "constant": true,
                         "readOnly": false,
-                        "mandatory": false,
+                        "mandatory": true,
                         "draftable": false,
                         "maxlength": "255",
                         "multiline": false
@@ -116,6 +116,22 @@
                     "label": "Key",
                     "objectProperty": "key",
                     "entityProperty": "key"
+                },
+                "group": {
+                    "class": "rocket\\impl\\ei\\component\\prop\\relation\\ManyToOneSelectEiProp",
+                    "props": {
+                        "displayInOverview": false,
+                        "displayInDetailView": false,
+                        "displayInEditView": false,
+                        "displayInAddView": true,
+                        "constant": true,
+                        "readOnly": false,
+                        "mandatory": true,
+                        "draftable": false
+                    },
+                    "label": "Group",
+                    "objectProperty": "group",
+                    "entityProperty": "group"
                 },
                 "placeholders": {
                     "class": "dbtext\\PlaceholderEiProp",
@@ -192,6 +208,16 @@
                 }
             },
             "bulkyOrder": [
+            	{
+                    "label": null,
+                    "type": null,
+                    "guiIdPath": "key"
+                },
+                {
+                    "label": null,
+                    "type": null,
+                    "guiIdPath": "group"
+                },
                 {
                     "label": null,
                     "type": null,
