@@ -10,6 +10,7 @@ use n2n\web\ui\Raw;
 use n2n\web\ui\UiComponent;
 use rocket\ei\util\Eiu;
 use rocket\impl\ei\component\prop\adapter\DisplayableEiPropAdapter;
+use rocket\si\content\SiField;
 
 class PlaceholderEiProp extends DisplayableEiPropAdapter {
 	/**
@@ -17,7 +18,7 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 	 * @param Eiu $eiu
 	 * @return UiComponent
 	 */
-	public function createUiComponent(HtmlView $view, Eiu $eiu) {
+	public function createOutSiField(Eiu $eiu): SiField {
 		$dtc = $eiu->dtc('dbtext');
 		$text = $eiu->entry()->getEntityObj();
 		CastUtils::assertTrue($text instanceof Text);
