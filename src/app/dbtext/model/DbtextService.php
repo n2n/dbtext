@@ -41,7 +41,7 @@ class DbtextService implements RequestScoped {
 			$n2nLocales[] = $this->n2nContext->getN2nLocale();
 		}
 		
-		if (!is_array($ns) && $this->dbtextCollections[$ns]) {
+		if (!is_array($ns) && isset($this->dbtextCollections[$ns])) {
 			return $this->dbtextCollections[$ns]->t($key, $args, ...$n2nLocales);
 		}
 		
@@ -64,7 +64,7 @@ class DbtextService implements RequestScoped {
 			$namespaces[] = $ns;
 		}
 
-		if (!is_array($ns) && $this->dbtextCollections[$ns]) {
+		if (!is_array($ns) && isset($this->dbtextCollections[$ns])) {
 			return $this->dbtextCollections[$ns]->tf($key, $args, ...$n2nLocales);
 		}
 		
