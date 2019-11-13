@@ -7,7 +7,7 @@
             "label": "Group",
             "pluralLabel": "Groups",
             "iconType": null,
-            "fields": {
+            "props": {
                 "label": {
                     "class": "rocket\\impl\\ei\\component\\prop\\string\\StringEiProp",
                     "props": {
@@ -98,7 +98,7 @@
             "label": "Text",
             "pluralLabel": "Texts",
             "iconType": null,
-            "fields": {
+            "props": {
                 "key": {
                     "class": "rocket\\impl\\ei\\component\\prop\\string\\StringEiProp",
                     "props": {
@@ -141,7 +141,7 @@
                         "displayInEditView": true,
                         "displayInAddView": true
                     },
-                    "label": "verfügbare Textbausteine"
+                    "label": "verf\u00fcgbare Textbausteine"
                 },
                 "textTs": {
                     "class": "rocket\\impl\\ei\\component\\prop\\translation\\TranslationEiProp",
@@ -208,7 +208,7 @@
                 }
             },
             "bulkyOrder": [
-            	{
+                {
                     "label": null,
                     "type": null,
                     "guiIdPath": "key"
@@ -240,7 +240,7 @@
             "label": "Text T",
             "pluralLabel": "Text Ts",
             "iconType": null,
-            "fields": {
+            "props": {
                 "str": {
                     "class": "rocket\\impl\\ei\\component\\prop\\string\\StringEiProp",
                     "props": {

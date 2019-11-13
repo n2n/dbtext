@@ -14,10 +14,10 @@ class DbtextDescriber extends ConfigDescriberAdapter {
 	 * @return \dbtext\config\DbtextConfig
 	 */
 	public function buildCustomConfig(): DbtextConfig {
-		$attributes = $this->readCustomAttributes();
+		$dataSet = $this->readCustomAttributes();
 
 		$dbConfig = new DbtextConfig();
-		$dbConfig->setModifyOnRequest($attributes->optBool(self::ATTR_CREATE_ON_REQUEST_KEY, 
+		$dbConfig->setModifyOnRequest($dataSet->optBool(self::ATTR_CREATE_ON_REQUEST_KEY, 
 				self::ATTR_CREATE_ON_REQUEST_DEFAULT));
 
 		return $dbConfig;

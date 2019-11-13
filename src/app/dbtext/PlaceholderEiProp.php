@@ -13,6 +13,10 @@ use rocket\impl\ei\component\prop\adapter\DisplayableEiPropAdapter;
 use rocket\si\content\SiField;
 
 class PlaceholderEiProp extends DisplayableEiPropAdapter {
+	
+	protected function prepare() {
+	}
+	
 	/**
 	 * @param HtmlView $view
 	 * @param Eiu $eiu
@@ -52,4 +56,5 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 
 		return $placeholderDiv;
 	}
+
 }
