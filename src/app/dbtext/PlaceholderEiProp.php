@@ -33,7 +33,7 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 			return new Raw($dtc->t('dbtext_no_placeholders_text'));
 		}
 
-		if ($eiu->gui()->isCompact()) {
+		if ($eiu->guiFrame()->isCompact()) {
 			return implode(', ', array_keys($placeholders));
 		}
 
