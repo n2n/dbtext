@@ -10,14 +10,19 @@ use n2n\web\ui\Raw;
 use n2n\web\ui\UiComponent;
 use rocket\ei\util\Eiu;
 use rocket\impl\ei\component\prop\adapter\DisplayableEiPropAdapter;
+use rocket\si\content\SiField;
 
 class PlaceholderEiProp extends DisplayableEiPropAdapter {
+	
+	protected function prepare() {
+	}
+	
 	/**
 	 * @param HtmlView $view
 	 * @param Eiu $eiu
 	 * @return UiComponent
 	 */
-	public function createUiComponent(HtmlView $view, Eiu $eiu) {
+	public function createOutSiField(Eiu $eiu): SiField {
 		$dtc = $eiu->dtc('dbtext');
 		$text = $eiu->entry()->getEntityObj();
 		CastUtils::assertTrue($text instanceof Text);
@@ -28,7 +33,7 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 			return new Raw($dtc->t('dbtext_no_placeholders_text'));
 		}
 
-		if ($eiu->gui()->isCompact()) {
+		if ($eiu->guiFrame()->isCompact()) {
 			return implode(', ', array_keys($placeholders));
 		}
 
@@ -51,4 +56,5 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 
 		return $placeholderDiv;
 	}
+
 }
