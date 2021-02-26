@@ -210,22 +210,22 @@
             "bulkyOrder": [
                 {
                     "label": null,
-                    "type": null,
+                    "type": "item",
                     "guiIdPath": "key"
                 },
                 {
                     "label": null,
-                    "type": null,
+                    "type": "item",
                     "guiIdPath": "group"
                 },
                 {
                     "label": null,
-                    "type": null,
+                    "type": "item",
                     "guiIdPath": "textTs.str"
                 },
                 {
                     "label": null,
-                    "type": null,
+                    "type": "item",
                     "guiIdPath": "placeholders"
                 }
             ],
