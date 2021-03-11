@@ -11,6 +11,9 @@ use n2n\web\ui\UiComponent;
 use rocket\ei\util\Eiu;
 use rocket\impl\ei\component\prop\adapter\DisplayableEiPropAdapter;
 use rocket\si\content\SiField;
+use rocket\ei\util\factory\EifGuiField;
+use rocket\si\content\impl\SiFields;
+use rocket\si\content\impl\meta\SiCrumb;
 
 class PlaceholderEiProp extends DisplayableEiPropAdapter {
 	
@@ -22,7 +25,7 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 	 * @param Eiu $eiu
 	 * @return UiComponent
 	 */
-	public function createOutSiField(Eiu $eiu): SiField {
+	public function createOutEifGuiField(Eiu $eiu): EifGuiField {
 		$dtc = $eiu->dtc('dbtext');
 		$text = $eiu->entry()->getEntityObj();
 		CastUtils::assertTrue($text instanceof Text);
@@ -30,11 +33,14 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 		$placeholders = $text->getPlaceholders();
 
 		if ($placeholders === null || count($placeholders) === 0) {
-			return new Raw($dtc->t('dbtext_no_placeholders_text'));
+			return $eiu->factory()->newGuiField(SiFields::crumbOut(
+					SiCrumb::createLabel($dtc->t('dbtext_no_placeholders_text'))));
 		}
 
 		if ($eiu->guiFrame()->isCompact()) {
-			return implode(', ', array_keys($placeholders));
+			return $eiu->factory()->newGuiField(SiFields::crumbOut(
+					SiCrumb::createLabel(implode(', ', array_keys($placeholders)))));
+			
 		}
 
 		$placeholderDiv = new HtmlElement('div');
@@ -54,7 +60,7 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 
 		$placeholderDiv->appendLn($helperDiv);
 
-		return $placeholderDiv;
+		return $eiu->factory()->newGuiField(SiFields::iframeOut($placeholderDiv, $eiu->getN2nContext()));
 	}
 
 }
