@@ -1,34 +1,36 @@
 {
-	"name" : "n2n/dbtext",
-	"type" : "n2n-module",
-	"description" : "translates textblocks from db",
-	"keywords" : [
-		"translation",
-		"n2n"
-	],
-	"homepage" : "https://n2n.rocks/",
-	"license" : "GPL-3.0-or-later",
-	"authors" : [{
-			"name" : "Nikolai Schmid",
-			"email" : "schmid@hnm.ch",
-			"homepage" : "https://www.schmid.guru/"
-		}, {
-			"name" : "Andreas von Burg",
-			"email" : "a@von-burg.net",
-			"homepage" : "https://www.von-burg.net/"
-		}
-	],
-	"require" : {
-		"php" : ">=7.0",
-		"n2n/n2n-composer-module-installer" : "master-dev",
-		"n2n/n2n" : "master-dev",
-		"n2n/n2n-l10n" : "master-dev",
-		"n2n/n2n-persistence" : "master-dev",
-		"n2n/rocket": "master-dev"
-	},
-	"autoload" : {
-		"psr-4" : {
-			"dbtext\\" : "src/app/dbtext"
-		}
-	}
+    "name": "n2n/dbtext",
+    "type": "n2n-module",
+    "description": "translates textblocks from db",
+    "keywords": [
+        "translation",
+        "n2n"
+    ],
+    "homepage": "https://n2n.rocks/",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Nikolai Schmid",
+            "email": "schmid@hnm.ch",
+            "homepage": "https://www.schmid.guru/"
+        },
+        {
+            "name": "Andreas von Burg",
+            "email": "a@von-burg.net",
+            "homepage": "https://www.von-burg.net/"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "n2n/n2n-composer-module-installer": "~7.1.3",
+        "n2n/n2n": "^7.2.33",
+        "n2n/n2n-l10n": "^7.2.33",
+        "n2n/n2n-persistence": "^7.2.33",
+        "n2n/rocket": "^3.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "dbtext\\": "src/app/dbtext"
+        }
+    }
 }
