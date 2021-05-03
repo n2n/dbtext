@@ -34,7 +34,7 @@ class BasicDbtextCollection implements DbtextCollection {
 		$n2nLocales = array_merge($n2nLocales, $this->n2nLocales);
 		$n2nLocales[] = N2nLocale::getFallback();
 		$args = (array) $args;
-			
+
 		if (!$this->has($key)) {
 			$this->groupData->add($key, $args);
 		} else if (!$this->groupData->equalsPlaceholders($key, $args)) {
@@ -43,9 +43,9 @@ class BasicDbtextCollection implements DbtextCollection {
 
 		$text = $this->groupData->find($key, ...$n2nLocales);
 		if ($text === null) {
-			return StringUtils::pretty(TextCollection::implode($key, $args));
+			return DbtextService::prettyNoTranslationKey($key, $args);
 		}
-		
+
 		return TextCollection::fillArgs($text, $args);
 	}
 
@@ -80,7 +80,7 @@ class BasicDbtextCollection implements DbtextCollection {
 	public function has(string $key): bool {
 		return $this->groupData->has($key);
 	}
-	
+
 	public function getKeys(): array {
 		return $this->groupData->getKeys();
 	}

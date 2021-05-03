@@ -30,7 +30,7 @@ class GroupedDbtextCollection implements DbtextCollection {
 		$passedN2nLocales[] = N2nLocale::getFallback();
 		
 		if (empty($this->dbtextCollections)) {
-			return $key;
+			return DbtextService::prettyNoTranslationKey($key, $args);
 		}
 
 		$n2nLocales = [];
@@ -52,7 +52,7 @@ class GroupedDbtextCollection implements DbtextCollection {
 			return reset($this->dbtextCollections)->t($key);
 		}
 		
-		return $key;
+		return DbtextService::prettyNoTranslationKey($key, $args);
 	}
 
 	/**

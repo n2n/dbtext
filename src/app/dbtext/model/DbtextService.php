@@ -5,6 +5,8 @@ use dbtext\storage\DbtextCollectionManager;
 use n2n\context\RequestScoped;
 use n2n\l10n\N2nLocale;
 use n2n\core\container\N2nContext;
+use n2n\l10n\TextCollection;
+use n2n\util\StringUtils;
 
 class DbtextService implements RequestScoped {
 	/**
@@ -111,5 +113,27 @@ class DbtextService implements RequestScoped {
 		}
 
 		return $this->dbtextCollections[$namespace];
+	}
+
+	/**
+	 * Replaces underscores with whitespaces and adds placeholders if args are in string key.
+	 * num_pages_txt [ 'num' ] = {num} Pages
+	 *
+	 * @param string $key
+	 * @param array $args|null
+	 * @return string
+	 */
+	public static function prettyNoTranslationKey(string $key, array $args = null): string {
+		$text = StringUtils::pretty(TextCollection::implode($key, $args));
+		if ($args === null) return $text;
+		$argKeysOnly = array_keys($args) === range(0, count($args) - 1);
+		foreach ($args as $argKey => $argValue) {
+			if ($argKeysOnly) {
+				$text = preg_replace('/(^|\s)' . preg_quote(ucfirst($argValue)) . '\s/', '{' . $argValue . '} ', $text);
+			} else {
+				$text = preg_replace('/(^|\s)' . preg_quote(ucfirst($argKey)) . '\s/', '{' . $argKey . '} ', $text);
+			}
+		}
+		return TextCollection::fillArgs($text, $args);
 	}
 }
