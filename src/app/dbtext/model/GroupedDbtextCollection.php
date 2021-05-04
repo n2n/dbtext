@@ -28,7 +28,7 @@ class GroupedDbtextCollection implements DbtextCollection {
 	public function t(string $key, array $args = null, N2nLocale ...$n2nLocales): string {
 		$passedN2nLocales = $n2nLocales ?? $this->n2nLocales;
 		$passedN2nLocales[] = N2nLocale::getFallback();
-		
+
 		if (empty($this->dbtextCollections)) {
 			return DbtextService::prettyNoTranslationKey($key, $args);
 		}
@@ -47,11 +47,11 @@ class GroupedDbtextCollection implements DbtextCollection {
 				return $dbtextCollection->t($key, $args, ...$n2nLocales);
 			}
 		}
-		
+
 		if (reset($this->dbtextCollections)) {
 			return reset($this->dbtextCollections)->t($key);
 		}
-		
+
 		return DbtextService::prettyNoTranslationKey($key, $args);
 	}
 
@@ -74,8 +74,8 @@ class GroupedDbtextCollection implements DbtextCollection {
 		if (reset($this->dbtextCollections)) {
 			return reset($this->dbtextCollections)->t($key);
 		}
-		
-		return $key;
+
+		return DbtextService::prettyNoTranslationKey($key, $args);
 	}
 
 	/**
@@ -91,7 +91,17 @@ class GroupedDbtextCollection implements DbtextCollection {
 
 		return false;
 	}
-	
+
+	public function hasTranslation(string $key, N2nLocale $n2nLocaless): bool {
+		foreach ($this->dbtextCollections as $dbtextCollection) {
+			if ($dbtextCollection->hasTranslation($key, $n2nLocaless)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 * @see \dbtext\model\DbtextCollection::getKeys()
@@ -100,13 +110,13 @@ class GroupedDbtextCollection implements DbtextCollection {
 		if (1 == count($this->dbtextCollections)) {
 			return reset($this->dbtextCollections)->getKeys();
 		}
-		
+
 		$keys = array();
-		
+
 		foreach ($this->dbtextCollections as $dbtextCollection) {
 			array_push($keys, ...$dbtextCollection->getKeys());
 		}
-		
+
 		return array_unique($keys);;
 	}
 }

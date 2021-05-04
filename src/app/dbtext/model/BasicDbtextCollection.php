@@ -4,7 +4,6 @@ namespace dbtext\model;
 use dbtext\storage\GroupData;
 use n2n\l10n\N2nLocale;
 use n2n\l10n\TextCollection;
-use n2n\util\StringUtils;
 
 /**
  * Manages {@see GroupData}.
@@ -45,8 +44,7 @@ class BasicDbtextCollection implements DbtextCollection {
 		if ($text === null) {
 			return DbtextService::prettyNoTranslationKey($key, $args);
 		}
-
-		return TextCollection::fillArgs($text, $args);
+		return TextCollection::fillArgs(DbtextService::prettyNoTranslationKey($text, $args), $args);
 	}
 
 	/**
@@ -59,10 +57,10 @@ class BasicDbtextCollection implements DbtextCollection {
 		if (!$this->has($key)) {
 			$this->groupData->add($key, $args);
 		}
-		
+
 		$text = $this->groupData->find($key, ...$n2nLocales);
 		if ($text === null) {
-			return StringUtils::pretty(TextCollection::implode($key, $args));
+			return DbtextService::prettyNoTranslationKey($key, $args);
 		}
 
 		$text = @sprintf($text, ...$args);
@@ -79,6 +77,10 @@ class BasicDbtextCollection implements DbtextCollection {
 	 */
 	public function has(string $key): bool {
 		return $this->groupData->has($key);
+	}
+
+	public function hasTranslation(string $key, N2nLocale $n2nLocale): bool {
+		return $this->groupData->find($key, $n2nLocale) !== null;
 	}
 
 	public function getKeys(): array {
