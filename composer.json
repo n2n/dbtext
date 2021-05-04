@@ -18,6 +18,11 @@
 			"homepage" : "https://www.von-burg.net/"
 		}
 	],
+	"minimum-stability" : "dev",
+	"prefer-stable": true,
+	"config" : {
+		"vendor-dir" : "src/vendor"
+	},
 	"require" : {
 		"php" : ">=7.0",
 		"n2n/n2n-composer-module-installer" : "^7.1",
