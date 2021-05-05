@@ -92,10 +92,10 @@ class GroupedDbtextCollection implements DbtextCollection {
 		return false;
 	}
 
-	public function getPlaceholdersOfKey(string $key): array {
+	public function getPlaceholderNamesOfKey(string $key): array {
 		foreach ($this->dbtextCollections as $dbtextCollection) {
 			if ($dbtextCollection->has($key)) {
-				return $dbtextCollection->getPlaceholdersOfKey($key);
+				return $dbtextCollection->getPlaceholderNamesOfKey($key);
 			}
 		}
 

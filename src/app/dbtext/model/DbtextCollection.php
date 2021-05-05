@@ -34,7 +34,13 @@ interface DbtextCollection {
 	 */
 	public function has(string $key): bool;
 
-	public function getPlaceholdersOfKey(string $key): array;
+	/**
+	 * Returns the saved placeholders
+	 *
+	 * @param string $key
+	 * @return array
+	 */
+	public function getPlaceholderNamesOfKey(string $key): array;
 
 	/**
 	 * @return string[]
