@@ -7,7 +7,7 @@ interface GroupDataListener {
 	 * @param GroupData $groupData
 	 * @param array|null $args
 	 */
-	public function keyAdded(string $key, GroupData $groupData);
+	public function keyAdded(string $key, GroupData $groupData, array $args);
 
 	/**
 	 * @param string $key

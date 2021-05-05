@@ -34,14 +34,7 @@ interface DbtextCollection {
 	 */
 	public function has(string $key): bool;
 
-	/**
-	 * True when DbtextCollection finds a TextT with N2nLocale
-	 * 
-	 * @param string $key
-	 * @param N2nLocale $n2nLocale
-	 * @return bool
-	 */
-	public function hasTranslation(string $key, N2nLocale $n2nLocale): bool;
+	public function getPlaceholdersOfKey(string $key): array;
 
 	/**
 	 * @return string[]

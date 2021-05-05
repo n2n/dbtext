@@ -42,9 +42,10 @@ class BasicDbtextCollection implements DbtextCollection {
 
 		$text = $this->groupData->find($key, ...$n2nLocales);
 		if ($text === null) {
-			return DbtextService::prettyNoTranslationKey($key, $args);
+			return DbtextService::prettyKey($key, $this->getPlaceholdersOfKey($key));
 		}
-		return TextCollection::fillArgs(DbtextService::prettyNoTranslationKey($text, $args), $args);
+
+		return TextCollection::fillArgs(DbtextService::prettyKey($text, $args), $args);
 	}
 
 	/**
@@ -60,7 +61,7 @@ class BasicDbtextCollection implements DbtextCollection {
 
 		$text = $this->groupData->find($key, ...$n2nLocales);
 		if ($text === null) {
-			return DbtextService::prettyNoTranslationKey($key, $args);
+			return DbtextService::prettyKey($key, $args);
 		}
 
 		$text = @sprintf($text, ...$args);
@@ -79,8 +80,8 @@ class BasicDbtextCollection implements DbtextCollection {
 		return $this->groupData->has($key);
 	}
 
-	public function hasTranslation(string $key, N2nLocale $n2nLocale): bool {
-		return $this->groupData->find($key, $n2nLocale) !== null;
+	public function getPlaceholdersOfKey(string $key): array {
+		return (array) $this->groupData->getData()[GroupData::PLACEHOLDER_JSON_KEY][$key];
 	}
 
 	public function getKeys(): array {
