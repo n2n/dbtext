@@ -1,0 +1,8 @@
+<!DOCTYPE xml>
+<phpunit bootstrap="test/bootstrap.php">
+	<testsuites>
+	    <testsuite name="Holeradio">
+	      <directory>test</directory>
+	    </testsuite>
+  	</testsuites>
+</phpunit>

@@ -36,6 +36,11 @@
 			"dbtext\\" : "src/app/dbtext"
 		}
 	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"dbtext\\" : "src/app/dbtext"
+		}
+	},
 	"require-dev" : {
 		"phpunit/phpunit" : "^9.5"
 	}
