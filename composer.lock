@@ -2528,20 +2528,20 @@
         },
         {
             "name": "sebastian/object-reflector",
-            "version": "2.0.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/object-reflector.git",
-                "reference": "f4fd0835cabb0d4a6546d9fe291e5740037aa1e7"
+                "reference": "127a46f6b057441b201253526f81d5406d6c7840"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/object-reflector/zipball/f4fd0835cabb0d4a6546d9fe291e5740037aa1e7",
-                "reference": "f4fd0835cabb0d4a6546d9fe291e5740037aa1e7",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-reflector/zipball/127a46f6b057441b201253526f81d5406d6c7840",
+                "reference": "127a46f6b057441b201253526f81d5406d6c7840",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.3"
+                "php": "^7.3 || ^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.0"
@@ -2569,24 +2569,30 @@
             ],
             "description": "Allows reflection of object attributes, including inherited and non-public ones",
             "homepage": "https://github.com/sebastianbergmann/object-reflector/",
-            "time": "2020-02-07T06:19:40+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-06-26T12:12:55+00:00"
         },
         {
             "name": "sebastian/recursion-context",
-            "version": "4.0.0",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "cdd86616411fc3062368b720b0425de10bd3d579"
+                "reference": "062231bf61d2b9448c4fa5a7643b5e1829c11d63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/cdd86616411fc3062368b720b0425de10bd3d579",
-                "reference": "cdd86616411fc3062368b720b0425de10bd3d579",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/062231bf61d2b9448c4fa5a7643b5e1829c11d63",
+                "reference": "062231bf61d2b9448c4fa5a7643b5e1829c11d63",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.3"
+                "php": "^7.3 || ^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.0"
@@ -2622,7 +2628,13 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2020-02-07T06:18:20+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-06-26T12:14:17+00:00"
         },
         {
             "name": "sebastian/resource-operations",
