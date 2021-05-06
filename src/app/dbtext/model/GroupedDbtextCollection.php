@@ -30,7 +30,7 @@ class GroupedDbtextCollection implements DbtextCollection {
 		$passedN2nLocales[] = N2nLocale::getFallback();
 
 		if (empty($this->dbtextCollections)) {
-			return DbtextService::prettyNoTranslationKey($key, $args);
+			return DbtextService::prettyKey($key, $args);
 		}
 
 		$n2nLocales = [];
@@ -52,7 +52,7 @@ class GroupedDbtextCollection implements DbtextCollection {
 			return reset($this->dbtextCollections)->t($key);
 		}
 
-		return DbtextService::prettyNoTranslationKey($key, $args);
+		return DbtextService::prettyKey($key, $args);
 	}
 
 	/**
@@ -75,7 +75,7 @@ class GroupedDbtextCollection implements DbtextCollection {
 			return reset($this->dbtextCollections)->t($key);
 		}
 
-		return DbtextService::prettyNoTranslationKey($key, $args);
+		return DbtextService::prettyKey($key, $args);
 	}
 
 	/**
@@ -92,14 +92,14 @@ class GroupedDbtextCollection implements DbtextCollection {
 		return false;
 	}
 
-	public function hasTranslation(string $key, N2nLocale $n2nLocaless): bool {
+	public function getPlaceholderNamesOfKey(string $key): array {
 		foreach ($this->dbtextCollections as $dbtextCollection) {
-			if ($dbtextCollection->hasTranslation($key, $n2nLocaless)) {
-				return true;
+			if ($dbtextCollection->has($key)) {
+				return $dbtextCollection->getPlaceholderNamesOfKey($key);
 			}
 		}
 
-		return false;
+		return array();
 	}
 
 	/**
@@ -117,6 +117,6 @@ class GroupedDbtextCollection implements DbtextCollection {
 			array_push($keys, ...$dbtextCollection->getKeys());
 		}
 
-		return array_unique($keys);;
+		return array_unique($keys);
 	}
 }

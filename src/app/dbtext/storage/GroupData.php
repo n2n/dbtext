@@ -32,7 +32,7 @@ class GroupData extends ObjectAdapter {
 		if (!isset($this->data[self::TEXTS_KEY])) {
 			$this->data[self::TEXTS_KEY] = array();
 		}
-		
+
 		if (!isset($this->data[self::PLACEHOLDER_JSON_KEY])) {
 			$this->data[self::PLACEHOLDER_JSON_KEY] = array();
 		}
@@ -94,7 +94,7 @@ class GroupData extends ObjectAdapter {
 		$this->data[self::PLACEHOLDER_JSON_KEY][$key] = $args;
 
 		foreach ($this->listeners as $listener) {
-			$listener->keyAdded($key, $this);
+			$listener->keyAdded($key, $this, $args);
 		}
 	}
 
@@ -156,7 +156,7 @@ class GroupData extends ObjectAdapter {
 	public function getKeys() {
 		return array_keys($this->data[self::TEXTS_KEY]);
 	}
-	
+
 	/**
 	 * @return GroupDataListener[]
 	 */
@@ -168,7 +168,7 @@ class GroupData extends ObjectAdapter {
 		if (!isset($this->data[self::PLACEHOLDER_JSON_KEY]) || !isset($this->data[self::PLACEHOLDER_JSON_KEY][$key])) {
 			return false;
 		}
-		
+
 		return array_keys($args) == array_keys((array) $this->data[self::PLACEHOLDER_JSON_KEY][$key]);
 	}
 }

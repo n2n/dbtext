@@ -18,11 +18,11 @@ class DbtextService implements RequestScoped {
 	 */
 	private $tcm;
 	/**
-	 * 
+	 *
 	 * @var N2nContext
 	 */
 	private $n2nContext;
-	
+
 	private function _init(DbtextCollectionManager $tcm, N2nContext $n2nContext) {
 		$this->tcm = $tcm;
 		$this->n2nContext = $n2nContext;
@@ -30,7 +30,7 @@ class DbtextService implements RequestScoped {
 
 	/**
 	 * Uses {@see DbtextCollection dbtextCollections} to translate a textblock.
-	 * 
+	 *
 	 * @see DbtextCollection::t()
 	 * @param string|string[] $ns
 	 * @param string $key
@@ -42,17 +42,17 @@ class DbtextService implements RequestScoped {
 		if (empty($n2nLocales)) {
 			$n2nLocales[] = $this->n2nContext->getN2nLocale();
 		}
-		
+
 		if (!is_array($ns) && isset($this->dbtextCollections[$ns])) {
 			return $this->dbtextCollections[$ns]->t($key, $args, ...$n2nLocales);
 		}
-		
+
 		return $this->tc($ns, ...$n2nLocales)->t($key, $args, ...$n2nLocales);
 	}
 
 	/**
 	 * Uses {@see DbtextCollection dbtextCollections} to translate a textblock.
-	 * 
+	 *
 	 * @see DbtextCollection::tf()
 	 * @param string|string[] $ns
 	 * @param string $key
@@ -69,7 +69,7 @@ class DbtextService implements RequestScoped {
 		if (!is_array($ns) && isset($this->dbtextCollections[$ns])) {
 			return $this->dbtextCollections[$ns]->tf($key, $args, ...$n2nLocales);
 		}
-		
+
 		return $this->tc($ns, ...$n2nLocales)->tf($key, $args, ...$n2nLocales);
 	}
 
@@ -83,13 +83,13 @@ class DbtextService implements RequestScoped {
 		if (empty($n2nLocales)) {
 			$n2nLocales[] = $this->n2nContext->getN2nLocale();
 		}
-		
+
 		if (!is_array($ns)) {
 			return $this->getOrCreateBasicDbCollection($ns, ...$n2nLocales);
 		} elseif (count($ns) === 1) {
 			return $this->getOrCreateBasicDbCollection(reset($ns), ...$n2nLocales);
 		}
-		
+
 		$dbtextCollections = array();
 		foreach ($ns as $namespace) {
 			$dbtextCollections[] = $this->getOrCreateBasicDbCollection($namespace, ...$n2nLocales);
@@ -117,23 +117,22 @@ class DbtextService implements RequestScoped {
 
 	/**
 	 * Replaces underscores with whitespaces and adds placeholders if args are in string key.
-	 * num_pages_txt [ 'num' ] = {num} Pages
+	 * num_pages_txt ['num' => '{num}'] = {num} Pages
 	 *
 	 * @param string $key
 	 * @param array $args|null
 	 * @return string
 	 */
-	public static function prettyNoTranslationKey(string $key, array $args = null): string {
-		$text = StringUtils::pretty(TextCollection::implode($key, $args));
+	public static function prettyKey(string $key, array $args = null): string {
+		$text = StringUtils::pretty(TextCollection::implode($key));
 		if ($args === null) return $text;
-		$argKeysOnly = array_keys($args) === range(0, count($args) - 1);
+
 		foreach ($args as $argKey => $argValue) {
-			if ($argKeysOnly) {
-				$text = preg_replace('/(^|\s)' . preg_quote(ucfirst($argValue)) . '\s/', '{' . $argValue . '} ', $text);
-			} else {
-				$text = preg_replace('/(^|\s)' . preg_quote(ucfirst($argKey)) . '\s/', '{' . $argKey . '} ', $text);
-			}
+			$text = preg_replace('/(^|\s)' . preg_quote(ucfirst($argKey)) . '(|\s)/', ' ' . $argValue . ' ', $text);
 		}
+
+		$text = trim($text);
+
 		return TextCollection::fillArgs($text, $args);
 	}
 }
