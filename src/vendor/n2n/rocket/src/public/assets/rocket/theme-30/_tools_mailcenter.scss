@@ -1,0 +1,62 @@
+.rocket-mail {
+	// padding: .75rem;
+	margin-bottom: 0.5rem;
+}
+
+.rocket-mail-header {
+	background: $gray-400;
+	padding: 0.5rem;
+	display: flex;
+	gap: 0 10px;
+	cursor: pointer;
+	&:hover,
+	&:focus {
+		background: $gray-500;
+	}
+	> * {
+		line-height: 1.5;
+	}
+	> i {
+		order: -1;
+		line-height: 1.3;
+	}
+}
+
+.rocket-mail-content {
+	background: $gray-300;
+	padding: 2.25rem 0.5rem 2.25rem 2.25rem;
+	border-top: 1px solid $gray-200;
+	border-bottom: 2px solid $gray-400;
+}
+
+.rocket-mail-infos {
+	display: grid;
+	grid-template-columns: 110px auto;
+	grid-gap: 0 $grid-gutter-width/2;
+}
+
+.rocket-mail-subject {
+	margin-bottom: 0;
+}
+
+.rocket-mail-properties {
+	margin-bottom: 0;
+}
+
+.rocket-mail-message {
+	&:not(:last-child) {
+		margin-bottom: 0.5rem;
+	}
+	> pre {
+		background: $white;
+		font-family: $font-family-monospace;
+		padding: 1rem;
+		margin-bottom: 0;
+		white-space: pre-wrap;
+	}
+}
+
+.rocket-mail-attachments {
+	list-style: none;
+	padding-left: 0;
+}

@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+
+.rocket-preview-inpage-component {
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+}
+
+input[type=text].rocket-preview-inpage-component,
+textarea.rocket-preview-inpage-component {
+	background: 
+		url('../img/preview1.png') top left repeat-x,
+		url('../img/preview2.png') center left  repeat-y,
+		url('../img/preview1.png') bottom center  repeat-x,
+		url('../img/preview2.png') center right  repeat-y;
+	width: 100%;
+	
+	height: inherit;
+	color: inherit;
+	overflow: hidden;
+	display: block;
+	text-decoration: inherit;
+	text-align: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	font-style: inherit;
+	font-family: inherit;
+	font-stretch: inherit;
+	font-variant: inherit;
+	text-transform: inherit;
+	text-indent: inherit;
+	text-justify: inherit;
+	text-outline: inherit;
+	text-overflow: inherit;
+	word-wrap: inherit;
+	resize: none;
+}
+
+input[type=submit].rocket-preview-inpage-component {
+	display: none;
+}

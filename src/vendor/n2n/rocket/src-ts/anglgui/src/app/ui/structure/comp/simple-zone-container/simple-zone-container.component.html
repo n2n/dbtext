@@ -1,0 +1,29 @@
+<div class="rocket-main-layer">
+	<div *ngIf="loading" class="rocket-loader"></div>
+
+	<div *ngIf="!loading" class="rocket-zone">
+		<div class="rocket-zone-content">
+			<rocket-ui-messages *ngIf="messages.length > 0" [messages]="messages">
+			</rocket-ui-messages>
+	
+			<header class="rocket-zone-header">
+				<rocket-ui-breadcrumbs [uiBreadcrumbs]="breadcrumbs"></rocket-ui-breadcrumbs>
+				<h1>{{ title }}</h1>
+			</header>
+	
+			<div class="rocket-content rocket-level-0">
+				<ng-content></ng-content>
+			</div>
+	
+			<div class="rocket-zone-commands">
+				<div class="rocket-main-commands">
+						<ng-content select="[main-zone-commands]"></ng-content>
+				</div>
+
+				<div class="rocket-aside-commands">
+						<ng-content select="[aside-commands]"></ng-content>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

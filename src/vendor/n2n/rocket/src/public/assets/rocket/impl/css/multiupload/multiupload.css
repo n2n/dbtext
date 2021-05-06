@@ -1,0 +1,117 @@
+section, footer, header, aside {
+    display: block;
+}
+
+
+/*----------------------------
+    The file upload form
+-----------------------------*/
+
+
+#rocket-multi-upload-form {
+    background-color: #E9E6E3;
+    width: 100%;
+    padding: 20px 20px 0 20px;
+
+}
+
+#rocket-multi-upload-drop {
+    background-color: #A7A29C;
+    padding: 40px 50px;
+    margin-bottom: 20px;
+    border: 3px dashed #87827C;
+    border-radius: 3px;
+    text-align: center;
+    text-transform: uppercase;
+
+    font-size: 16px;
+    font-weight: bold;
+    color: #e9e6e3;
+}
+
+#rocket-multi-upload-drop a {
+    background-color:#ED8207;
+    padding:12px 26px;
+    color:#fff;
+    font-size:14px;
+    border-radius:2px;
+    cursor:pointer;
+    display:inline-block;
+    margin-top:12px;
+    line-height:1;
+    margin-left: 20px;
+}
+
+#rocket-multi-upload-drop a:hover {
+    background-color:#DD7906;
+    text-decoration: none;
+}
+
+#rocket-multi-upload-drop input {
+    display:none;
+}
+
+#rocket-multi-upload-form ul {
+    list-style: none;
+    margin: 0 -20px;
+    border-top: 1px solid #d3cdc7;
+    padding: 0;
+}
+
+#rocket-multi-upload-form ul li {
+    border-top:1px solid #d3cdc7;
+    border-bottom:1px solid #d3cdc7;
+    padding:15px;
+    height: 62px;
+
+    position: relative;
+}
+
+#rocket-multi-upload-form ul li input {
+    display: none;
+}
+
+#rocket-multi-upload-form ul li p {
+    width: 144px;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #4F4A46;
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 100px;
+}
+
+#rocket-multi-upload-form ul li i {
+    font-weight: normal;
+    font-style: normal;
+    font-size: 14px;
+    color: #7f7f7f;
+    display: block;
+}
+
+#rocket-multi-upload-form ul li canvas {
+    top: 15px;
+    left: 32px;
+    position: absolute;
+}
+
+#rocket-multi-upload-form ul li span {
+    width: 15px;
+    height: 12px;
+    background: url('img/delete-icon.png') no-repeat;
+    position: absolute;
+    top: 24px;
+    right: 20px;
+    cursor: pointer;
+}
+
+#rocket-multi-upload-form ul li.working span{
+    height: 16px;
+    background-position: 0 -12px;
+}
+
+#rocket-multi-upload-form ul li.error p {
+    color: red;
+}

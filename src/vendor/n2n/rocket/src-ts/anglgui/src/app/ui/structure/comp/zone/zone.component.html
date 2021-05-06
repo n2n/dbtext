@@ -1,0 +1,72 @@
+
+
+<div class="rocket-zone-content">
+	<header class="rocket-zone-header">
+		<rocket-ui-breadcrumbs [uiBreadcrumbs]="uiZone.breadcrumbs"></rocket-ui-breadcrumbs>
+		
+		<h1>{{ uiZone.title }}</h1>
+		
+		<div *ngIf="contextMenuUiContents.length > 0" class="rocket-context-menu">
+			<ng-template *ngFor="let uiContent of contextMenuUiContents" 
+					rocketUiContent [uiContent]="uiContent"></ng-template>
+		</div>
+	</header>
+	
+	<div *ngIf="!uiZone.structure" class="rocket-loader"></div>
+	<div *ngIf="uiZone.structure" rocketUiStructure [uiStructure]="uiZone.structure" [asideVisible]="false" class="rocket-content"></div>
+
+	<div *ngIf="hasUiZoneErrors()" class="rocket-additional">
+		<div>
+			<ul class="rocket-additional-nav">
+				<li class="rocket-severity-danger rocket-active">{{ 'errors_txt' | translate }}</li>
+			</ul>
+			<div class="rocket-additional-container">
+				<div class="rocket-additional-content">
+					<div *ngFor="let uiZoneError of uiZoneErrors" class="rocket-error-index-entry" 
+							(mouseenter)="uiZoneError.marked(true)" (mouseleave)="uiZoneError.marked(false)"
+							(click)="uiZoneError.focus()">
+						<rocket-ui-message [message]="uiZoneError.message" class="rocket-error-index-message"></rocket-ui-message>
+						<!-- <span>{{ 'show_errors_txt' | translate }}</span> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="rocket-zone-commands">
+		<div *ngIf="partialCommandUiContents.length > 0" class="rocket-partial-commands">
+			<ng-template *ngFor="let uiContent of partialCommandUiContents" 
+					rocketUiContent [uiContent]="uiContent"></ng-template>
+		</div>
+		<div *ngIf="mainCommandUiContents.length > 0" class="rocket-main-commands">
+			<ng-template *ngFor="let uiContent of mainCommandUiContents" 
+					rocketUiContent [uiContent]="uiContent"></ng-template>
+		</div>
+		<div *ngIf="asideCommandUiContents.length > 0" class="rocket-aside-commands">
+			<ng-template *ngFor="let uiContent of asideCommandUiContents" 
+					rocketUiContent [uiContent]="uiContent"></ng-template>
+		</div>
+	</div>
+</div>
+
+
+<ng-container *ngIf="uiZone.confirmDialog">
+	<div class="rocket-dialog-background">
+	</div>
+	<div class="rocket-dialog" [class.rocket-dialog-danger]="uiZone.confirmDialog.danger">
+		<p>
+			<ng-container *ngIf="uiZone.confirmDialog.message">{{ uiZone.confirmDialog.message}}</ng-container>
+			<ng-container *ngIf="!uiZone.confirmDialog.message">{{ 'common_confirm' | translate }}</ng-container>
+		</p>
+		
+		<button (click)="uiZone.confirmDialog.ok()" class="btn btn-primary">
+			<ng-container *ngIf="uiZone.confirmDialog.okLabel">{{ uiZone.confirmDialog.okLabel}}</ng-container>
+			<ng-container *ngIf="!uiZone.confirmDialog.okLabel">{{ 'common_ok_label' | translate }}</ng-container>
+		</button>
+		&ngsp;
+		<button (click)="uiZone.confirmDialog.cancel()" class="btn btn-secondary">
+			<ng-container *ngIf="uiZone.confirmDialog.cancelLabel">{{ uiZone.confirmDialog.cancelLabel}}</ng-container>
+			<ng-container *ngIf="!uiZone.confirmDialog.cancelLabel">{{ 'common_cancel_label' | translate }}</ng-container>
+		</button>
+	</div>
+</ng-container>

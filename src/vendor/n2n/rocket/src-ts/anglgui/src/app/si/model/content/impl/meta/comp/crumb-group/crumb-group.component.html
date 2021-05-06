@@ -1,0 +1,17 @@
+
+<ng-container *ngFor="let siCrumb of siCrumbGroup.crumbs">
+	<ng-container *ngIf="isLabel(siCrumb)">
+		<span [class.rocket-inactive]="isInactive(siCrumb)" 
+				[class.rocket-important]="isImportant(siCrumb)" 
+				[class.rocket-unimportant]="isUnimportant(siCrumb)"
+				[title]="siCrumb.title || ''">{{ siCrumb.label }}</span>
+	</ng-container>
+	<ng-container *ngIf="isIcon(siCrumb)">
+		<i class="fa-fw" [class]="siCrumb.iconClass" 
+				[class.rocket-inactive]="isInactive(siCrumb)" 
+				[class.rocket-important]="isImportant(siCrumb)" 
+				[class.rocket-unimportant]="isUnimportant(siCrumb)"
+				[title]="siCrumb.title || ''"></i>
+	</ng-container>
+	
+</ng-container>

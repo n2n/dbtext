@@ -1,0 +1,37 @@
+.rocket-dialog-background {
+	background: rgba(0,0,0,0.8);
+}
+
+.rocket-dialog {
+	background: white;
+	padding: 2rem 2rem 2rem 8rem;
+	&::after {
+		content: "\f059";
+		font-family: fontawesome;
+		position: absolute;
+		top: 1rem;
+		left: 2rem;
+		font-size: 5rem;
+	}
+}
+
+.rocket-dialog-warning::after {
+	color: $warning;
+	content: "\f06a";
+}
+
+.rocket-dialog-danger::after {
+	color: $danger;
+	content: "\f071";
+}
+
+.rocket-dialog-info::after {
+	color: $info;
+	content: "\f05a";
+}
+
+.rocket-dialog-success::after {
+	color: $success;
+	content: "\f058";
+}
+

@@ -1,0 +1,140 @@
+.rocket-image-resizer-container {
+	background-color: $white;
+	padding: 1rem !important;
+	> form {
+		display: grid;
+		grid-template-columns: calc(100vw - 43rem) 16rem;
+		grid-gap: 2rem 2rem;
+	}
+}
+
+#rocket-image-resizer {
+	position: relative;
+}
+
+.rocket-image-resizer-size-selector {
+	border: 1px dotted $primary;
+}
+
+.rocket-image-resizer-size-selector:hover {
+	cursor: move;
+}
+
+.rocket-image-resizer-size-selector > span {
+	border: 1px solid $primary;
+	width: 20px;
+	height: 20px;
+	display: block;
+	-ms-filter: "alpha(opacity=40)";
+	background-color: black;
+	background-color: rgba(0,0,0,0.4);
+
+}
+
+.rocket-image-resizer-size-selector > span:hover {
+	cursor: se-resize;
+}
+
+.rocket-image-resizer-toolbar {
+	background-color: $gray-200;
+	width: 100%;
+}
+
+.rocket-image-resizer-toolbar > ul {
+	list-style: none;
+	padding: 0.571429em;
+}
+
+.rocket-image-resizer-toolbar > ul > li {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.rocket-image-resizer-toolbar > ul > li.rocket-low-resolution span {
+	background-color: $danger;
+	padding: 0.2em 0.4em;
+	color: $white;
+}
+
+.rocket-image-resizer-toolbar > ul > li label {
+	font-weight: bold;
+	margin-right: 0.5em;
+}
+
+.rocket-low-resolution-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 50;
+	text-align: center;
+	> span {
+		display: inline-block;
+		background-color: $danger;
+		color: $white;
+		margin: 0 auto;
+		padding: 0.5rem 2rem;
+	}
+}
+
+.rocket-image-resizer-fixed-ratio {
+	display: inline-block;
+}
+
+.rocket-fixed-ratio-container {
+	text-align: center;
+	padding: 0.5rem;
+	font-weight: bold;
+
+}
+
+// mask
+.rocket-image-resizer-content-overlay {
+	background-color:black;
+	-ms-filter: "alpha(opacity=50)";
+	opacity: 0.5;
+	width: 100%;
+	height: 100%;
+	position:absolute;
+	top: 0px;
+	left: 0px;
+}
+
+
+// image dimensions
+.rocket-image-dimensions {
+	> .rocket-image-version {
+		position: relative;
+		padding: 0.5rem 0;
+		.rocket-simple-commands {
+			position: absolute;
+			top: 0.25rem;
+			right: 0.5rem;
+			padding: 0;
+		}
+		&.rocket-image-ratio:not(:first-child) {
+			border-top: 1px solid $input-border-color;
+		}
+		> label,
+		> input {
+			margin-right: 0.75rem;
+			margin-bottom: 0;
+		}
+		> a {
+			position: absolute;
+			top: 0.5rem;
+			right: 1rem;
+		}
+	}
+}
+
+.rocket-fixed-ration-container {
+	text-align: center;
+	padding: 0.5rem 0;
+	> label {
+		font-weight: bold;
+		margin-right: 0.5rem;
+	}
+}
+
+

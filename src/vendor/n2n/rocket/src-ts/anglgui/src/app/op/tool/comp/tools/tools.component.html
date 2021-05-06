@@ -1,0 +1,59 @@
+<rocket-ui-simple-zone-container [title]="'tools_title' | translate" [messages]="messages" [breadcrumbs]="uiBreadcrumbs">
+	<table class="table table-hover rocket-table">
+		<thead>
+			<tr>
+				<th>{{ 'tool_title' | translate }}</th>
+				<th>{{ 'common_list_tools_label' | translate }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					{{ 'tool_backup_title' | translate }}
+				</td>
+				<td>
+					<div class="rocket-simple-commands">
+						<ng-template [ngIf]="false">
+							<button rocketUiButton
+									class="btn btn-secondary"
+									[iconClass]="'fa fa-hdd'" title="{{ 'tool_backup_create_label' | translate }}">
+								<span>{{ 'tool_backup_create_label' | translate }}</span>
+							</button>
+						</ng-template>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					{{ 'tool_mail_center_title' | translate }}
+				</td>
+				<td>
+					<div class="rocket-simple-commands">
+						<a routerLink="/tools/mail-center" class="btn btn-secondary" title="{{ 'tool_mail_center_title' | translate }}">
+							<i class="fa fa-envelope"></i>
+							<span>{{ 'tool_mail_center_title' | translate }}</span>
+						</a>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					{{ 'tools_cache_cleared_title' | translate }}
+				</td>
+				<td>
+					<div class="rocket-simple-commands">
+						<button rocketUiButton
+								class="btn btn-secondary"
+								(click)="clearCache()"
+								[loading]="clearCacheInProgress"
+								[iconClass]="'fas fa-eraser'" title="{{'tools_cache_cleared_title' | translate}}">
+
+							<span>{{'tools_cache_cleared_title' | translate}}</span>
+						</button>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</rocket-ui-simple-zone-container>

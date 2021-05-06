@@ -1,0 +1,17 @@
+
+<ng-container *ngIf="visible">
+	<button type="button" class="btn btn-secondary"	(click)="currentPageNo = 1">
+		<span>1</span>&nbsp;<i class="fa fa-step-backward"></i>
+	</button>
+	<button type="button" class="btn btn-secondary" (click)="currentPageNo = currentPageNo - 1">
+		<i class="fa fa-chevron-left"></i>
+	</button>
+	<input class="rocket-pagination-no form-control" type="text" value="1"
+			[(ngModel)]="currentPageNo">
+	<button type="button" class="btn btn-secondary" (click)="currentPageNo = currentPageNo + 1">
+		<i class="fa fa-chevron-right"></i>
+	</button>
+	<button type="button" class="btn btn-secondary" (click)="currentPageNo = pagesNum">
+		<i class="fa fa-step-forward"></i>&nbsp;<span>{{ pagesNum }}</span>
+	</button>
+</ng-container>

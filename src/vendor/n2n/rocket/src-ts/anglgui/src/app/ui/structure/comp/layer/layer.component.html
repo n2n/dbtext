@@ -1,0 +1,18 @@
+
+<div *ngIf="!uiLayer.main" class="rocket-layer-toolbar">
+	<button class="btn layer-close-bar"	(click)="uiLayer.dispose()">
+		<div class="btn btn-warning layer-close-btn">
+			<i class="fa fa-times"></i>
+		</div>
+		<div class="rocket-layer-toolbar-description">
+			<span>{{ 'close_layer_text' | translate }}</span>
+		</div>
+	</button>
+</div>
+
+<ng-container *ngIf="!uiLayer.currentRoute.zone; else uiZoneContent">
+	<div class="rocket-loader"></div>
+</ng-container>
+<ng-template #uiZoneContent>
+	<rocket-ui-zone [uiZone]="uiLayer.currentRoute.zone" class="rocket-zone"></rocket-ui-zone>
+</ng-template>

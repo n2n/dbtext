@@ -1,0 +1,109 @@
+<div *ngIf="loading" class="rocket-loader"></div>
+
+<rocket-upload-result-message [uploadResult]="uploadResult" [messageFieldModel]="model"></rocket-upload-result-message>
+
+<div class="d-flex" [class.rocket-img-loading]="loading">
+
+	<div class="flex-fill">
+		<div style="height: 75vh">
+			<img #img [src]="model.getSiFile().url" style="display: block; max-width: 100%;" />
+		</div>
+
+		<div *ngIf="originalActive" class="current-image-commands">
+			<div class="current-image-commands-common">
+				<button (click)="imageSrc.toggleCropping()" class="btn btn-secondary" [class.active]="imageSrc.cropping">
+					<i class="fa fa-crop"></i>
+				</button>
+				<button (click)="imageSrc.rotateCcw()" class="btn btn-secondary">
+					<i class="fa fa-undo"></i>
+				</button>
+				<button (click)="imageSrc.rotateCw()" class="btn btn-secondary">
+					<i class="fa fa-redo fa-fw"></i>
+				</button>
+			</div>
+
+			<div class="current-image-commands-presist">
+				<button *ngIf="imageSrc.changed" (click)="saveOriginal()" class="btn btn-secondary"><i class="fa fa-check fa-fw"></i> {{ 'save_original_txt' | translate }}</button>
+				<button *ngIf="imageSrc.changed" (click)="resetOriginal()" class="btn btn-secondary"><i class="fa fa-trash fa-fw"></i> {{ 'reset_original_txt' | translate }}</button>
+			</div>
+		</div>
+
+		<rocket-ui-toggler *ngIf="freeRatioOption" [(enabled)]="imageSrc.fixedRatio" enabledTextCode="fixed_ratio_enabled_txt"
+				disabledTextCode="fixed_ratio_disabled_txt"></rocket-ui-toggler>
+	</div>
+	<div class="rocket-image-resizer-images-panel">
+		<div class="rocket-image-resizer-images-original">
+			<h3>{{ 'original_image_txt' | translate }}</h3>
+			<button class="btn btn-secondary d-flex justify-content-start align-items-center w-100" 
+					[class.active]="originalActive" (click)="switchToOriginal()">
+				<div class="rocket-image-resizer-thumb-image">
+					<div [class.sr-only]="!originalActive || !imageSrc.changed" #originalPreview class="rocket-image-preview"></div>
+			
+					<rocket-image-preview *ngIf="!originalActive || !imageSrc.changed" [src]="model.getSiFile().url"></rocket-image-preview>
+				</div>
+				<div class="rocket-image-resizer-btn-label" style="height: 50px">
+					<div class="rocket-image-resizer-btn-label-size">{{ 'original_image_txt' | translate }} <span *ngIf="originalChanged">*</span></div>
+					<div class="rocket-image-resizer-btn-label-infos">{{ imageSrc.origWidth }}:{{ imageSrc.origHeight }}</div>
+				</div>
+			</button>
+		</div>
+		<div class="rocket-image-resizer-images-generated">
+			<h3>{{ 'generated_images_txt' | translate }}</h3>
+			<ul class="rocket-image-dimensions list-unstyled">
+				<li *ngFor="let thumbRatio of thumbRatios" class="rocket-image-version rocket-image-ratio" 
+						[class.open]="thumbRatio.open" [class.active]="isThumbRatioActive(thumbRatio)" >
+					<div class="rocket-image-version-controls">
+						<button class="btn btn-secondary flex-fill d-flex" (click)="switchToThumbRatio(thumbRatio)" 
+								[class.active]="currentThumbRatio === thumbRatio" 
+								[disabled]="!thumbRatio.hasGroupedImageCuts() || originalChanged">
+							<div *ngIf="thumbRatio.hasGroupedImageCuts()" class="rocket-image-resizer-thumb-image mr-2">
+								<rocket-image-preview [src]="model.getSiFile().url" 
+										[imageCut]="thumbRatio.getGroupedPreviewImageCut(null)"></rocket-image-preview>
+							</div>
+							<div class="rocket-image-resizer-btn-label" >
+								<div class="rocket-image-resizer-btn-label-size">{{ thumbRatio.width }}:{{ thumbRatio.height }}</div>
+								<div class="rocket-image-resizer-btn-label-infos">[infos]</div>
+							</div>
+						</button>
+	
+						<button class="btn btn-secondary rocket-image-versions-toggler"	
+								[class.active]="currentThumbRatio === thumbRatio"
+								[disabled]="!thumbRatio.hasGroupedImageCuts() || originalChanged"
+								(click)="thumbRatio.open = !thumbRatio.open">
+							<i *ngIf="thumbRatio.open" class="fa fa-chevron-up fa-fw"></i>
+							<i *ngIf="!thumbRatio.open" class="fa fa-chevron-down fa-fw"></i>
+						</button>
+					</div>
+					
+					<ul>
+						<ng-container *ngFor="let imageDimension of thumbRatio.imageDimensions">
+							<li class="rocket-image-version">
+								<div class="rocket-image-version-controls">
+									<button (click)="switchToImageDimension(imageDimension, thumbRatio)" 
+											class="btn btn-secondary flex-fill d-flex" [class.active]="currentImageDimension === imageDimension"
+											[disabled]="originalChanged">
+										<div class="rocket-image-resizer-thumb-image mr-2">
+											<rocket-image-preview [src]="model.getSiFile().url" [imageCut]="imageDimension.imageCut">
+											</rocket-image-preview>
+										</div>
+										<div class="rocket-image-resizer-btn-label" >
+											<div class="rocket-image-resizer-btn-label-size">{{ imageDimension.width }} x {{ imageDimension.height }}</div>
+											<div class="rocket-image-resizer-btn-label-infos">{{ imageDimension.name || 'image_dimensions_na_txt' | translate }}</div>
+										</div>
+										
+										<div *ngIf="isLowRes(imageDimension)" class="rocket-image-low-res" title="low res"><i class="fa fa-alert fa-fw"></i></div>
+									</button>
+									<button class="btn btn-secondary rocket-image-reset" *ngIf="thumbRatio.hasIndividualImageCut(imageDimension)" (click)="resetIndividualImageCut(thumbRatio, imageDimension)"
+											[disabled]="originalChanged">
+										<i class="fa fa-undo fa-fw"></i>
+									</button>
+								</div>
+							</li>
+						</ng-container>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		
+	</div>
+</div>

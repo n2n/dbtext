@@ -1,0 +1,218 @@
+/**
+ * rocket-layer and rocket zone
+ */
+
+
+
+
+/**
+ * rocket zone
+ */
+
+ .rocket-zone {
+	 display: grid;
+	 grid-area: main;
+	 overflow-y: scroll;
+ }
+
+.rocket-zone-content {
+	position: relative;
+	// z-index: 0;
+    flex-direction: column;
+    display: grid;
+    padding: 0 $content-padding;
+    grid-template-areas: 	"header header"
+    						"main aside"
+    						"bottom bottom";
+    grid-template-rows: min-content 1fr min-content;
+    //minmax(0,#) to prevent blowout -> x-scrollbar
+    grid-template-columns: minmax(0, 1fr) minmax(0, min-content);
+	gap: 1rem;
+
+
+    > .rocket-content {
+        flex: 1 1 100%;
+        grid-area: main;
+
+		// display flex for iframe purposes
+		display: flex;
+		flex-direction: column;
+    }
+	// display flex for iframe purposes
+	rocket-iframe-out,
+	rocket-ui-iframe,
+	rocket-ui-url-iframe {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
+	// display flex for iframe purposes
+	rocket-ui-iframe,
+	rocket-ui-url-iframe {
+		flex: 1;
+	}
+
+	// rocket-ui-url-iframe > iframe,
+	// rocket-ui-iframe > iframe {
+	//     height: auto !important;
+	//     flex: 1;
+	// }
+
+    > .rocket-zone-commands {
+        padding: 10px $content-padding;
+        margin: 0 -#{$content-padding};
+        position: sticky;
+        position: -webkit-sticky;
+        bottom: 0;
+        grid-area: bottom;
+        align-self: flex-end;
+	}
+
+	@include media-breakpoint-down(md) {
+		padding: 0 $content-padding-xs; 
+        > header {
+            padding: 0 $content-padding-xs;
+            margin: 0 -#{$content-padding-xs};
+        }
+        > .rocket-zone-commands {
+            padding: 10px $content-padding-xs;
+            margin: 0 -#{$content-padding-xs};
+        }
+	}
+}
+
+.rocket-zone-header {
+	display: grid;
+	position: relative;
+	grid-template-columns: 1fr auto;
+	grid-template-rows: minmax(#{$zone-header-breadcrumb-min-height}, min-content) minmax(#{$zone-header-title-min-height}, min-content);
+	background: white;
+	padding: 0 $content-padding;
+	grid-area: header;
+	margin: 0 -#{$content-padding};
+	
+	> .breadcrumb {
+		grid-row: 1 / 2;
+	}
+	> h1 {
+		grid-row: 2 / 3;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	> .rocket-context-menu {
+		grid-column: 2 / -1;
+		grid-row: 1 / -1;
+		align-self: center;
+		padding: 10px 0;
+	}
+}
+
+.rocket-layer-toolbar + .rocket-zone {
+	padding: 0 $content-padding-with-toolbar;
+
+	> header {
+		padding: 0 $content-padding-with-toolbar;
+		margin: 0 -#{$content-padding-with-toolbar};
+	}
+
+	> .rocket-zone-commands {
+		padding: 10px $content-padding-with-toolbar;
+		margin: 0 -#{$content-padding-with-toolbar};
+	}
+}
+
+
+
+/**
+ * rocket zone
+ */
+
+
+.rocket-layer {
+	z-index: 50;
+    top: 0;
+	background-color: $gray-200;
+	> .rocket-layer-toolbar {
+		position: sticky;
+		position: -webkit-sticky;
+		top: 0;
+		left: 0;
+		width: $content-padding;
+		background: $gray-300;
+		display: flex;
+		align-items: flex-start;
+		z-index: 10;
+
+		.layer-close-bar {
+			width: 100%;
+			padding: 0;
+			border: 0;
+			position: sticky;
+			position: -webkit-sticky;
+			top: 0;
+			&:hover,
+			&:focus,
+			&.active {
+				box-shadow: none;
+
+				.layer-close-btn {
+					background: darken($primary, 10%);
+					border-color: darken($primary, 10%);
+				}
+
+				.rocket-layer-toolbar-description {
+					color: darken($primary, 10%);
+				}
+			}
+		}
+
+		.layer-close-btn {
+			width: 100%;
+			height: $zone-close-btn-height;
+			background: $primary;
+			color: white;
+			text-align: center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.rocket-layer-toolbar-description {
+			writing-mode: vertical-rl;
+			white-space: nowrap;
+			transform: scale(-1);
+			text-transform: uppercase;
+			display: inline-flex;
+			justify-content: center;
+			width: 100%;
+			color: $primary;
+			font-weight: bold;
+			padding: 15px 0;
+			transition: $btn-transition;
+			> span  {
+				margin: 0 auto;
+			}
+		}
+	}
+
+	.rocket-impl-overview-tools {
+		background-color: $gray-300;
+	}
+}
+
+
+rocket-ui-compact-explorer {
+	display: block;
+	min-height: 100%;
+}
+
+
+.rocket-zone > .rocket-zone-content > .rocket-content > .rocket-toolbar:not(.rocket-massive) {
+	position: absolute;
+	right: $content-padding;
+	top: 1.5rem;
+	z-index: 60;
+}

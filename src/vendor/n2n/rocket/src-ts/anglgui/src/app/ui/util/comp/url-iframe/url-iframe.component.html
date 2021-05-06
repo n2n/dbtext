@@ -1,0 +1,8 @@
+<div *ngIf="loading" class="rocket-loader"></div>
+
+<iframe #urlIframe
+		resizableIframe
+		[src]="sanitizedUrl"
+		style="width: 100%; border: 0px;"
+		(load)="iframeLoaded()">
+</iframe>

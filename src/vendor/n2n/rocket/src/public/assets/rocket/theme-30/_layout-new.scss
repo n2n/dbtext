@@ -1,0 +1,403 @@
+$rocket-header-height: 2.75rem;
+$rocket-global-nav-width: 14rem;
+$rocket-global-nav-spacer: 4rem;
+$rocket-content-margin-right: 3rem;
+$rocket-content-margin-left: $rocket-global-nav-width + $rocket-global-nav-spacer;
+
+
+
+html {
+    height: 100%;
+    font-size: 15px;
+}
+
+body {
+    background: $gray-200;
+    // background: $body-color;
+}
+
+body > rocket-root {
+    overflow: hidden;
+    display: grid;
+    height: 100vh;
+    grid-template-areas:    "header header"
+                            "main main";
+}
+
+/**
+ * Header
+ */
+#rocket-header {
+    background-color: $rocket-header-bg;
+    color: white;
+    grid-area: header;
+    display: flex;
+    z-index: 1;
+    padding: 0 0 0 1rem;
+}
+
+#rocket-branding {
+    display: block
+}
+
+
+@include media-breakpoint-down(md) {
+    #rocket-branding {
+        width: 30px;
+        margin-right: 0.5rem;
+        align-self: center;
+        > img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+}
+@include media-breakpoint-up(lg) {
+    #rocket-branding {
+        position: absolute;
+        top: 0.5rem;
+        left: 1rem;
+        z-index: 1;
+    }
+
+    #rocket-header {
+        padding: 0 0 0 $content-padding;
+    }
+}
+
+#rocket-customer-name {
+    flex: 1 0 auto;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: $rocket-header-height;
+
+    @include media-breakpoint-only(xs) {
+        display: none;
+    }
+}
+
+
+#rocket-conf-nav {
+    flex: 1 0 auto;
+}
+
+/**
+ * Global navigation
+ */
+#rocket-global-nav {
+    background: url(../img/nav-body-bg.png) repeat $gray-700 4px 11px;
+    color: white;
+    scrollbar-width: thin;
+    grid-area: main;
+
+    @include media-breakpoint-up(lg) {
+        overflow-y: auto;
+        position: relative;
+        grid-area: nav;
+    }
+}
+
+
+@include media-breakpoint-down(md) {
+    .navbar-toggler {
+        position: absolute;
+        top: 0.375rem;
+        color: white;
+    }
+}
+
+.rocket-nav-group {
+    background: $gray-800;
+}
+
+/**
+ * Content
+ */
+
+.rocket-content {
+    // margin-top: 1rem;
+    display: block;
+}
+
+ #rocket-content-container {
+     padding: 0;
+ }
+
+/**
+ * Context Control
+ */
+
+.rocket-zone-commands {
+    background-color: $gray-200;
+    display: grid;
+    @include media-breakpoint-up(sm) {
+        padding: 1rem 0;
+        display: grid;
+        grid-template-columns: auto auto;
+        z-index: 50;
+        > div:nth-child(2) {
+            text-align: right;
+        }
+    }
+}
+
+.rocket-partial-commands {
+    display: inline-block;
+}
+
+.rocket-pagination {
+    text-align: right;
+}
+
+
+/**
+ * loader
+ */
+
+
+.rocket-loader {
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    display: grid;
+    grid-template-areas: "spinner";
+    position: absolute;
+    &:after {
+        content: "";
+        grid-area: spinner;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: solid 6px rgba(0, 0, 0, 0.1);
+        border-top-color: $primary;
+        animation: spin 1s infinite linear;  
+        cursor: wait;
+    }
+}
+
+.rocket-item .rocket-loader {
+    margin: 0 auto 0;
+    width: 18px;
+    height: 18px;
+    &:after {
+        border-width: 3px;
+    }
+}
+
+.btn {
+    position: relative;
+    z-index: 0;
+    .rocket-loader {
+        z-index: 1;
+        width: 14px;
+        height: 14px;
+    }
+
+}
+
+// .rocket-zone.rocket-loader {
+//     margin-top: 10rem;
+// }
+
+// .rocket-load-blocker {
+//     position: absolute;
+//     top: 0px;
+//     left: 0px;
+//     right: 0px;
+//     bottom: 0px;
+//     background: $gray-200;
+// }
+
+// .rocket-load-blocker > .rocket-loader {
+//     width: 25px;
+//     height: 25px;
+//     margin: 8px auto auto;
+//     border: solid 5px $gray-400;
+//     border-top-color: $primary;
+// }
+
+// .rocket-zone-block {
+//     position: fixed;
+//     cursor: wait;
+//     top: 0px;
+//     left: 0px;
+//     right: 0px;
+//     bottom: 0px;
+//     background-color: rgba(0, 0, 0, 0.2);
+//     padding-top: calc(50vh - 1rem);
+// }
+
+@keyframes spin { 
+    100% { 
+      transform: rotate(360deg); 
+    } 
+}
+
+
+/**
+ * rocket addtional
+ */
+
+ .rocket-additional-nav {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: $gray-900;
+    color: $white;
+    > li {
+        display: inline-block;
+        padding: .5rem 1rem;
+        cursor: pointer;
+    }
+}
+
+ @include media-breakpoint-up(lg) {
+	.rocket-zone.rocket-contains-additional {
+		> .rocket-additional {
+            > div {
+                position: sticky;
+                position: -webkit-sticky;
+                top: 0;
+                margin-top: 1rem;
+                margin-left: $content-gap-x;
+                width: 19rem;
+                // overflow-y: auto;
+                grid-area: aside;
+            }
+		}
+	}
+}
+
+/**
+ * General Styles
+ */
+
+.rocket-content h2 {
+    padding: 0.5rem 1rem;
+    margin: 1rem 0 0;
+    border-left: 3px solid $primary;
+    font-size: $h2-font-size;
+    font-weight: bold;
+    background: white;
+}
+
+.rocket-severity-danger {
+    color: $white;
+    background-color: $danger;
+}
+
+
+
+// new
+
+#rocket-content-container,
+router-outlet + *,
+.rocket-ghost,
+.rocket-container {
+    overflow: hidden;
+}
+
+#rocket-content-container,
+router-outlet + *,
+.rocket-ghost {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+}
+
+#rocket-content-container {
+    grid-area: main;
+    background: #F7F5F5;
+}
+
+.rocket-container {
+    flex: 1 1 100%;
+    display: grid;
+}
+
+.rocket-main-layer,
+.rocket-layer {
+    // overflow-y: scroll;
+    overflow: hidden;
+    grid-row: 1;
+    grid-column: span 1 / 1;
+    display: grid;
+    grid-template-areas: 
+    "aside main";
+    grid-template-columns: min-content 1fr;
+}
+
+// iframes 
+
+html.rocket-iframe {
+    height: initial !important;
+    // overflow-y: hidden;
+    // > body {
+    //     position: relative;
+    //     min-height: 100%;
+    //     top: 0px;
+    // }
+}
+
+// rocket-ui-url-iframe > iframe,
+// rocket-ui-iframe > iframe {
+//     height: auto !important;
+//     flex: 1;
+//     > html {
+//         min-height: 100%;
+//         overflow-y: hidden;
+//         > body {
+//             position: relative;
+//             min-height: 100%;
+//             top: 0px;
+//         }
+//     }
+// }
+
+
+@include media-breakpoint-down(md) {
+    #rocket-global-nav {
+        grid-area: main;
+        position: relative;
+        // main-sibling musst have a higher z-index
+        z-index: 2;
+        overflow-y: scroll;
+        left: 0;
+        transition: $transition-base;
+        transition-property: width, transform;
+        transform: translateX(-100%);
+        &.not-collapsed {
+            transform: translateX(0%);
+        }
+    }
+    
+     #rocket-content-container {
+        // nav-elment-sibling musst have a higher z-index
+        z-index: 1;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    body > rocket-root {
+        grid-template-areas:    "header-placeholder header"
+                                "nav main";
+        grid-template-rows: min-content 1fr;
+
+        //minmax(0,#) to prevent blowout -> x-scrollbar
+        grid-template-columns: minmax(0, $left-content-width) minmax(0, 1fr);
+
+        &:before {
+            content: "";
+            grid-area: header-placeholder;
+            background: $rocket-header-bg;
+        }
+    }
+
+    #rocket-global-nav {
+        padding-top: 5rem;
+    }
+}

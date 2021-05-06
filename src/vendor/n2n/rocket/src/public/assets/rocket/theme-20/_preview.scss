@@ -1,0 +1,15 @@
+.rocket-plain {
+	position: relative;
+	margin: 0 -3rem 0 -4rem;
+}
+
+.rocket-impl-preview {
+	position: fixed;
+	top: 7.75rem;
+	bottom: 3.75rem;
+	left: 14rem;
+	border: 0;
+	right: 0;
+	width: 100%;
+	height: calc(100vh - 11.825rem);
+}

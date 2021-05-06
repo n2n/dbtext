@@ -1,0 +1,59 @@
+<ng-container *ngIf="hasSubUiContents() || hasSubSiButtons(); else simpleButton">
+	<div class="dropdown">
+		<ng-template [ngTemplateOutlet]="simpleButton"></ng-template>
+
+		<div *ngIf="subVisible" class="dropdown-subs">
+
+			<div *ngFor="let subUiContent of subUiContents">
+				<ng-template rocketUiContent [uiContent]="subUiContent"></ng-template>
+			</div>
+
+			<div *ngFor="let item of subSiButtonMap | keyvalue">
+				<button [class]="item.value.btnClass" [class.rocket-important]="siButton.important"
+						(click)="subExec(item.key)" [disabled]="disabled">
+					<span>{{ item.value.name }}</span>
+					<i [class]="item.value.iconClass"></i>
+				</button>
+			</div>
+
+			<div *ngIf="model.getSubTooltip && model.getSubTooltip()" class="rocket-tooltip">
+				{{ model.getSubTooltip() }}
+			</div>
+		</div>
+	</div>
+</ng-container>
+
+<ng-template #simpleButton>
+	<button [class]="siButton.btnClass"
+			[class.rocket-important]="siButton.important"
+			[class.rocket-icon-important]="siButton.iconImportant"
+			[class.rocket-icon-always]="siButton.iconAlways"
+			[class.rocket-label-always]="siButton.labelAlways"
+			[class.btn-loading]="loading" [disabled]="disabled" (click)="exec()" *ngIf="!siButton.href">
+		<span class="btn-label">{{ siButton.name }}</span>
+		<i [class]="siButton.iconClass" class="btn-icon"></i>
+		<span *ngIf="loading" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+	</button>
+
+	<a [class]="siButton.btnClass"
+			[class.rocket-important]="siButton.important"
+			[class.rocket-icon-important]="siButton.iconImportant"
+			[class.rocket-icon-always]="siButton.iconAlways"
+			[class.rocket-label-always]="siButton.labelAlways"
+			[class.btn-loading]="loading"
+			[class.disabled]="disabled"
+			[target]="siButton.target ? siButton.target : ''"
+			[href]="siButton.href"
+			*ngIf="!!siButton.href">
+	<span class="btn-label">{{ siButton.name }}</span>
+	<i [class]="siButton.iconClass" class="btn-icon"></i>
+	<span *ngIf="loading" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+	</a>
+
+	<style *ngIf="disabled && !siButton.href">
+	a.disabled {
+		pointer-events: none;
+		cursor: default;
+	}
+	</style>
+</ng-template>

@@ -1,0 +1,63 @@
+<div class="rocket-impl-translation-manager">
+	<div class="rocket-simple-commands">
+		<button class="btn btn-secondary" title="" type="button" (click)="toggleMenuVisibility()">
+			<i [class]="model.getIconClass()"></i>
+		</button>
+	</div>
+	
+	<div *ngIf="menuVisible" class="rocket-impl-translation-menu">
+		<ul>
+			<li *ngFor="let splitOption of model.getSplitOptions()"
+					[class.rocket-active]="model.isKeyActive(splitOption.key)" 
+					[class.rocket-disabled]="model.isKeyMandatory(splitOption.key)" 
+					(click)="toggleKeyActivity(splitOption.key)">
+				<label>
+					{{ splitOption.label }}	
+				</label>
+			</li>
+		</ul>
+		
+		<div *ngIf="model.getTooltip()" class="rocket-tooltip">
+			{{ model.getTooltip() }}
+		</div>
+	</div>
+
+</div>
+
+<!--
+<div class="rocket-impl-translation-manager" >
+	<div class="rocket-simple-commands">
+		<button class="btn btn-secondary" title="" type="button">
+			<span>Page Leaf Ts</span><i class="fa fa-language"></i>
+		</button>
+	</div>
+	<div class="rocket-control">
+		<div class="rocket-impl-translation-menu" 
+				data-rocket-impl-locale-labels="Sprachen" data-active-locales-label="Ei Impl Active Locales" data-standard-label="Ei Impl Standard" data-translations-only-label="Ei Impl Translations Only">
+			<ul>
+				<li data-rocket-impl-locale-id="de_CH" data-rocket-impl-mandatory="" class="rocket-disabled rocket-active">
+					<label>
+						<input type="checkbox" checked="checked" value="1" name="opt-eiuEntryForm[eiuEntryTypeForms][page-page][dispatchable][pageContent][currentMappingForm][eiuEntryForm][eiuEntryTypeForms][page-page-content][dispatchable][pageContentTs][dispatchables][de_CH][objEna]"><input name="property-target[]" value="MEd0eUVSdkZIa1pTamo1eTh2RjVFOWpXRVo2RU5PekVrWnhZa3BJdy9BaFJiVllnQkUwVFV1SFdINTlCbklEZ2QxWFduUmQ1VlZjVmU1NFlDTXRHYU9oUTFLVE9zMHJuTkZkT21sSU1BdE5TQXVLaXQyQk5sbzFYTGNuVzFMa1g1eWVMSWhWczQ1Q0U4azlNTGJWOHRtND0=" type="hidden">					
+						Deutsch (Schweiz)				
+					</label>
+				</li>
+				<li data-rocket-impl-locale-id="de_CH" data-rocket-impl-mandatory="" class="rocket-active">
+					<label>
+						<input type="checkbox" checked="checked" value="1" name="opt-eiuEntryForm[eiuEntryTypeForms][page-page][dispatchable][pageTs][dispatchables][de_CH][objEna]"><input name="property-target[]" value="TEU2Smc4clgvSXRPQjlDQnVCMmVqeENNUW44cy8xQkdyU3ZoMVI0bE9pT1JTWXVwdEwvNUtVK0FZMGZMMUR4NjB4RDBrV09GU29jU0toZWdKRit5K1lJK2diZEpjSGpoOWxFclZ0YmRNMHUzQ0E9PQ==" type="hidden">					
+						Deutsch (Schweiz)				</label>
+				</li>
+				<li data-rocket-impl-locale-id="fr_CH" data-rocket-impl-mandatory="" class="rocket-active">
+					<label>
+						<input type="checkbox" checked="checked" value="1" name="opt-eiuEntryForm[eiuEntryTypeForms][page-page][dispatchable][pageTs][dispatchables][fr_CH][objEna]"><input name="property-target[]" value="TEU2Smc4clgvSXRPQjlDQnVCMmVqeENNUW44cy8xQkdyU3ZoMVI0bE9pT1JTWXVwdEwvNUtVK0FZMGZMMUR4NjB4RDBrV09GU29jU0toZWdKRit5K1lJK2diZEp3WHZoOWxFclZ0YmRNejYzZnc9PQ==" type="hidden">					Französisch (Schweiz)				</label>
+				</li>
+				<li data-rocket-impl-locale-id="it" data-rocket-impl-mandatory="" class="rocket-active">
+					<label>
+						<input type="checkbox" checked="checked" value="1" name="opt-eiuEntryForm[eiuEntryTypeForms][page-page][dispatchable][pageTs][dispatchables][it][objEna]"><input name="property-target[]" value="TEU2Smc4clgvSXRPQjlDQnVCMmVqeENNUW44cy8xQkdyU3ZoMVI0bE9pT1JTWXVwdEwvNUtVK0FZMGZMMUR4NjB4RDBrV09GU29jU0toZWdKRit5K1lJK2diZUpRbnJ3V0pjQjdvWCt0UT09" type="hidden">					Italienisch				</label>
+				</li>
+			</ul>
+			<div class="rocket-impl-tooltip">Nutzen Sie diese Werkzeugleiste, um für den Inhalt in diesem Bereich Übersetzungen hinzuzufügen oder zu entfernen.</div>
+		</div>
+	</div>
+</div>
+
+-->

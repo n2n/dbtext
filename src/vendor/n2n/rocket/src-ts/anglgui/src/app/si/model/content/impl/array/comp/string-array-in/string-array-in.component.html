@@ -1,0 +1,14 @@
+
+<div *ngFor="let stringArrayInElement of getStringArrayInElements()">
+	<div class="input-group">
+		<input type="text" class="form-control" [(ngModel)]="stringArrayInElement.value" (blur)="applyValues()"/>
+		<button class="btn btn-danger" [disabled]="removeDisabled" (click)="removeStringArrayInElement(stringArrayInElement)">
+			<i class="fas fa-times"></i>
+		</button>
+	</div>
+</div>
+<button class="btn btn-primary" [disabled]="addDisabled" (click)="addElement()">{{ 'common_add_label' | translate }}</button>
+
+<div>
+	<rocket-field-messages *ngIf="model.getMessages().length > 0" [model]="model"></rocket-field-messages>
+</div>	

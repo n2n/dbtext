@@ -1,0 +1,140 @@
+// Bootstrap overrides
+//
+// Copy variables from `_variables.scss` to this file to override default values
+// without modifying source files.
+
+
+$gray-900: #373431;
+$gray-800: #4F4A46;
+$gray-700: #66615C;
+$gray-600: #837E78;
+$gray-500: #C2BDB6;
+$gray-400: #DAD7D3;
+$gray-300: #ECEBE9;
+$gray-200: #F7F5F5;
+$gray-100: #FBFAFA;
+
+$primary: #ed8207;
+
+$secondary: $gray-200;
+$success: #2D7F00;
+$info:    #4c97cb;
+$warning: #F6A723;
+$danger:  #b90f00;
+$inverse: $gray-900;
+
+$link-decoration:       none;
+$link-hover-decoration: none;
+
+$aczent-1:          #00467B;
+$aczent-2:          #EAF6FF;
+$aczent-2-d-100:    #DEEDF9;
+$aczent-2-l-300:    #EEFEFA;
+
+$text-muted: $gray-500;
+
+$font-size-xs: .75rem;
+
+$h1-font-size: 1.5rem;
+$h2-font-size: 1.25rem;
+$h3-font-size: 1.125rem;
+$h4-font-size: 1rem;
+$h5-font-size: 1rem;
+$h6-font-size: 1rem;
+
+$headings-font-weight:   bold;
+
+$breadcrumb-bg:                 transparent;
+$breadcrumb-divider:            "\f054";
+$breadcrumb-item-padding:		1rem;
+$breadcrumb-padding-y:          0.6rem;
+$breadcrumb-padding-x:          0;
+
+
+
+$enable-rounded: false;
+$enable-shadows: true;
+
+$btn-font-weight:  bold;
+$btn-box-shadow:   none;
+// $btn-box-shadow:                 2px 1px 4px 0 rgba(0,0,0,0.20);
+// $btn-focus-box-shadow:           0 0 0 2px rgba($primary, .25) !default;
+// $btn-active-box-shadow:          inset 0 3px 5px rgba($black,.125) !default;
+
+$box-box-shadow:                2px 1px 4px 0 rgba(0,0,0,0.20);
+
+$input-btn-padding-x: 			0.625rem;
+$input-color: 					$gray-800;
+$input-border-color: 			$gray-400;
+$input-placeholder-color: 		$gray-500;
+
+$input-border-width: 			1px;
+
+$table-hover-bg: 				$gray-300;
+$table-border-color:          	$gray-400;
+$table-header-bg:               $gray-800;
+
+
+$dropdown-item-padding-x: 		1rem;
+$dropdown-item-padding-y: 		0.375rem;
+$dropdown-box-shadow: 			$box-box-shadow;
+
+$font-name-icons:               "Font Awesome 5 Free";
+
+@import "bootstrap/variables";
+
+$custom-datepicker-padding-y:           $input-padding-y !default;
+$custom-datepicker-padding-x:           $input-padding-x !default;
+$custom-datepicker-indicator-padding:	1.2rem;
+$custom-datepicker-bg-size:				18px auto;
+$custom-datepicker-indicator: 	str-replace(url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 20'%3E%3Cpath id='datepicker' d='M16,20H2a2,2,0,0,1-2-2L.01,4A2,2,0,0,1,2,2H3V0H5V2h8V0h2V2h1a2,2,0,0,1,2,2V18A2,2,0,0,1,16,20ZM2,7V18H16V7Zm7,7H4V9H9v5Z' transform='translate(0 0)' fill='#{$custom-select-indicator-color}'/%3E%3C/svg%3E%0A"), "#", "%23");
+$custom-datepicker-bg:			$custom-datepicker-indicator no-repeat right $custom-datepicker-padding-x center / $custom-datepicker-bg-size !default; // Used so we can have multiple background elements (e.g., arrow and feedback icon)
+
+
+
+$rocket-header-bg:              $gray-900;
+
+$zone-header-breadcrumb-min-height:     2rem;
+$zone-header-title-min-height:          3rem;
+$zone-close-btn-height:                 $zone-header-breadcrumb-min-height + $zone-header-title-min-height;
+
+$left-content-width:                    14rem;
+$content-padding-xs:                    1rem;
+$content-padding:                       3rem;
+$content-padding-with-toolbar:          $content-padding/2;
+
+$content-gap-x:             1rem;
+
+$header-padding:            10px 20px 14px $content-padding;
+
+
+$rocket-item-double-item-width:         4rem;
+
+$context-menu-z-index:                  60;
+
+$context-menu-arrow-size:               8px;
+$context-menu-arrow-size-sm:            6px;
+
+$context-menu-drop-shadow:              drop-shadow(0px 0px 10px rgba($black, .3));
+$context-menu-drop-shadow-sm:           drop-shadow(0px 0px 10px rgba($black, .3));
+
+$context-menu-offset:                   $context-menu-arrow-size + $context-menu-arrow-size;
+$context-menu-offset-sm:                $context-menu-arrow-size-sm + $context-menu-arrow-size-sm;
+
+$rocket-btn-group-spacing:              0.5rem;
+
+$rocket-toggler-bullet-size:            14px;
+$rocket-toggler-active-color:           $gray-700;
+$rocket-toggler-border-width:           2px;
+$rocket-toggler-width:                  22px;
+
+$sticky-commands-enabled:               false;
+
+$rocket-tree-level-num:		            9;
+$rocket-tree-generic-offset:                        20px;
+$rocket-tree-item-width-level-1:                    10px;
+$rocket-tree-item-width-levels:                     27px;
+$rocket-tree-offset-to-label:                       10px;
+$rocket-tree-fixed-padding:                 #{$table-cell-padding} + #{$rocket-tree-offset-to-label};
+
+$n2n-tree-indicator-icon:               str-replace(url("data:image/svg+xml,%3Csvg width='15' height='10' viewBox='0 0 15 10' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cpath d='M11.5737216,1.27220186 L8.73089963,-1.79037942 C8.471544,-2.06966841 8.02882109,-2.07007857 7.76910999,-1.79037942 L4.92604191,1.27220186 C4.53759636,1.69056113 4.83372935,2.37500237 5.40693672,2.37500237 L7.15625416,2.37500237 L7.15625416,9.81250054 L4.86003405,9.81250054 C4.77300901,9.8124926 4.68954765,9.84706731 4.6280222,9.9086138 L3.09677129,11.4398634 C2.89005242,11.6465548 3.03645094,12 3.32878315,12 L8.68750507,12 C9.04994669,12 9.34375546,11.7061915 9.34375546,11.3437502 L9.34375546,2.37500237 L11.0928268,2.37500237 C11.66371,2.37500237 11.9637531,1.69225644 11.5737216,1.27220186 Z' id='Path' fill='#{$gray-600}' fill-rule='nonzero' transform='translate(7.375000, 5.000000) rotate(90.000000) translate(-7.375000, -5.000000) '%3E%3C/path%3E%3C/g%3E%3C/svg%3E"), "#", "%23") !default;

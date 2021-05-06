@@ -1,0 +1,65 @@
+<?php
+/*
+ * Copyright (c) 2012-2016, Hofmänner New Media.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This file is part of the N2N FRAMEWORK.
+ *
+ * The N2N FRAMEWORK is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Lesser General Public License as published by the Free Software Foundation, either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * N2N is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details: http://www.gnu.org/licenses/
+ *
+ * The following people participated in this project:
+ *
+ * Andreas von Burg.....: Architect, Lead Developer
+ * Bert Hofmänner.......: Idea, Frontend UI, Community Leader, Marketing
+ * Thomas Günther.......: Developer, Hangar
+ */
+namespace n2n\persistence\orm\annotation;
+
+use n2n\util\type\ArgUtils;
+use n2n\reflection\annotation\PropertyAnnotation;
+use n2n\reflection\annotation\PropertyAnnotationTrait;
+use n2n\reflection\annotation\AnnotationTrait;
+use n2n\persistence\orm\CascadeType;
+use n2n\persistence\orm\FetchType;
+
+abstract class OrmRelationAnnotation implements PropertyAnnotation {
+	use PropertyAnnotationTrait, AnnotationTrait;
+	
+	private $targetEntityClass = null;
+	private $cascadeType = CascadeType::NONE;
+	private $fetchType = FetchType::LAZY;
+	private $orphanRemoval = false;
+	
+	public function __construct(\ReflectionClass $targetEntityClass, $cascadeType = null, 
+			$fetchType = null) {
+		$this->targetEntityClass = $targetEntityClass;
+		
+		if ($cascadeType !== null) {
+			ArgUtils::valType($cascadeType, 'numeric', false, 'cascadeType');
+			$this->cascadeType = (int) $cascadeType;
+		}
+		
+		if ($fetchType !== null) {
+			ArgUtils::valEnum($fetchType, FetchType::getValues(), null, false, 'fetchType');
+			$this->fetchType = $fetchType;
+		}
+	}
+	
+	public function getTargetEntityClass() {
+		return $this->targetEntityClass;
+	}
+	
+	public function getCascadeType() {
+		return $this->cascadeType;
+	}
+	
+	public function getFetchType() {
+		return $this->fetchType;
+	}
+}

@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+.visible-phone-portrait, .visible-phone-landscape, .visible-tablet, .visible-desktop-normal, .visible-desktop-big { 
+	display: none; 
+}
+@media only screen and (max-width: 479px) {
+	.visible-phone-portrait {display: block;}
+}
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	.visible-phone-landscape { display: block; }	
+}
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+	.visible-tablet { display: block; }
+}
+@media only screen and (min-width: 1024px) and (max-width: 1279px) {
+	.visible-desktop-normal { display: block; }
+}
+@media only screen and (min-width: 1280px) {
+	.visible-desktop-big { display: block; }
+}
+
+.responsive-table-container {
+	cursor: pointer;
+}
+
+.responsive-table-container:before {
+	font-family: "FontAwesome";
+	content: "";
+	padding-right: 0.4em;
+}
+
+.responsive-table-container.responsive-row-open:before {
+	content: "";
+}
+
+.responsive-table-extended dl dt {
+	float: left;
+}
+
+.responsive-table-extended dl dd {
+	margin-left: 7em;
+	margin-bottom: 1em;
+}

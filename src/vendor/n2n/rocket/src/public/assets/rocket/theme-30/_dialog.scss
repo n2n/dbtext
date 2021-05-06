@@ -1,0 +1,60 @@
+
+
+.rocket-dialog-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: rgba(0,0,0,0.56);
+	z-index: 10000;
+}
+
+.rocket-dialog {
+	background: white;
+	position: fixed;
+	top: clamp(150px, 30vh, 30vh);
+	left: 50%;
+	transform: translate3d(-50%, -50%, 0);
+	z-index: 10000;
+	padding: 2rem 2rem 2rem 8rem;
+	max-height: calc(100vh - 150px);
+	overflow-y: auto;
+	&:after {
+		content: "\ebae";
+		font-weight: 900;
+		font-family: $font-name-icons;
+		position: absolute;
+		top: 1rem;
+		left: 2rem;
+		font-size: 5rem;
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing: antialiased;
+		display: inline-block;
+		font-style: normal;
+		font-variant: normal;
+		text-rendering: auto;
+		line-height: 1;
+	}
+}
+
+.rocket-dialog-warning:after {
+	color: $warning;
+	content: "\f06a";
+}
+
+.rocket-dialog-danger:after {
+	color: $danger;
+	content: "\f071";
+}
+
+.rocket-dialog-info:after {
+	color: $info;
+	content: "\f05a";
+}
+
+.rocket-dialog-success:after {
+	color: $success;
+	content: "\f058";
+}
+

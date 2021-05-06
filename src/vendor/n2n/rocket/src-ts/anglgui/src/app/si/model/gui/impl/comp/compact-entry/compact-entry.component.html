@@ -1,0 +1,10 @@
+
+<div *ngIf="model.isLoading()" class="rocket-loader"></div>
+
+<ng-container *ngIf="!model.isLoading()">
+
+	<ng-container *ngFor="let fieldUiStructure of model.getFieldUiStructures()">
+		<div rocketUiStructure [uiStructure]="fieldUiStructure" [compact]="true"></div>
+	</ng-container>
+	
+</ng-container>

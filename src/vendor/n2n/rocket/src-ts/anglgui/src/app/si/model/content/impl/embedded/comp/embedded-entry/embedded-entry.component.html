@@ -1,0 +1,15 @@
+<ng-container *ngIf="embe.isPlaceholder()">
+	<div class="rocket-loading"></div>
+</ng-container>
+
+<ng-container *ngIf="!embe.isPlaceholder() && !embe.isTypeSelected()">
+	<rocket-choose-paste class="rocket-multi-type-menu"	[siEmbeddedEntry]="embe.siEmbeddedEntry"></rocket-choose-paste>
+</ng-container>
+<ng-content rocketUiStructureToolbar></ng-content>
+<ng-container *ngIf="!embe.isPlaceholder() && embe.isTypeSelected()">
+	<div rocketUiStructure [uiStructure]="uiStructure">
+		<ng-container *ngIf="hasToolbar()" rocketUiStructureToolbar>
+			<ng-content select="[rocketUiStructureToolbar]"></ng-content>
+		</ng-container>
+	</div>
+</ng-container>

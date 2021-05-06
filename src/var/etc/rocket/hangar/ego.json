@@ -1,0 +1,7 @@
+{
+    "templateDefs": [
+        "rocket\\impl\\hangar\\TranslatableTemplateDef",
+        "rocket\\impl\\hangar\\ContentItemTemplateDef",
+        "rocket\\impl\\hangar\\TranslationTemplateDef"
+    ]
+}

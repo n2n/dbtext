@@ -1,0 +1,14 @@
+<button type="button" class="btn btn-secondary"	(click)="internalPageNo = 1">
+	<span>1</span>&nbsp;<i class="fa fa-step-backward"></i>
+</button>
+<button type="button" class="btn btn-secondary" (click)="internalPageNo = internalPageNo - 1" [disabled]="internalPageNo == 1">
+	<i class="fa fa-chevron-left"></i>
+</button>
+<input class="rocket-pagination-no form-control" type="text" value="1" [(ngModel)]="internalPageNo">
+<button type="button" class="btn btn-secondary" (click)="internalPageNo = internalPageNo + 1"
+		[disabled]="internalPageNo == totalPagesNo">
+	<i class="fa fa-chevron-right"></i>
+</button>
+<button type="button" class="btn btn-secondary" (click)="internalPageNo = lastPageNo">
+	<i class="fa fa-step-forward"></i>&nbsp;<span>{{ lastPageNo }}</span>
+</button>

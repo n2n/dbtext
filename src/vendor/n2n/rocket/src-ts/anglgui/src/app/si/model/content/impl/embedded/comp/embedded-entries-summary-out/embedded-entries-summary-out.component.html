@@ -1,0 +1,51 @@
+<!--
+<div class="rocket-toolbar">
+	<div class="rocket-simple-commands">
+		<button class="btn btn-warning rocket-important rocket-label-important" (click)="model.openAll()">
+			{{ 'common_show_all_label' | translate }} <i class="fa fa-file"></i>
+		</button>
+	</div>
+</div>
+-->
+
+<div>
+	<div *ngFor="let embeStructure of embeStructures">
+				
+		<ng-container *ngIf="!embeStructure.embe.isPlaceholder() && !embeStructure.embe.isTypeSelected()">
+			<div class="rocket-summary rocket-summary-ghost">
+				<div class="invisible"></div>
+				<div class="rocket-si-qualifier">
+				</div>
+				<div class="rocket-simple-commands">
+			
+				</div>
+			</div>
+		</ng-container>
+
+		<ng-container *ngIf="!embeStructure.embe.isPlaceholder() && embeStructure.embe.isTypeSelected()">
+			<div rocketUiStructure class="rocket-summary" 
+						[uiStructure]="embeStructure.uiStructure" [toolbarVisible]="false"
+						rocketSiEntry [siEntry]="embeStructure.embe.siEmbeddedEntry.summaryEntry">
+				<ng-container pre-content>
+					<div class="invisible"></div>
+					<div rocketSiQualifier [siMaskQualifier]="embeStructure.embe.siEntry.qualifier.maskQualifier" [iconImportant]="true" class="rocket-qualifier-btn"></div>
+				</ng-container>
+
+				<ng-container post-content>
+					<div class="rocket-simple-commands">
+						<ng-template *ngFor="let uiContent of embeStructure.uiStructure.model.getMainControlContents()" 
+								rocketUiContent [uiContent]="uiContent"></ng-template>
+								
+						<ng-template *ngFor="let uiContent of embeStructure.uiStructure.model.getAsideContents()" 
+								rocketUiContent [uiContent]="uiContent"></ng-template>
+					
+						<button class="btn btn-warning" (click)="model.open(embeStructure)">
+							<span>{{ 'common_detail_label' | translate }}</span>
+							<i class="fa fa-file"></i>
+						</button>
+					</div>
+				</ng-container>
+			</div>
+		</ng-container>
+	</div>
+</div>

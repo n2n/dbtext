@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'rocket';
+  src:  url('fonts/rocket.eot?y2birh');
+  src:  url('fonts/rocket.eot?y2birh#iefix') format('embedded-opentype'),
+    url('fonts/rocket.ttf?y2birh') format('truetype'),
+    url('fonts/rocket.woff?y2birh') format('woff'),
+    url('fonts/rocket.svg?y2birh#rocket') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.rt {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'rocket' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.rt-check:before {
+  content: "\e900";
+}

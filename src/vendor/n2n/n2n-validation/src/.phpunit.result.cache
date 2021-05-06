@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":306:{a:2:{s:7:"defects";a:2:{s:47:"n2n\bind\marshal\ValidateTest::testAuthBindable";i:4;s:56:"n2n\validation\build\impl\ValidateTest::testAuthBindable";i:3;}s:5:"times";a:2:{s:47:"n2n\bind\marshal\ValidateTest::testAuthBindable";d:0.004;s:56:"n2n\validation\build\impl\ValidateTest::testAuthBindable";d:0.012;}}}

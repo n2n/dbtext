@@ -1,0 +1,46 @@
+<rocket-ui-simple-zone-container [loading]="!user" [title]="'change_password_txt' | translate">
+	<div *ngIf="user" class="rocket-group rocket-simple-group">
+		<div class="rocket-structure-content">
+			<div class="rocket-item">
+				<label for="frm-username">{{ 'username_txt' | translate }}</label>
+				<div class="rocket-structure-content">
+					{{ user.username }}
+				</div>
+			</div>
+
+			<div class="rocket-item">
+				<label for="frm-password">{{ 'password_txt' | translate }}</label>
+				<div class="rocket-structure-content">
+					<input id="frm-username" class="form-control" type="password" [(ngModel)]="password" minlength="3" maxlength="255" />
+
+					<rocket-ui-message *ngFor="let message of getErrorMessages('password')"
+							[message]="message"></rocket-ui-message>
+				</div>
+			</div>
+
+			<div class="rocket-item">
+				<label for="frm-password">{{ 'password_confirmation_txt' | translate }}</label>
+				<div class="rocket-structure-content">
+					<input id="frm-username" class="form-control" type="password" [(ngModel)]="passwordConfirmation" minlength="3" maxlength="255" />
+
+					<rocket-ui-message *ngFor="let message of getErrorMessages('passwordConfirmation')"
+							[message]="message"></rocket-ui-message>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<ng-container main-zone-commands *ngIf="user">
+		<button class="btn btn-success rocket-important" (click)="save()">
+			<span *ngIf="saving" class="spinner-grow spinner-grow-sm" role="status"></span>
+
+			{{ 'save_txt' | translate }}
+		</button>
+
+		<button class="btn btn-secondary" (click)="cancel()">
+			{{ 'cancel_txt' | translate }}
+		</button>
+	</ng-container>
+
+</rocket-ui-simple-zone-container>

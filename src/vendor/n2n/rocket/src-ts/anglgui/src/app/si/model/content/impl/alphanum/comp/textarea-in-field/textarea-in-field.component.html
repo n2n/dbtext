@@ -1,0 +1,6 @@
+<textarea class="form-control" [(ngModel)]="value"
+		[maxlength]="model.getMaxlength()"
+		(focus)="model.onFocus()" (blur)="model.onBlur()">
+</textarea>
+
+<rocket-field-messages *ngIf="model.getMessages().length > 0" [model]="model"></rocket-field-messages>

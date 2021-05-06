@@ -1,0 +1,82 @@
+<?php
+/*
+ * Copyright (c) 2012-2016, Hofmänner New Media.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This file is part of the N2N FRAMEWORK.
+ *
+ * The N2N FRAMEWORK is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Lesser General Public License as published by the Free Software Foundation, either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * N2N is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details: http://www.gnu.org/licenses/
+ *
+ * The following people participated in this project:
+ *
+ * Andreas von Burg.....: Architect, Lead Developer
+ * Bert Hofmänner.......: Idea, Frontend UI, Community Leader, Marketing
+ * Thomas Günther.......: Developer, Hangar
+ */
+namespace n2n\l10n\impl;
+
+use n2n\l10n\Lstr;
+use n2n\l10n\DynamicTextCollection;
+use n2n\l10n\N2nLocale;
+
+class TextCodeLstr extends Lstr {
+	private $code;
+	private $args;
+	private $num;
+	private $moduleNamespaces;
+	private $prependedLangNamespaces = [];
+	private $langNamespaces = [];
+	
+	/**
+	 * @param string $code
+	 * @param array|null $args
+	 * @param int|null $num
+	 * @param string[] $moduleNamespaces
+	 */
+	function __construct(string $code, ?array $args, ?int $num, array $moduleNamespaces) {
+		$this->code = $code;
+		$this->args = $args;
+		$this->num = $num;
+		$this->moduleNamespaces = $moduleNamespaces;
+	}
+	
+	/**
+	 * @param string $langNamespace
+	 * @param bool $prendend
+	 * @return \n2n\l10n\impl\TextCodeLstr
+	 */
+	function addLangNs(string $langNamespace, bool $prendend = false) {
+		if ($prendend) {
+			$this->prependedLangNamespaces[] = $langNamespace;
+		} else {
+			$this->langNamespaces[] = $langNamespace;
+		}
+		
+		return $this;
+	}
+	
+	public function t(N2nLocale $n2nLocale): string {
+		$dtc = new DynamicTextCollection($this->moduleNamespaces, $n2nLocale);
+		foreach ($this->prependedLangNamespaces as $langNamespace) {
+			$dtc->addLangNamespace($langNamespace, true);
+		}
+		foreach ($this->langNamespaces as $langNamespace) {
+			$dtc->addLangNamespace($langNamespace, false);
+		}
+		return $dtc->translate($this->code, $this->args, $this->num);
+	}
+	
+	public function __toString(): string {
+		try {
+			return $this->t(N2nLocale::getDefault());
+		} catch (\Throwable $e) {
+			return $e->getMessage();
+		}
+	}
+}

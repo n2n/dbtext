@@ -1,0 +1,8 @@
+<div *ngIf="messages.length > 0" class="alert alert-danger">
+	@Timo: Design das!
+	@tomekk: Style das!
+
+	<rocket-ui-message *ngFor="let message of messages" [message]="message"></rocket-ui-message>
+</div>
+
+<rocket-ui-container [uiContainer]="uiContainer" class="rocket-container"></rocket-ui-container>

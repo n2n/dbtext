@@ -1,0 +1,20 @@
+
+<ng-container *ngFor="let item of model.getChildUiStructureMap() | keyvalue">
+
+	<ng-container *ngIf="item.value.visible">
+		<div *ngIf="model.isKeyActive(item.key); else activateButton" rocketUiStructure [uiStructure]="item.value"></div>
+		
+		<ng-template #activateButton>
+			<div rocketUiStructure [uiStructure]="item.value" [contentVisible]="false" [toolbarVisible]="false">
+				<ng-container pre-content>
+					<button class="rocket-enabler" type="button" (click)="model.activateKey(item.key)">
+						<i class="fa fa-globe-americas mr-2"></i>
+						<span>{{ model.getLabelByKey(item.key) }}</span> 
+						{{ 'activate_txt' | translate }}.
+					</button>
+				</ng-container>
+			</div>
+		</ng-template>
+
+	</ng-container>
+</ng-container>

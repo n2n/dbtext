@@ -1,0 +1,29 @@
+<ng-container *ngIf="inputAvailable">
+	<input #fileInput type="file" (change)="change($event)" [accept]="getAcceptStr()" [disabled]="loading" />
+
+	<span>({{ 'max_label'| translate }} {{ getPrettySize() }})</span>
+</ng-container>
+
+<ng-container *ngIf="currentSiFile">
+	<a *ngIf="currentSiFile.url" [href]="currentSiFile.url" class="file-in-item" rocketUiGlightBox [glightboxEnabled]="!!currentSiFile.thumbUrl">
+		<ng-container *ngIf="currentSiFile.thumbUrl; else nothumb">
+			<img [class.sr-only]="!imgLoaded" [src]="currentSiFile.thumbUrl"
+					[alt]="currentSiFile.name" height="30" (load)="imgLoaded = true" />
+		</ng-container>
+
+		<ng-template #nothumb>{{ currentSiFile.name }}</ng-template>
+	</a>
+	
+	<span *ngIf="!currentSiFile.url" class="file-in-item">{{ currentSiFile.name }}</span>
+</ng-container>
+
+<button *ngIf="resizable" (click)="editImage()" class="btn btn-secondary">
+	<i class="fa fa-crop"></i> 
+</button>
+<button *ngIf="removable" (click)="removeCurrent()" class="btn btn-secondary" title="{{ 'common_delete_label' | translate }}">
+	<i class="fa fa-trash-alt"></i>
+</button>
+
+<div *ngIf="loading" class="rocket-loader"></div>
+
+<rocket-upload-result-message [uploadResult]="uploadResult" [messageFieldModel]="model"></rocket-upload-result-message>

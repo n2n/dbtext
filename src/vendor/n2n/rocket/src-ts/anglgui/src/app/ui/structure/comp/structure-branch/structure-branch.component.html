@@ -1,0 +1,24 @@
+
+<!--
+<ng-template *ngIf="uiContent" rocketUiContent [uiContent]="uiContent"></ng-template>
+-->
+
+<ng-container *ngFor="let childNode of childNodes">
+	<ng-container *ngIf="childNode.uiStructure">
+		<div *ngIf="childNode.uiStructure.visible && !childNode.uiStructure.disabled" 
+				rocketUiStructure [uiStructure]="childNode.uiStructure"></div>
+	</ng-container>
+
+	<ng-container *ngIf="childNode.tabContainer">
+		<ul class="rocket-main-group-nav nav nav-tabs">
+			<ng-container *ngFor="let tab of childNode.tabContainer.availableTabs">
+				<li class="nav-item" (click)="tab.visible = true">
+					<a class="nav-link" [class.active]="childNode.tabContainer.activeTab === tab">{{ tab.label }}</a>
+				</li>
+			</ng-container>
+		</ul>
+
+		<div *ngIf="childNode.tabContainer.activeTab" 
+				rocketUiStructure [uiStructure]="childNode.tabContainer.activeTab" [labelVisible]="false"></div>
+	</ng-container>
+</ng-container>

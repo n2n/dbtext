@@ -1,0 +1,27 @@
+.rocket-mail {
+	background: $gray-400;
+	padding: .5rem;
+	margin-bottom: 0.5rem;
+}
+
+.rocket-mail-header {
+	padding: 0.5rem 0;
+}
+
+.rocket-mail-subject {
+	margin-bottom: 0;
+}
+
+.rocket-mail-properties {
+	margin-bottom: 0;
+}
+
+.rocket-mail-message {
+	> pre {
+		background: $white;
+		font-family: $font-family-monospace;
+		padding: 1rem;
+		margin-bottom: 0;
+		white-space: pre-wrap;
+	}
+}

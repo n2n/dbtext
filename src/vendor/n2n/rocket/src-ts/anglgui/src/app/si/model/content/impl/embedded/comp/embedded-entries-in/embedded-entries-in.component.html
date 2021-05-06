@@ -1,0 +1,23 @@
+<div>
+	<div *ngFor="let embeStructure of embeStructures">
+		<rocket-si-add-past *ngIf="!toOne" [disabled]="maxReached" [obtainer]="obtainer"
+				(newEntry)="model.addBefore(embeStructure, $event)"></rocket-si-add-past>	
+
+		<rocket-embedded-entry [embeStructure]="embeStructure">
+			<div rocketUiStructureToolbar class="rocket-simple-commands">
+				<button class="btn btn-danger" (click)="model.remove(embeStructure)">
+					<span>{{ 'common_delete_label' | translate }}</span>
+					<i class="fa fa-trash-alt"></i>
+				</button>
+				<button class="btn btn-success" [class.active]="copyPool.isCopied(embeStructure.embe)" 
+						(click)="copyPool.toggle(embeStructure.embe)">	
+					<span>{{ 'common_copy_label' | translate }}</span>
+					<i class="fa fa-copy"></i>
+				</button>
+			</div>
+		</rocket-embedded-entry>
+	</div>
+	
+	<rocket-si-add-past *ngIf="!toOne || !maxReached" [disabled]="maxReached" [obtainer]="obtainer"
+			(newEntry)="model.add($event)"></rocket-si-add-past>
+</div>

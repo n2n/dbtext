@@ -1,0 +1,242 @@
+.rocket-image-resizer-container {
+	display: block;
+	background-color: $white;
+	padding: 1rem;
+	> form {
+		display: grid;
+		grid-template-columns: calc(100vw - 43rem) 16rem;
+		grid-gap: 2rem 2rem;
+	}
+}
+
+#rocket-image-resizer {
+	position: relative;
+}
+
+.rocket-image-resizer-images-panel {
+	padding: 0 0 0 1rem;
+}
+
+.rocket-image-resizer-images-original {
+	margin-bottom: 2rem;
+}
+
+.rocket-image-resizer-images-generated {
+	
+}
+
+.rocket-image-resizer-size-selector {
+	border: 1px dotted $primary;
+}
+
+.rocket-image-resizer-size-selector:hover {
+	cursor: move;
+}
+
+.rocket-image-resizer-size-selector > span {
+	border: 1px solid $primary;
+	width: 20px;
+	height: 20px;
+	display: block;
+	-ms-filter: "alpha(opacity=40)";
+	background-color: black;
+	background-color: rgba(0,0,0,0.4);
+
+}
+
+.rocket-image-resizer-size-selector > span:hover {
+	cursor: se-resize;
+}
+
+.rocket-image-resizer-toolbar {
+	background-color: $gray-200;
+	width: 100%;
+}
+
+.rocket-image-resizer-toolbar > ul {
+	list-style: none;
+	padding: 0.571429em;
+}
+
+.rocket-image-resizer-toolbar > ul > li {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.rocket-image-resizer-toolbar > ul > li.rocket-low-resolution span {
+	background-color: $danger;
+	padding: 0.2em 0.4em;
+	color: $white;
+}
+
+.rocket-image-resizer-toolbar > ul > li label {
+	font-weight: bold;
+	margin-right: 0.5em;
+}
+
+.rocket-low-resolution-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 50;
+	text-align: center;
+	> span {
+		display: inline-block;
+		background-color: $danger;
+		color: $white;
+		margin: 0 auto;
+		padding: 0.5rem 2rem;
+	}
+}
+
+.rocket-image-resizer-fixed-ratio {
+	display: inline-block;
+}
+
+.rocket-fixed-ratio-container {
+	text-align: center;
+	padding: 0.5rem;
+	font-weight: bold;
+
+}
+
+// mask
+.rocket-image-resizer-content-overlay {
+	background-color:black;
+	-ms-filter: "alpha(opacity=50)";
+	opacity: 0.5;
+	width: 100%;
+	height: 100%;
+	position:absolute;
+	top: 0px;
+	left: 0px;
+}
+
+
+// image dimensions
+
+ul.rocket-image-dimensions,
+ul.rocket-image-dimensions ul {
+	list-style: none;
+	padding: 0;
+}
+
+.rocket-image-dimensions > .rocket-image-version {
+	margin-bottom: 10px;
+}
+
+.rocket-image-resizer-images-original .btn.active,
+.rocket-image-version.active {
+	outline: 4px solid $gray-300;
+}
+
+.rocket-image-version > ul {
+	display: none;
+}
+
+.rocket-image-version.open > ul {
+	display: block;
+	margin-top: -$input-btn-border-width;
+}
+
+.rocket-image-version > ul > li {
+	margin-bottom: -$input-btn-border-width;
+}
+
+.rocket-image-version-controls {
+	display: flex;
+	flex-wrap: nowrap;
+	width: 100%;
+	flex-basis: 100%;
+}
+
+
+.rocket-image-resizer-images-original .btn:not(:disabled):not(.disabled).active,
+.rocket-image-version .btn:not(:disabled):not(.disabled).active {
+	position: relative;
+	z-index: 0;
+	box-shadow: none;
+	background: $gray-300;
+}
+
+.rocket-image-resizer-images-original .btn:not(:disabled):not(.disabled).active:first-child:before,
+.rocket-image-version .btn:not(:disabled):not(.disabled).active:first-child:before {
+	content: "";
+	position: absolute;
+	width: 4px;
+	background: $primary;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	z-index: -1;
+}
+
+.rocket-image-version-controls > .btn + .btn {
+	margin-left: -$input-btn-border-width;
+}
+
+.rocket-image-resizer-btn-label {
+	font-size: $font-size-sm;
+}
+
+.rocket-image-resizer-btn-label-infos {
+	color: $text-muted;
+	font-size: $font-size-xs;
+}
+
+.rocket-image-resizer-thumb-image {
+	$chess-opacity: 25%;
+	$chess-size:	10px;
+	flex: 0 0 50px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid $gray-300;
+	position: relative;
+	background-image: linear-gradient(45deg, rgba($black, 0.2) $chess-opacity, transparent $chess-opacity), linear-gradient(-45deg, rgba($black, 0.2) $chess-opacity, transparent $chess-opacity), linear-gradient(45deg, transparent (100% - $chess-opacity), rgba($black, 0.2) (100% - $chess-opacity)), linear-gradient(-45deg, transparent (100% - $chess-opacity), rgba($black, 0.2) (100% - $chess-opacity));
+	background-size: $chess-size $chess-size;
+	background-position: 0 0, 0 $chess-size/2, $chess-size/2 -#{$chess-size/2}, -$chess-size/2 0px;
+
+	.sr-only {
+		position: absolute !important;
+		padding: 0 !important;
+		margin: -1px !important; // Fix for https://github.com/twbs/bootstrap/issues/25686
+		overflow: hidden !important;
+		clip: rect(0, 0, 0, 0) !important;
+		white-space: nowrap !important;
+		border: 0 !important;
+	}
+
+	rocket-image-preview,
+	.rocket-image-preview {
+		position: relative;
+		z-index: 0;
+		&:after {
+			content: "";
+			position: absolute;
+			background: $black;
+			opacity: 0.2;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			z-index: -1;
+		}
+	}
+}
+
+.rocket-fixed-ration-container {
+	text-align: center;
+	padding: 0.5rem 0;
+	> label {
+		font-weight: bold;
+		margin-right: 0.5rem;
+	}
+}
+
+
+.cropper-canvas {
+	background: rgba($black,0.1);
+}

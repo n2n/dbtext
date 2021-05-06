@@ -1,0 +1,3 @@
+<rocket-ui-layer *ngFor="let uiLayer of uiContainer.getLayers()" [uiLayer]="uiLayer"
+		[class.rocket-main-layer]="uiLayer.main"
+		[class.rocket-layer]="!uiLayer.main"></rocket-ui-layer>

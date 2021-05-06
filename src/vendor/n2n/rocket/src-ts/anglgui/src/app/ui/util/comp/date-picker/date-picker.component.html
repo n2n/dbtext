@@ -1,0 +1,12 @@
+
+<div class="input-group">
+	<input type="text"
+			class="form-control"
+			#dp="bsDatepicker"
+			bsDatepicker
+			[ngModel]="date" (ngModelChange)="selectDate($event)" [bsConfig]="bsConfig" placement="top left">
+
+	<div class="input-group-append">
+		<button class="btn btn-secondary" (click)="dp.toggle()" type="button"><i class="fas fa-beer"></i></button>
+	</div>
+</div>

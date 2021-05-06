@@ -1,0 +1,6 @@
+<rocket-ui-select [options]="options" [(value)]="value" [optional]="optional" 
+		[placeholderLabel]="model.getEmptyLabel() || ((optional ? 'no_selection_txt' : 'please_select_txt') | translate)" 
+		[resetLabel]="model.getEmptyLabel() || ('remove_selection_txt' | translate)"></rocket-ui-select>
+<div>
+	<rocket-field-messages *ngIf="model.getMessages().length > 0" [model]="model"></rocket-field-messages>
+</div>

@@ -1,0 +1,19 @@
+{
+	"name": "n2n/n2n-persistence",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.0",
+        "n2n/n2n-io": "master-dev",
+        "n2n/n2n-reflection": "master-dev",
+        "n2n/n2n-util": "master-dev"
+    },
+	"require-dev" : {
+        "n2n/n2n": "master-dev",
+        "n2n/n2n-web": "master-dev",
+        "n2n/n2n-impl-persistence-orm": "master-dev",
+        "n2n/n2n-impl-persistence-meta": "master-dev", 
+        "n2n/n2n-impl-web-ui": "master-dev", 
+		"phpunit/phpunit" : "^7.5"
+	}
+}

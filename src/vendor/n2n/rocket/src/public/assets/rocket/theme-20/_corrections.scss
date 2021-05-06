@@ -1,0 +1,62 @@
+/**
+ * File to correct bootstrap styles
+ */
+
+.breadcrumb {
+    margin-bottom: 0;
+    font-size: $font-size-sm;
+}
+
+.breadcrumb-item {
+    > a {
+        color: $body-color;
+        &:hover {
+            color: $primary;
+        }
+    }
+    &:before {
+        font-family: fontawesome;
+    }
+}
+
+.table {
+    background: white;
+}
+
+h1, .h1 {
+    font-weight: normal;
+}
+
+// .btn {
+//    // font-size: $font-size-sm;
+//     > i {
+//         font-size: $font-size-base;
+//     }
+// }
+
+@each $color, $value in $theme-colors {
+    .btn-#{$color} {
+        border-color: darken($value, 15);
+    }
+}
+
+.rocket-simple-commands .dropdown-menu { 
+    right: 0;
+    left: auto;
+}
+
+.rocket-simple-commands .dropdown-toggle::after {
+    display: none;
+}
+
+
+.form-check-input {
+    top: 0.5rem;
+}
+
+// 1. reset for moz firefox on mac
+@supports (-moz-osx-font-smoothing: auto) {
+    .form-check-input {
+        top: 0.35rem;
+    }
+}

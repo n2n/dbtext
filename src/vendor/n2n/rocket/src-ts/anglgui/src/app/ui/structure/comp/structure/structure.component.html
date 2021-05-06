@@ -1,0 +1,56 @@
+<ng-container *ngIf="uiStructure.disposed">
+	 disposed!!!
+</ng-container>
+
+<ng-container *ngIf="labelVisible && getLabel()">
+	<label>{{ getLabel() }}</label>
+</ng-container>
+
+<div *ngIf="hasCustomToolbar() || (toolbarVisible && toolbarUiStructures.length > 0) || (asideVisible && asideUiContents.length > 0)" 
+		class="rocket-toolbar" [class.rocket-massive]="isToolbarMassive()">
+
+	<ng-content select="[rocketUiStructureToolbar]"></ng-content>
+
+	<ng-container *ngIf="toolbarVisible">
+		<ng-container *ngFor="let toolbarUiStructure of toolbarUiStructures">
+			<div rocketUiStructure [uiStructure]="toolbarUiStructure"></div>		
+		</ng-container>
+	</ng-container>
+
+	<ng-container *ngIf="asideVisible">
+		<ng-container *ngFor="let asideUiContent of asideUiContents">
+			<ng-template rocketUiContent [uiContent]="asideUiContent"></ng-template>		
+		</ng-container>
+	</ng-container>
+</div>
+
+<ng-content select="[pre-content]"></ng-content>
+
+<ng-container *ngIf="contentVisible">
+	<div *ngIf="getType()" class="rocket-structure-content">
+		<ng-template [ngTemplateOutlet]="structureContent"></ng-template>
+	</div>
+	
+	<ng-container *ngIf="!getType()">
+		<ng-template [ngTemplateOutlet]="structureContent"></ng-template>
+	</ng-container>
+	
+	<ng-template #structureContent>
+		<div *ngIf="uiStructure.disabled" class="rocket-inactive">{{ 'disabled_txt' | translate }}</div>
+		
+		<div *ngIf="!loaded && !uiStructure.disabled" class="rocket-loader"></div>
+		
+		<ng-container *ngIf="loaded && !uiStructure.disabled">
+			
+			<ng-template *ngIf="uiContent" rocketUiContent [uiContent]="uiContent"></ng-template>
+			<!--
+			<rocket-ui-structure-branch *ngIf="uiStructure.hasContentChildren()" [uiStructure]="uiStructure">
+			</rocket-ui-structure-branch>
+			-->
+		</ng-container>
+	</ng-template>
+</ng-container>
+
+
+
+<ng-content select="[post-content]"></ng-content>

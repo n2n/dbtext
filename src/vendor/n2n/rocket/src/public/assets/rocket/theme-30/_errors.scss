@@ -1,0 +1,62 @@
+// (error) messages
+
+.rocket-messages {
+	margin: 1rem 0;
+}
+
+// errors in forms
+
+.rocket-error {
+	outline: 3px solid $red;
+	position: relative;
+	background: rgba($red, 0.1);
+}
+
+.rocket-highlight-remember {
+	outline: 3px solid transparent;	
+	transition: outline 1s;
+}
+
+.rocket-error-index-entry {
+	background: $white;
+	border-bottom: 1px solid $danger;
+	padding: 0.5rem 2rem 0.5rem 1rem;
+	position: relative;
+	cursor: pointer;
+	&:after {
+		position: absolute;
+		top: 0.75rem;
+		right: 1rem;
+		color: $danger;
+		content: '\f0e7';
+		font-weight: bold;
+		font-family: $font-name-icons;
+		font-size: $font-size-lg;
+	}
+	&:hover {
+		background-color: $danger;
+		color: white;
+		> a {
+			color: $white;
+		}
+	}
+	&:hover:after {
+		color: white;
+	}
+	> .rocket-error-index-message {
+		font-weight: bold;
+	}
+	> a {
+		font-size: $font-size-sm;
+		color: $body-color
+	}
+}
+
+.rocket-message-error > div {
+	font-size: $font-size-sm;
+	color: $danger;
+}
+
+.rocket-has-error > label {
+	color: $danger;
+}

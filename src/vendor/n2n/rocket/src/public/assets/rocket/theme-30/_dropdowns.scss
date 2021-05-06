@@ -1,0 +1,85 @@
+
+
+.rocket-button-control {
+	.dropdown-subs,
+	.dropdown > div {
+		position: absolute;
+		right: 0;
+		margin: $context-menu-offset-sm;
+		transform: translateX($context-menu-offset-sm);
+		background:	$white;
+		padding: 1rem;
+		filter: $context-menu-drop-shadow-sm;
+		z-index: $context-menu-z-index;
+		
+		&:after {
+			content: "";
+			position: absolute;
+			top: -$context-menu-arrow-size-sm;
+			right: $context-menu-arrow-size-sm;
+			transform: translateX(-50%);
+			border-width: 0 $context-menu-arrow-size-sm $context-menu-arrow-size-sm;
+			border-style: solid;
+			border-color: $white transparent;
+		}
+		div {
+			&:not(:last-child) {
+				> .rocket-button-control > .btn,
+				> .btn {
+					border-bottom: 1px solid $input-border-color;
+				}
+			}
+			> .rocket-button-control > .btn,
+			> .btn {
+				display: flex;
+				padding-left: 1rem;
+				padding-right: 1rem;
+				width: 100%;
+				width: calc(100% + 2rem);
+				margin-left: -1rem;
+				background: $white;
+				border: none;
+				// justify-content: space-between;
+				align-items: baseline;
+				color: $body-color;
+				text-align: left;
+				font-weight: bold;
+				> i {
+					width: 1.2rem;
+					text-align: left;
+				}
+				> i:not(:first-child) {
+					margin-left: .5rem;
+				}
+				&:hover,
+				&:focus {
+					background: $gray-200;
+				}
+			}
+		}
+	}
+	&.rocket-fixed-width .dropdown > div {
+		width: 300px;
+	}
+
+	.dropdown > .dropdown-subs {
+		width: auto;
+	}
+
+	.dropdown > .dropdown-subs > div > .rocket-button-control > .btn {
+		display: flex;
+		font-weight: normal;
+		i {
+			order: -1;
+			margin-left: 0 !important;
+			margin-right: 0.5em;
+		}
+	}
+
+	.dropdown-subs > div:first-child > .rocket-button-control > .btn {
+		margin-top: -1rem;
+	}
+	.dropdown-subs > div:last-child > .rocket-button-control > .btn {
+		margin-bottom: -1rem;
+	}
+}

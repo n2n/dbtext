@@ -1,0 +1,19 @@
+/* @import '~cropperjs/dist/cropper.css'; */
+
+/*
+button {
+	background: url('https://media4.giphy.com/headers/jmckeehen/s2wy7iphPP98.gif');
+}*/
+
+.rocket-image-preview {
+	max-height: 50px; 
+	height: 50px; 
+	width: 50px; 
+	max-width: 50px; 
+	overflow: hidden;
+}
+
+.rocket-img-loading {
+	visibility: hidden;
+}
+

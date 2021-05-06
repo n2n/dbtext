@@ -1,0 +1,9 @@
+<label class="input-group">
+	<div class="input-group-prepend">
+		<span class="input-group-text"><i class="fa fa-search"></i></span>
+	</div>
+	<input type="text" class="form-control" [(ngModel)]="value" [placeholder]="placeholder" maxlength="100" />
+	<div *ngIf="value" class="input-group-append">
+		<button class="btn btn-primary" type="button" (click)="value = null">{{ 'reset_txt' | translate }}</button>
+	</div>
+</label>

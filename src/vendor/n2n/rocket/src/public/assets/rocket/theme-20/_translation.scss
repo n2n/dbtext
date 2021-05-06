@@ -1,0 +1,277 @@
+.rocket-impl-translation-status {
+	display: inline-block;
+	padding-right: 1rem;
+	font-size: $font-size-sm;
+	> label {
+		padding-right: 0.5rem;
+		font-weight: bold;
+		> i {
+			padding-right: 0.5rem;
+			font-weight: normal;
+		}
+	}
+}
+
+
+/**
+ * common language menu 
+ */
+.rocket-impl-translation-status-menu,
+.rocket-impl-translation-menu {
+    position: absolute;
+    right: 0;
+	width: 300px;
+    background: white;
+    
+    padding: 1rem;
+    box-shadow: $box-box-shadow;
+	> ul {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+		width: 100%;
+		> li {
+			border-bottom: 1px solid $input-border-color;
+		}
+		> li:last-child {
+			border-bottom: none;
+		}
+	}
+}
+
+.rocket-impl-translation-status-menu {
+	border-bottom: 3px solid $primary;
+	z-index: 60;
+    > ul > li {
+        > a.btn {
+			display: block;
+			position: relative;
+            color: $body-color;
+            text-align: left;
+            padding-left: 0;
+            padding-right: 2rem;
+            font-weight: bold;
+            i {
+				position: absolute;
+				top: 0.25rem;
+				right: 0;
+                font-size: $font-size-lg;
+            }
+        }
+    }
+    > ul > li:last-child {
+        border-bottom: none;
+    }
+}
+
+
+.rocket-impl-translation-manager {
+	text-align: right;
+	position: relative;
+}
+
+.rocket-impl-translation-menu {
+	z-index: 10;
+	> ul > li {
+		text-align: left;
+		> label {
+			display:block;
+			position: relative;
+			margin: 0.75rem 0;
+			padding-right: 2rem;
+			&:after {
+				position: absolute;
+				top: 0;
+				right: 0;
+				font-family: fontawesome;
+				padding-left: 5rem;
+				font-weight: normal;
+				content: "\f068";
+			}
+			input {
+				display: none;
+			}
+		}
+	}
+	> ul > li.rocket-active {
+		font-weight: bold;
+		> label:after {
+			content: "\f067";
+		}
+	}
+	> ul > li.rocket-active.rocket-disabled {
+		> label:after {
+			content: "\f023";
+		}
+	}
+}
+
+
+.rocket-impl-tooltip {
+	text-align: left;
+	padding-top:1rem;
+	font-size: $font-size-sm;
+}
+
+/**
+ * labels
+ */
+
+.rocket-impl-translatable {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+}
+
+.rocket-impl-translation {
+	position: relative;
+	// must be overwritten in Table Cells
+	min-height: 2.5rem;
+	margin-bottom: 0.5rem;
+	> .rocket-required > label::after {
+		content: "";
+	}
+}
+
+// general translation label style, as used in groups...
+.rocket-impl-locale-label  {
+	width: 100%;
+	padding: 0.5rem 0;
+	color: $primary;
+	border-top: 1px solid $primary;
+	font-weight: normal;
+	margin: 2rem 0 1rem;
+	font-weight: bold;
+}
+
+// translation in entry
+.rocket-item > .rocket-structure-content > .rocket-impl-translatable > .rocket-impl-translation {
+	position: relative;
+	display: grid;
+	grid-template-columns:  1fr auto;
+	.rocket-impl-locale-label {
+		position: absolute;
+		top: 0.625rem;
+		left: -6rem;
+		width: 5rem;
+		padding: 0;
+		border: none;
+		font-weight: normal;
+		margin: 0;
+		text-align: right;
+		font-size: $font-size-sm;
+		color: $text-muted;
+	}
+	> .rocket-impl-translation-copy-control {
+		grid-column-start: 2;
+		grid-column-end: 3;
+	}
+	> .rocket-field {
+		padding: 0;
+		
+		> .rocket-structure-content {
+			margin: 0;
+		}
+	}
+	
+}
+
+// translation in entry: group
+
+.rocket-group,
+.rocket-panel {
+	> .rocket-structure-content > .rocket-impl-translatable > .rocket-impl-translation   {
+		> .rocket-impl-translation-copy-control {
+			position: absolute;
+			top: 2.5rem;
+			right: 0;
+		}
+	}
+}
+
+.rocket-impl-enabler {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border: 1px dashed $input-border-color;
+	text-align: left;
+	vertical-align: top;
+	background-color: $gray-200;
+}
+
+
+.rocket-impl-translation-copy-control > .rocket-impl-translation-copy-menu {
+	position: absolute;
+	right: 0;
+	width: 300px;
+	background: white;
+	padding: 1rem;
+	box-shadow: $box-box-shadow;
+	z-index: 5;
+	> ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		> li > a {
+			position: relative;
+			display: block;
+			font-weight: bold;
+			border-bottom: 1px solid $gray-400;
+			padding: 0.5rem 0;
+
+			&:hover {
+				background-color: $gray-200;
+			}
+			> i {
+				position: absolute;
+				top: 1rem;
+				right: 0;
+			}
+		}
+	}
+}
+
+/**
+ * translations in tables
+ */
+
+td {
+	.rocket-impl-translatable {
+		width: auto;
+	}
+	.rocket-impl-translation {
+		// unsets the min-height of the entry
+		min-height: unset;
+		padding: 0;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		margin: 0;
+		> .rocket-impl-locale-label {
+			position: static;
+			grid-column-start: 2;
+			grid-column-end: 3;
+			font-size: $font-size-xs;
+			color: $gray-600;
+			width: auto;
+			white-space: nowrap;
+			padding: 0.325rem 0 0 0;
+			border: none;
+			margin: 0;
+		}
+		> .rocket-structure-content {
+			grid-row-start: 1;
+			grid-column-start: 1;
+			grid-column-end: 2;
+			padding: 0;
+		}
+		> .rocket-structure-content:not(:empty) {
+			padding: 0 0.5rem 0 0;			
+		}
+
+	}
+
+}
+

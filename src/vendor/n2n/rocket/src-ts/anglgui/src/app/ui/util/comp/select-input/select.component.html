@@ -1,0 +1,26 @@
+<div dropdown class="dropdown"> <!-- container="body" -->
+	<button dropdownToggle	[id]="id" class="btn btn-secondary dropdown-toggle"	type="button"	[attr.aria-controls]="id" [disabled]="disabled"
+			[class.font-italic]="empty">
+		<i *ngIf="selectedIconClass" [class]="selectedIconClass"></i>
+		{{ selectedLabel }}
+		<span *ngIf="selectedLabelAddition" class="ml-1 text-muted font-weight-light">
+			{{ selectedLabelAddition }}
+		</span>
+	</button>
+	<div class="dropdown-menu" *dropdownMenu [attr.aria-labelledby]="id" role="menu">
+		<button *ngIf="value !== null && optional" class="dropdown-item font-italic" (click)="selectValue(null)">
+			{{ resetLabel }} <ng-container *ngIf="!resetLabel">&nbsp;</ng-container>
+		</button>
+		
+		<ng-container *ngFor="let option of options">
+			<button class="dropdown-item" (click)="selectValue(option.value)"
+					[class.active]="value === option.value" [disabled]="disabled">
+				<i *ngIf="option.iconClass" [class]="option.iconClass"></i>
+				{{ option.label }}
+				<span *ngIf="option.labelAddition" class="ml-1 text-muted font-weight-light">
+					{{ option.labelAddition}}
+				</span>
+			</button>
+		</ng-container>
+	</div>
+</div>
