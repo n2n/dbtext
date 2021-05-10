@@ -164,11 +164,28 @@ class GroupData extends ObjectAdapter {
 		return $this->listeners;
 	}
 
+	/**
+	 * @param string $key
+	 * @param array $args
+	 * @return bool
+	 */
 	public function equalsPlaceholders(string $key, array $args) {
 		if (!isset($this->data[self::PLACEHOLDER_JSON_KEY]) || !isset($this->data[self::PLACEHOLDER_JSON_KEY][$key])) {
 			return false;
 		}
 
 		return array_keys($args) == array_keys((array) $this->data[self::PLACEHOLDER_JSON_KEY][$key]);
+	}
+
+	/**
+	 * @throws \OutOfBoundsException
+	 * @param string $key
+	 * @return string[]
+	 */
+	public function getPlaceholderNamesOfKey(string $key) {
+		if (!$this->has($key)) {
+			throw new \OutOfBoundsException('The key "' . $key . '" does not exist');
+		}
+		return array_keys((array) $this->data[GroupData::PLACEHOLDER_JSON_KEY][$key]);
 	}
 }
