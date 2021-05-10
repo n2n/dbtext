@@ -107,7 +107,7 @@ class GroupedDbtextCollection implements DbtextCollection {
 	 * @see \dbtext\model\DbtextCollection::getKeys()
 	 */
 	public function getKeys(): array {
-		if (1 == count($this->dbtextCollections)) {
+		if (1 === count($this->dbtextCollections)) {
 			return reset($this->dbtextCollections)->getKeys();
 		}
 
