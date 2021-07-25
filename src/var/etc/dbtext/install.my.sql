@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `dbtext_group` (
   `namespace` varchar(255) NOT NULL,
   `label` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`namespace`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Daten Export vom Benutzer nicht ausgewählt
 -- Exportiere Struktur von Tabelle n2n_rocket_playground.dbtext_text
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `dbtext_text` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `key_group_namespace` (`key`,`group_namespace`),
   KEY `dbtext_text_index_1` (`group_namespace`)
-) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4;
 
 -- Daten Export vom Benutzer nicht ausgewählt
 -- Exportiere Struktur von Tabelle n2n_rocket_playground.dbtext_text_t
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `dbtext_text_t` (
   `text_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `n2n_locale_text_id` (`text_id`,`n2n_locale`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 -- Daten Export vom Benutzer nicht ausgewählt
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
