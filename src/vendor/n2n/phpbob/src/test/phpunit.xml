@@ -1,7 +1,0 @@
-<phpunit bootstrap="bootstrap.php">
-	<testsuites>
-	    <testsuite name="holeradio">
-	      <directory>.</directory>
-	    </testsuite>
-  	</testsuites>
-</phpunit>

@@ -1,3 +1,0 @@
-# hangar-api
-
-todo

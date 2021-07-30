@@ -1,4 +1,0 @@
-<ng-container *ngIf="model.getSrcDoc()">
-	<rocket-ui-iframe [srcDoc]="model.getSrcDoc()" [(formData)]="formData"></rocket-ui-iframe>
-</ng-container>
-<rocket-field-messages *ngIf="model.getMessages().length > 0" [model]="model"></rocket-field-messages>
