@@ -128,7 +128,7 @@ class DbtextService implements RequestScoped {
 		if ($args === null) return $text;
 
 		foreach ($args as $argKey => $argValue) {
-			$text = preg_replace('/(^|\s)' . preg_quote(ucfirst($argKey)) . '(|\s)/', ' ' . $argValue . ' ', $text);
+			$text = preg_replace('/(^|\s)' . preg_quote(StringUtils::pretty($argKey)) . '(|\s)/', ' ' . $argValue . ' ', $text);
 		}
 
 		$text = trim($text);
