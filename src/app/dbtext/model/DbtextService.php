@@ -124,11 +124,11 @@ class DbtextService implements RequestScoped {
 	 * @return string
 	 */
 	public static function prettyKey(string $key, array $args = null): string {
-		$text = StringUtils::pretty(TextCollection::implode($key));
+		$text = ' ' . StringUtils::pretty(TextCollection::implode($key)) . ' ';
 		if ($args === null) return $text;
 
 		foreach ($args as $argKey => $argValue) {
-			$text = preg_replace('/(^|\s)' . preg_quote(StringUtils::pretty($argKey)) . '(|\s)/', ' ' . $argValue . ' ', $text);
+			$text = preg_replace('/(\s)' . preg_quote(StringUtils::pretty($argKey)) . '(\s)/', ' ' . $argValue . ' ', $text);
 		}
 
 		$text = trim($text);
