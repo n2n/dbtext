@@ -43,6 +43,7 @@ class DbtextDao implements RequestScoped {
 		
 		$text = new Text($key, $this->getOrCreateGroup($namespace), $args);
 		$this->em->persist($text);
+		$this->em->flush();
 		$tx->commit();
 	}
 
