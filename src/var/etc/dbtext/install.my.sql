@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `dbtext_group` (
 -- Exportiere Struktur von Tabelle n2n_rocket_playground.dbtext_text
 CREATE TABLE IF NOT EXISTS `dbtext_text` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) DEFAULT NULL,
+  `key` varchar(255) NOT NULL,
   `group_namespace` varchar(255) DEFAULT NULL,
   `placeholders` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`),
