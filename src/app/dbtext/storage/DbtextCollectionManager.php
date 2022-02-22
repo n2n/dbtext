@@ -7,6 +7,8 @@ use n2n\core\container\N2nContext;
 use n2n\core\N2N;
 use n2n\util\cache\CacheStore;
 use n2n\util\cache\CorruptedCacheStoreException;
+use n2n\core\util\N2nUtil;
+use n2n\core\container\TransactionManager;
 
 /**
  * Manages data for dbtext module.
@@ -32,10 +34,16 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 */
 	private $cacheStore;
 
+	/**
+	 * @var N2nUtil
+	 */
+	private $n2nUtil;
+
 	private function _init(DbtextDao $dbtextDao, N2nContext $n2nContext) {
 		$this->dbtextDao = $dbtextDao;
 		$this->moduleConfig = $n2nContext->getModuleConfig(self::NS);
 		$this->cacheStore = $n2nContext->getAppCache()->lookupCacheStore(DbtextCollectionManager::class);
+		$this->n2nUtil = $n2nContext->util();
 	}
 
 	/**
@@ -83,12 +91,16 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * @param GroupData $groupData
 	 */
 	public function keyAdded(string $key, GroupData $groupData, array $args = null) {
-		$this->dbtextDao->insertKey($groupData->getNamespace(), $key, $args);
-		$this->clearCache($groupData->getNamespace());
+		$this->n2nUtil->container()->outsideTransaction(function() use ($groupData, $key, $args) {
+			$this->dbtextDao->insertKey($groupData->getNamespace(), $key, $args);
+			$this->clearCache($groupData->getNamespace());
+		});
 	}
 
 	public function placeholdersChanged(string $key, string $ns, array $args = null) {
-		$this->dbtextDao->changePlaceholders($key, $ns, $args);
+		$this->n2nUtil->container()->outsideTransaction(function() use ($ns, $key, $args) {
+			$this->dbtextDao->changePlaceholders($key, $ns, $args);
+		});
 	}
 
 	/**

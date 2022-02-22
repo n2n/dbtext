@@ -19,18 +19,22 @@
 		}
 	],
 	"minimum-stability" : "dev",
-	"prefer-stable": true,
+	"prefer-stable": false,
 	"config" : {
 		"vendor-dir" : "src/vendor"
 	},
 	"require" : {
 		"php" : ">=7.0",
 		"n2n/n2n-composer-module-installer" : "^7.1",
-		"n2n/n2n" : "^7.2.33",
-		"n2n/n2n-l10n" : "^7.2.33",
-		"n2n/n2n-persistence" : "^7.2.33",
+		"n2n/n2n" : "^7.3",
+		"n2n/n2n-l10n" : "^7.3",
+		"n2n/n2n-persistence" : "^7.3",
 		"n2n/rocket" : "^3"
 	},
+	"require-dev" : {
+        "n2n/n2n-test" : "^7.3",
+        "phpunit/phpunit" : "^9.5"
+    },
 	"autoload" : {
 		"psr-4" : {
 			"dbtext\\" : "src/app/dbtext"
@@ -40,8 +44,5 @@
 		"psr-4" : {
 			"dbtext\\" : "src/app/dbtext"
 		}
-	},
-	"require-dev" : {
-		"phpunit/phpunit" : "^9.5"
 	}
 }
