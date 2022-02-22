@@ -11,10 +11,10 @@ class GeneralTestEnv  {
 			TestEnv::container()->tm()->getRootTransaction()->rollBack();
 		}
 	    TestEnv::em()->clear();
-		\n2n\test\TestEnv::db()->truncate();
+		TestEnv::db()->truncate();
 
 		try {
-			\n2n\test\TestEnv::db()->pdo()->exec('DELETE FROM sqlite_sequence');
+			TestEnv::db()->pdo()->exec('DELETE FROM sqlite_sequence');
 		} catch (PdoStatementException $e) {
 		}
 
