@@ -31,7 +31,7 @@ class DbtextDao implements RequestScoped {
 	 */
 	public function insertKey(string $namespace, string $key, array $args = null) {
 		$tx = $this->tm->createTransaction();
-		
+
 		if (0 < (int) $this->em->createCriteria()
 				->select('COUNT(1)')
 				->from(Text::getClass(), 't')
@@ -40,7 +40,7 @@ class DbtextDao implements RequestScoped {
 			$tx->commit();	
 			return;
 		}
-		
+
 		$text = new Text($key, $this->getOrCreateGroup($namespace), $args);
 		$this->em->persist($text);
 		$this->em->flush();
