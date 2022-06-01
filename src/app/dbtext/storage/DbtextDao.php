@@ -144,7 +144,7 @@ class DbtextDao implements RequestScoped {
 				$formedResult[$item[0]] = array();
 			}
 
-			$formedResult[$item[0]] = json_decode($item[3]);
+			$formedResult[$item[0]] = json_decode($item[3] ?? '');
 		}
 		
 		return $formedResult;
