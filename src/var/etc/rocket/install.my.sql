@@ -14,7 +14,7 @@ CREATE TABLE `rocket_login` (
   `ip` varchar(255) NOT NULL DEFAULT '',
   `date_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `rocket_user` (
@@ -27,7 +27,7 @@ CREATE TABLE `rocket_user` (
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nick` (`nick`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 INSERT INTO `rocket_user` (`id`, `nick`, `firstname`, `lastname`, `email`, `power`, `password`) VALUES
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `rocket_critmod_save` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `ei_spec_id` (`ei_type_path`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `rocket_custom_grant` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `rocket_custom_grant` (
   `access_json` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `script_id_user_group_id` (`custom_spec_id`,`rocket_user_group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `rocket_ei_grant` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `rocket_ei_grant` (
   `access_json` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `script_id_user_group_id` (`rocket_user_group_id`,`ei_type_path`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `rocket_ei_grant_privileges` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `rocket_ei_grant_privileges` (
   `restricted` tinyint(4) NOT NULL DEFAULT '0',
   `restriction_group_json` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `rocket_user_access_grant` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -83,17 +83,17 @@ CREATE TABLE IF NOT EXISTS `rocket_user_access_grant` (
   `user_group_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_group_id` (`user_group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `rocket_user_group` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `nav_json` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `rocket_user_rocket_user_groups` (
   `rocket_user_id` int(10) unsigned NOT NULL,
   `rocket_user_group_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`rocket_user_id`,`rocket_user_group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
