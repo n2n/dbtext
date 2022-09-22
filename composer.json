@@ -32,6 +32,8 @@
 		"n2n/n2n" : "^7.3",
 		"n2n/n2n-l10n" : "^7.3",
 		"n2n/n2n-persistence" : "^7.3",
+        "n2n/n2n-impl-persistence-orm": "^7.3",
+        "n2n/n2n-impl-persistence-meta": "^7.3",
 		"n2n/rocket" : "^3"
 	},
 	"require-dev" : {
