@@ -119,7 +119,7 @@ class DbtextDao implements RequestScoped {
 	private function formGroupDataResult(array $result) {
 		$formedResult = array();
 
-		foreach ($result as $i => $item) {
+		foreach ($result as $item) {
 			if (!isset($formedResult[$item[0]])) {
 				$formedResult[$item[0]] = array();
 			}
