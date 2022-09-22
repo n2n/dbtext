@@ -21,7 +21,10 @@
 	"minimum-stability" : "dev",
 	"prefer-stable": false,
 	"config" : {
-		"vendor-dir" : "src/vendor"
+		"vendor-dir" : "src/vendor",
+		"allow-plugins": {
+			"n2n/n2n-composer-module-installer": true
+		}
 	},
 	"require" : {
 		"php" : ">=7.0",

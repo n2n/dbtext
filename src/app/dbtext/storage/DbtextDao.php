@@ -5,8 +5,8 @@ use dbtext\text\Group;
 use dbtext\text\Text;
 use n2n\context\RequestScoped;
 use n2n\core\container\TransactionManager;
-use n2n\persistence\orm\EntityManager;
 use n2n\persistence\orm\EntityManagerFactory;
+use n2n\util\StringUtils;
 
 class DbtextDao implements RequestScoped {
 	/**
@@ -144,7 +144,7 @@ class DbtextDao implements RequestScoped {
 				$formedResult[$item[0]] = array();
 			}
 
-			$formedResult[$item[0]] = json_decode($item[3] ?? '');
+			$formedResult[$item[0]] = StringUtils::jsonDecode($item[3] ?? '');
 		}
 		
 		return $formedResult;
