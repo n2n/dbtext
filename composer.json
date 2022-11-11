@@ -8,7 +8,8 @@
 	],
 	"homepage" : "https://n2n.rocks/",
 	"license" : "GPL-3.0-or-later",
-	"authors" : [{
+	"authors" : [
+        {
 			"name" : "Nikolai Schmid",
 			"email" : "schmid@hnm.ch",
 			"homepage" : "https://www.schmid.guru/"

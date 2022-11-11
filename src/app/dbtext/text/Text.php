@@ -10,12 +10,21 @@ use n2n\persistence\orm\CascadeType;
 use n2n\reflection\annotation\AnnoInit;
 use n2n\reflection\ObjectAdapter;
 use rocket\attribute\EiType;
+use rocket\attribute\MenuItem;
+use rocket\attribute\EiPreset;
+use rocket\spec\setup\EiPresetMode;
+use rocket\ei\util\Eiu;
+use dbtext\PlaceholderEiPropNature;
+use rocket\attribute\impl\EiSetup;
+use rocket\attribute\EiDisplayScheme;
 
 /**
  * Text holds Translations {@see TextT}.
  * @package dbtext\text
  */
-#[EiType]
+#[EiType(label: 'Text', pluralLabel: 'Texts')]
+#[MenuItem(name: 'Alle Texte', groupName: 'Tools')]
+#[EiPreset(EiPresetMode::EDIT, excludeProps: ['id'])]
 class Text extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
 		$ai->c(new AnnoTable('dbtext_text'));
@@ -32,22 +41,22 @@ class Text extends ObjectAdapter {
 	 * @var string
 	 */
 	private $key;
-/**
+	/**
+	 * @var Group $group
+	 */
+	private $group;
+	/**
 	 * @var TextT[] $textTs
 	 */
 	private $textTs;
-/**
+	/**
 	 * The available Placeholders that were found.
 	 * Placeholders are updated when found only if
 	 * the config specifies modifyOnRequest = true.
 	 *
 	 * @var string $placeholdersJson
 	 */
-	private $placeholdersJson;
-/**
-	 * @var Group $group
-	 */
-	private $group;
+	private $placeholdersJson = '{}';
 
 	/**
 	 * @param int $id
@@ -68,13 +77,6 @@ class Text extends ObjectAdapter {
 	 */
 	public function getId() {
 		return $this->id;
-	}
-
-	/**
-	 * @param int $id
-	 */
-	public function setId(int $id) {
-		$this->id = $id;
 	}
 
 	/**
@@ -131,5 +133,14 @@ class Text extends ObjectAdapter {
 	 */
 	public function setGroup(Group $group) {
 		$this->group = $group;
+	}
+
+	/**
+	 * @param Eiu $eiu
+	 * @return void
+	 */
+	#[EiSetup]
+	static function eiSetup(Eiu $eiu) {
+		$eiu->mask()->addProp((new PlaceholderEiPropNature())->setLabel('Verfügbare Textbausteine'));
 	}
 }

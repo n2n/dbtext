@@ -8,7 +8,11 @@ use n2n\persistence\orm\annotation\AnnoTable;
 use n2n\reflection\ObjectAdapter;
 use n2n\reflection\annotation\AnnoInit;
 use rocket\impl\ei\component\prop\translation\Translatable;
+use rocket\attribute\EiPreset;
+use rocket\attribute\EiType;
 
+#[EiType]
+#[EiPreset(editProps: ['str' => 'Übersetzung'])]
 class TextT extends ObjectAdapter implements Translatable {
 	private static function _annos(AnnoInit $ai) {
 		$ai->c(new AnnoTable('dbtext_text_t'));
@@ -16,9 +20,9 @@ class TextT extends ObjectAdapter implements Translatable {
 	}
 	
 	/**
-	 * @var int $id
+	 * @var int|null $id
 	 */
-	private $id;
+	private ?int $id = null;
 	/**
 	 * @var N2nLocale $n2nLocale
 	 */
@@ -26,7 +30,7 @@ class TextT extends ObjectAdapter implements Translatable {
 	/**
 	 * @var string $str
 	 */
-	private $str;
+	private string $str;
 	/**
 	 * @var Text $text
 	 */
@@ -41,7 +45,9 @@ class TextT extends ObjectAdapter implements Translatable {
 	public function __construct(int $id = null, N2nLocale $n2nLocale = null, string $str = null, Text $text = null) {
 		$this->id = $id;
 		$this->n2nLocale = $n2nLocale;
-		$this->str = $str;
+		if ($str !== null) {
+			$this->str = $str;
+		}
 		$this->text = $text;
 	}
 
@@ -51,10 +57,6 @@ class TextT extends ObjectAdapter implements Translatable {
 
 	public function getId() {
 		return $this->id;
-	}
-	
-	public function setId(int $id) {
-		$this->id = $id;
 	}
 	
 	/**
@@ -72,10 +74,10 @@ class TextT extends ObjectAdapter implements Translatable {
 	}
 
 	public function getStr() {
-		return $this->str;
+		return $this->str ?? null;
 	}
 
-	public function setStr($str) {
+	public function setStr(string $str) {
 		$this->str = $str;
 	}
 
