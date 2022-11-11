@@ -9,11 +9,13 @@ use n2n\persistence\orm\annotation\AnnoTable;
 use n2n\persistence\orm\CascadeType;
 use n2n\reflection\annotation\AnnoInit;
 use n2n\reflection\ObjectAdapter;
+use rocket\attribute\EiType;
 
 /**
  * Text holds Translations {@see TextT}.
  * @package dbtext\text
  */
+#[EiType]
 class Text extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
 		$ai->c(new AnnoTable('dbtext_text'));

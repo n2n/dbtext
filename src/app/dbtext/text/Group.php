@@ -9,11 +9,18 @@ use n2n\persistence\orm\FetchType;
 use n2n\reflection\annotation\AnnoInit;
 use n2n\reflection\ObjectAdapter;
 use n2n\persistence\orm\annotation\AnnoTable;
+use rocket\attribute\EiPreset;
+use rocket\attribute\EiType;
+use rocket\attribute\MenuItem;
+use rocket\spec\setup\EiPresetMode;
 
 /**
  * Represents the namespace texts belong to.
  * @package dbtext\text
  */
+#[EiType(label: 'Übersetzungen Gruppe', pluralLabel: 'Übersetzungen Gruppen')]
+#[MenuItem(groupName: 'Tools')]
+#[EiPreset(EiPresetMode::EDIT, readProps: ['texts'])]
 class Group extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
 		$ai->c(new AnnoTable('dbtext_group'));
@@ -22,37 +29,38 @@ class Group extends ObjectAdapter {
 	}
 
 	/**
-	 * @var string $namespace
+	 * @var string|null $namespace
 	 */
-	private $namespace;
+	private ?string $namespace;
 	/**
-	 * @var string $label
+	 * @var string|null $label
 	 */
-	private $label;
+	private ?string $label;
 	/**
 	 * @var Text[] $texts
 	 */
-	private $texts;
+	private \ArrayObject $texts;
 
 	/**
 	 * @param string $namespace
 	 */
-	public function __construct($namespace = null) {
+	public function __construct(string $namespace = null) {
 		$this->namespace = $namespace;
 		$this->label = $namespace;
+		$this->texts = new \ArrayObject();
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getNamespace() {
+	public function getNamespace(): ?string {
 		return $this->namespace;
 	}
 
 	/**
 	 * @param string $namespace
 	 */
-	public function setNamespace($namespace) {
+	public function setNamespace(string $namespace) {
 		$this->namespace = $namespace;
 	}
 
@@ -66,7 +74,7 @@ class Group extends ObjectAdapter {
 	/**
 	 * @param string $label
 	 */
-	public function setLabel($label) {
+	public function setLabel(string $label) {
 		$this->label = $label;
 	}
 
@@ -80,7 +88,7 @@ class Group extends ObjectAdapter {
 	/**
 	 * @param Text[] $texts
 	 */
-	public function setTexts($texts) {
+	public function setTexts(\ArrayObject $texts) {
 		$this->texts = $texts;
 	}
 
