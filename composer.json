@@ -30,15 +30,15 @@
 	"require" : {
 		"php" : ">=7.0",
 		"n2n/n2n-composer-module-installer" : "^7.1",
-		"n2n/n2n" : "^7.3",
-		"n2n/n2n-l10n" : "^7.3",
-		"n2n/n2n-persistence" : "^7.3",
-        "n2n/n2n-impl-persistence-orm": "^7.3",
-        "n2n/n2n-impl-persistence-meta": "^7.3",
+		"n2n/n2n" : "~7.3",
+		"n2n/n2n-l10n" : "~7.3",
+		"n2n/n2n-persistence" : "~7.3",
+        "n2n/n2n-impl-persistence-orm": "~7.3",
+        "n2n/n2n-impl-persistence-meta": "~7.3",
 		"n2n/rocket" : "^4"
 	},
 	"require-dev" : {
-        "n2n/n2n-test" : "^7.3",
+        "n2n/n2n-test" : "~7.3",
         "phpunit/phpunit" : "^9.5.25"
     },
 	"autoload" : {
