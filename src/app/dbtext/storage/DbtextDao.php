@@ -5,24 +5,29 @@ use dbtext\text\Group;
 use dbtext\text\Text;
 use n2n\context\RequestScoped;
 use n2n\core\container\TransactionManager;
-use n2n\persistence\orm\EntityManager;
+use n2n\persistence\orm\EntityManagerFactory;
+use n2n\util\StringUtils;
 
 class DbtextDao implements RequestScoped {
-	/**
-	 * @var EntityManager $em;
-	 */
-	private $em;
 	/**
 	 * @var TransactionManager $tm
 	 */
 	private $tm;
+	/**
+	 * @var EntityManagerFactory
+	 */
+	private $emf;
+
+	private function _init(EntityManagerFactory $emf, TransactionManager $tm) {
+		$this->emf = $emf;
+		$this->tm = $tm;
+	}
 
 	/**
-	 * @param EntityManager $em
+	 * @return \n2n\persistence\orm\EntityManager
 	 */
-	private function _init(EntityManager $em, TransactionManager $tm) {
-		$this->em = $em;
-		$this->tm = $tm;
+	private function em() {
+		return $this->emf->getTransactional();
 	}
 
 	/**
@@ -31,8 +36,8 @@ class DbtextDao implements RequestScoped {
 	 */
 	public function insertKey(string $namespace, string $key, array $args = null) {
 		$tx = $this->tm->createTransaction();
-		
-		if (0 < (int) $this->em->createCriteria()
+
+		if (0 < (int) $this->em()->createCriteria()
 				->select('COUNT(1)')
 				->from(Text::getClass(), 't')
 				->where(array('t.key' => $key, 't.group.namespace' => $namespace))->endClause()
@@ -40,25 +45,27 @@ class DbtextDao implements RequestScoped {
 			$tx->commit();	
 			return;
 		}
-		
-		$text = new Text($key, $this->getOrCreateGroup($namespace), $args);
-		$this->em->persist($text);
-		$tx->commit();
-	}
 
-	public function persistText(Text $text) {
-		$this->em->persist($text);
+		$text = new Text($key, $this->getOrCreateGroup($namespace), $args);
+		$this->em()->persist($text);
+		$this->em()->flush();
+
+		$tx->commit();
 	}
 
 	/**
 	 * @param string $namespace
 	 */
 	public function getGroupData(string $namespace) {
-		$result = $this->em->createNqlCriteria('
+		$tx = $this->tm->createTransaction(true);
+
+		$result = $this->em()->createNqlCriteria('
 				SELECT  t.key, t.textTs.n2nLocale, t.textTs.str, t.placeholdersJson
 				FROM Text t 
 				WHERE t.group.namespace = :ns',
 				array('ns' => $namespace))->toQuery()->fetchArray();
+
+		$tx->commit();
 
 		if (empty($result)) {
 			return new GroupData($namespace);
@@ -77,16 +84,14 @@ class DbtextDao implements RequestScoped {
 	 * @return Group
 	 */
 	private function getOrCreateGroup(string $namespace): Group {
-		$group = $this->em->find(Group::getClass(), $namespace);
+		$group = $this->em()->find(Group::getClass(), $namespace);
 
 		if (null !== $group) {
 			return $group;
 		}
 
 		$group = new Group($namespace);
-		$t = $this->tm->createTransaction();
-		$this->em->persist($group);
-		$t->commit();
+		$this->em()->persist($group);
 		return $group;
 	}
 
@@ -96,12 +101,12 @@ class DbtextDao implements RequestScoped {
 		/**
 		 * @var Text $text
 		 */
-		$text = $this->em->createSimpleCriteria(Text::getClass(),
-				array('key' => $key, 'group' => $this->em->find(Group::getClass(), $ns)))->toQuery()->fetchSingle();
+		$text = $this->em()->createSimpleCriteria(Text::getClass(),
+				array('key' => $key, 'group' => $this->em()->find(Group::getClass(), $ns)))->toQuery()->fetchSingle();
 		
 		if ($text !== null) {
 			$text->setPlaceholders($args);
-			$this->em->persist($text);
+			$this->em()->persist($text);
 		}
 		
 		$tx->commit();
@@ -114,7 +119,7 @@ class DbtextDao implements RequestScoped {
 	private function formGroupDataResult(array $result) {
 		$formedResult = array();
 
-		foreach ($result as $i => $item) {
+		foreach ($result as $item) {
 			if (!isset($formedResult[$item[0]])) {
 				$formedResult[$item[0]] = array();
 			}
@@ -134,12 +139,12 @@ class DbtextDao implements RequestScoped {
 	private function formPlaceholdersFromResult(array $result) {
 		$formedResult = array();
 
-		foreach ($result as $i => $item) {
+		foreach ($result as $item) {
 			if (!isset($formedResult[$item[0]])) {
 				$formedResult[$item[0]] = array();
 			}
 
-			$formedResult[$item[0]] = json_decode($item[3]);
+			$formedResult[$item[0]] = (isset($item[3]) ? StringUtils::jsonDecode($item[3]) : []);
 		}
 		
 		return $formedResult;
