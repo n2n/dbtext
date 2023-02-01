@@ -19,10 +19,13 @@
     ],
     "require": {
         "php": ">=7.0",
-        "n2n/n2n-composer-module-installer": "7.1.x-dev",
-        "n2n/n2n": "7.2.x-dev",
-        "n2n/n2n-l10n": "7.2.x-dev",
-        "n2n/n2n-persistence": "7.2.x-dev"
+        "n2n/n2n-composer-module-installer" : "^7.1.5",
+		"n2n/n2n" : "^7.2",
+		"n2n/n2n-l10n" : "^7.2",
+		"n2n/n2n-persistence" : "^7.2",
+        "n2n/n2n-impl-persistence-orm": "^7.2",
+        "n2n/n2n-impl-persistence-meta": "^7.2",
+		"n2n/rocket" : "^2"
     },
     "autoload": {
         "psr-4": {
