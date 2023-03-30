@@ -10,6 +10,7 @@ use n2n\reflection\annotation\AnnoInit;
 use rocket\impl\ei\component\prop\translation\Translatable;
 use rocket\attribute\EiPreset;
 use rocket\attribute\EiType;
+use rocket\attribute\impl\EiPropString;
 
 #[EiType]
 #[EiPreset(editProps: ['str' => 'Übersetzung'])]
@@ -30,6 +31,7 @@ class TextT extends ObjectAdapter implements Translatable {
 	/**
 	 * @var string $str
 	 */
+	#[EiPropString(multiline: true)]
 	private string $str;
 	/**
 	 * @var Text $text
