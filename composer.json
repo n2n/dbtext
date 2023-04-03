@@ -29,7 +29,7 @@
 	},
 	"require" : {
 		"php" : ">=7.0",
-		"n2n/n2n-composer-module-installer" : "^7.1",
+        "n2n/n2n-composer-module-installer" : "^7.1.3",
 		"n2n/n2n" : "^7.3",
 		"n2n/n2n-l10n" : "^7.3",
 		"n2n/n2n-persistence" : "^7.3",
