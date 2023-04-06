@@ -42,7 +42,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	private function _init(DbtextDao $dbtextDao, N2nContext $n2nContext) {
 		$this->dbtextDao = $dbtextDao;
 		$this->moduleConfig = $n2nContext->getModuleConfig(self::NS);
-		$this->cacheStore = $n2nContext->getAppCache()->lookupCacheStore(DbtextCollectionManager::class);
+		$this->cacheStore = $n2nContext->getAppCache()->lookupCacheStore(DbtextCollectionManager::class, true);
 		$this->n2nUtil = $n2nContext->util();
 	}
 
