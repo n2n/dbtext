@@ -10,7 +10,7 @@ use n2n\persistence\orm\CascadeType;
 use n2n\reflection\annotation\AnnoInit;
 use n2n\reflection\ObjectAdapter;
 use rocket\attribute\EiType;
-use rocket\attribute\MenuItem;
+use rocket\attribute\EiMenuItem;
 use rocket\attribute\EiPreset;
 use rocket\op\spec\setup\EiPresetMode;
 use rocket\op\ei\util\Eiu;
@@ -23,7 +23,7 @@ use rocket\attribute\EiDisplayScheme;
  * @package dbtext\text
  */
 #[EiType(label: 'Text', pluralLabel: 'Texts')]
-#[MenuItem(name: 'Alle Texte', groupName: 'Tools')]
+#[EiMenuItem(name: 'Alle Texte', groupName: 'Tools')]
 #[EiPreset(EiPresetMode::EDIT, excludeProps: ['id'])]
 class Text extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {

@@ -11,7 +11,7 @@ use n2n\reflection\ObjectAdapter;
 use n2n\persistence\orm\annotation\AnnoTable;
 use rocket\attribute\EiPreset;
 use rocket\attribute\EiType;
-use rocket\attribute\MenuItem;
+use rocket\attribute\EiMenuItem;
 use rocket\op\spec\setup\EiPresetMode;
 
 /**
@@ -19,7 +19,7 @@ use rocket\op\spec\setup\EiPresetMode;
  * @package dbtext\text
  */
 #[EiType(label: 'Übersetzungen Gruppe', pluralLabel: 'Übersetzungen Gruppen')]
-#[MenuItem(groupName: 'Tools')]
+#[EiMenuItem(groupName: 'Tools')]
 #[EiPreset(EiPresetMode::EDIT, readProps: ['texts'])]
 class Group extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
