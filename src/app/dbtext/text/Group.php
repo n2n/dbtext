@@ -12,7 +12,7 @@ use n2n\persistence\orm\annotation\AnnoTable;
 use rocket\attribute\EiPreset;
 use rocket\attribute\EiType;
 use rocket\attribute\MenuItem;
-use rocket\spec\setup\EiPresetMode;
+use rocket\op\spec\setup\EiPresetMode;
 
 /**
  * Represents the namespace texts belong to.
