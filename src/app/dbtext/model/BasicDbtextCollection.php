@@ -84,4 +84,13 @@ class BasicDbtextCollection implements DbtextCollection {
 	public function getKeys(): array {
 		return $this->groupData->getKeys();
 	}
+
+	/**
+	 * @throws \OutOfBoundsException
+	 * @param string $key
+	 * @return array
+	 */
+	public function getPlaceholderNamesOfKey(string $key): array {
+		return $this->groupData->getPlaceholderNamesOfKey($key);
+	}
 }

@@ -171,4 +171,16 @@ class GroupData extends ObjectAdapter {
 		
 		return array_keys($args) == array_keys((array) $this->data[self::PLACEHOLDER_JSON_KEY][$key]);
 	}
+
+	/**
+	 * @throws \OutOfBoundsException
+	 * @param string $key
+	 * @return string[]
+	 */
+	public function getPlaceholderNamesOfKey(string $key) {
+		if (!$this->has($key)) {
+			throw new \OutOfBoundsException('The key "' . $key . '" does not exist');
+		}
+		return array_keys((array) $this->data[GroupData::PLACEHOLDER_JSON_KEY][$key]);
+	}
 }

@@ -38,4 +38,11 @@ interface DbtextCollection {
 	 * @return string[]
 	 */
 	public function getKeys(): array;
+
+	/**
+	 * @throws \OutOfBoundsException
+	 * @param string $key
+	 * @return array
+	 */
+	public function getPlaceholderNamesOfKey(string $key): array;
 }

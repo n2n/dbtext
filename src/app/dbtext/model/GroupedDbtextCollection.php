@@ -109,4 +109,15 @@ class GroupedDbtextCollection implements DbtextCollection {
 		
 		return array_unique($keys);;
 	}
+
+	public function getPlaceholderNamesOfKey(string $key): array {
+		foreach ($this->dbtextCollections as $dbtextCollection) {
+			if ($dbtextCollection->has($key)) {
+				return $dbtextCollection->getPlaceholderNamesOfKey($key);
+			}
+		}
+
+		return array();
+	}
+
 }
