@@ -17,13 +17,14 @@ use rocket\op\ei\util\Eiu;
 use dbtext\PlaceholderEiPropNature;
 use rocket\attribute\impl\EiSetup;
 use rocket\attribute\EiDisplayScheme;
+use rocket\attribute\EiLabel;
 
 /**
  * Text holds Translations {@see TextT}.
  * @package dbtext\text
  */
 #[EiType(label: 'Text', pluralLabel: 'Texts')]
-#[EiMenuItem(name: 'Alle Texte', groupName: 'Tools')]
+#[EiMenuItem(name: 'Alle Texte', groupName: 'Tools', orderIndex: 200)]
 #[EiPreset(EiPresetMode::EDIT, excludeProps: ['id'])]
 class Text extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
@@ -37,13 +38,15 @@ class Text extends ObjectAdapter {
 	 * @var int
 	 */
 	private $id;
-/**
+	/**
 	 * @var string
 	 */
+	#[EiLabel('Schlüssel')]
 	private $key;
 	/**
 	 * @var Group $group
 	 */
+	#[EiLabel('Gruppe')]
 	private $group;
 	/**
 	 * @var TextT[] $textTs
