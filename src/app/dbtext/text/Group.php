@@ -11,15 +11,15 @@ use n2n\reflection\ObjectAdapter;
 use n2n\persistence\orm\annotation\AnnoTable;
 use rocket\attribute\EiPreset;
 use rocket\attribute\EiType;
-use rocket\attribute\MenuItem;
+use rocket\attribute\EiMenuItem;
 use rocket\op\spec\setup\EiPresetMode;
 
 /**
  * Represents the namespace texts belong to.
  * @package dbtext\text
  */
-#[EiType(label: 'Übersetzungen Gruppe', pluralLabel: 'Übersetzungen Gruppen')]
-#[MenuItem(groupName: 'Tools')]
+#[EiType(label: 'Übersetzungen Gruppe', pluralLabel: 'Übersetzungen Gruppen', identityStringPattern: '{label}')]
+#[EiMenuItem(groupName: 'Tools', groupOrderIndex: 999, orderIndex: 100)]
 #[EiPreset(EiPresetMode::EDIT, readProps: ['texts'])]
 class Group extends ObjectAdapter {
 	private static function _annos(AnnoInit $ai) {
