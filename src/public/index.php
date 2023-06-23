@@ -10,7 +10,7 @@ if (isset($_SERVER['N2N_STAGE'])) {
 	define('N2N_STAGE', $_SERVER['N2N_STAGE']);
 }
 
-// require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 require_once '../vendor/n2n/n2n/src/app/n2n/core/TypeLoader.php';
 
 n2n\core\TypeLoader::register(true,
