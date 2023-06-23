@@ -6,11 +6,8 @@ use n2n\impl\web\ui\view\html\HtmlElement;
 use n2n\impl\web\ui\view\html\HtmlView;
 use n2n\l10n\TextCollection;
 use n2n\util\type\CastUtils;
-use n2n\web\ui\Raw;
 use n2n\web\ui\UiComponent;
 use rocket\op\ei\util\Eiu;
-use rocket\impl\ei\component\prop\adapter\DisplayableEiPropAdapter;
-use rocket\si\content\SiField;
 use rocket\op\ei\util\factory\EifGuiField;
 use rocket\si\content\impl\SiFields;
 use rocket\si\content\impl\meta\SiCrumb;
@@ -38,7 +35,7 @@ class PlaceholderEiPropNature extends DisplayableEiPropNatureAdapter {
 					SiCrumb::createLabel($dtc->t('dbtext_no_placeholders_text'))));
 		}
 
-		if ($eiu->guiFrame()->isCompact()) {
+		if ($eiu->guiMaskDeclaration()->isCompact()) {
 			return $eiu->factory()->newGuiField(SiFields::crumbOut(
 					SiCrumb::createLabel(implode(', ', array_keys($placeholders)))));
 			
