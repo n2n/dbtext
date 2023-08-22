@@ -39,7 +39,7 @@ class PlaceholderEiProp extends DisplayableEiPropAdapter {
 			$placeholderList->appendLn(new HtmlElement('dt', array('class' => 'col'),
 					TextCollection::ARG_PREFIX . $placeholderName . TextCollection::ARG_SUFFIX));
 			$placeholderList->appendLn(new HtmlElement('dd', array('class' => 'col-9'),
-					$placeholderValue . ', ...'));
+					$placeholderValue ?? '' . ', ...'));
 			$placeholderDiv->appendLn($placeholderList);
 		}
 
