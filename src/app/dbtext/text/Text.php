@@ -107,7 +107,7 @@ class Text extends ObjectAdapter {
 	 * @return array
 	 */
 	public function getPlaceholders() {
-		return json_decode($this->placeholdersJson, true);
+		return json_decode($this->placeholdersJson ?? '[]', true);
 	}
 
 	/**
