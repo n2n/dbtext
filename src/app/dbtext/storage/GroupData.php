@@ -188,4 +188,12 @@ class GroupData extends ObjectAdapter {
 		}
 		return array_keys((array) $this->data[GroupData::PLACEHOLDER_JSON_KEY][$key]);
 	}
+
+	function toRecord(): GroupDataRecord {
+		return new GroupDataRecord($this->namespace, $this->data);
+	}
+
+	static function fromRecord(GroupDataRecord $groupDataRecord): GroupData {
+		return new GroupData($groupDataRecord->namespace, $groupDataRecord->data);
+	}
 }

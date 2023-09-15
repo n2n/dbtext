@@ -119,8 +119,8 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 			$cacheItem = $this->cacheStore->get(self::APP_CACHE_PREFIX . $namespace, array());
 			if ($cacheItem === null) return null;
 
-			if ($cacheItem->data instanceof GroupData) {
-				return $cacheItem->data;
+			if ($cacheItem->data instanceof GroupDataRecord) {
+				return GroupData::fromRecord($cacheItem->data);
 			}
 		} catch (CorruptedCacheStoreException $e) {
 		}
@@ -133,9 +133,10 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * @param GroupData $groupData
 	 */
 	private function writeToAppCache(GroupData $groupData) {
-		if (!empty($groupData->getListeners())) {
-			throw new \InvalidArgumentException('GroupData cannot have registered listeners while caching');
-		}
-		$this->cacheStore->store(self::APP_CACHE_PREFIX . $groupData->getNamespace(), array(), $groupData);
+		// no longer necessary because we store a data record only.
+//		if (!empty($groupData->getListeners())) {
+//			throw new \InvalidArgumentException('GroupData cannot have registered listeners while caching');
+//		}
+		$this->cacheStore->store(self::APP_CACHE_PREFIX . $groupData->getNamespace(), array(), $groupData->toRecord());
 	}
 }
