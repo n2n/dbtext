@@ -44,7 +44,7 @@ class Group extends ObjectAdapter {
 	/**
 	 * @param string $namespace
 	 */
-	public function __construct(string $namespace = null) {
+	public function __construct(?string $namespace = null) {
 		$this->namespace = $namespace;
 		$this->label = $namespace;
 		$this->texts = new \ArrayObject();

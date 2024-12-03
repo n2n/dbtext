@@ -29,7 +29,7 @@ class BasicDbtextCollection implements DbtextCollection {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function t(string $key, array $args = null, N2nLocale ...$n2nLocales): string {
+	public function t(string $key, ?array $args = null, N2nLocale ...$n2nLocales): string {
 		$n2nLocales = array_merge($n2nLocales, $this->n2nLocales);
 		$n2nLocales[] = N2nLocale::getFallback();
 		$args = (array) $args;
@@ -51,7 +51,7 @@ class BasicDbtextCollection implements DbtextCollection {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function tf(string $key, array $args = null, N2nLocale ...$n2nLocales): string {
+	public function tf(string $key, ?array $args = null, N2nLocale ...$n2nLocales): string {
 		$n2nLocales = array_merge($n2nLocales, $this->n2nLocales);
 		$n2nLocales[] = N2nLocale::getFallback();
 

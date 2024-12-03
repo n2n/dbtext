@@ -75,7 +75,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * 
 	 * @param string $namespace
 	 */
-	public function clearCache(string $namespace = null) {
+	public function clearCache(?string $namespace = null) {
 		if (null !== $namespace) {
 			$this->cacheStore->remove(self::APP_CACHE_PREFIX . $namespace, array());
 			return;
@@ -90,14 +90,14 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * @param string $key
 	 * @param GroupData $groupData
 	 */
-	public function keyAdded(string $key, GroupData $groupData, array $args = null) {
+	public function keyAdded(string $key, GroupData $groupData, ?array $args = null) {
 		$this->n2nUtil->container()->outsideTransaction(function() use ($groupData, $key, $args) {
 			$this->dbtextDao->insertKey($groupData->getNamespace(), $key, $args);
 			$this->clearCache($groupData->getNamespace());
 		});
 	}
 
-	public function placeholdersChanged(string $key, string $ns, array $args = null) {
+	public function placeholdersChanged(string $key, string $ns, ?array $args = null) {
 		$this->n2nUtil->container()->outsideTransaction(function() use ($ns, $key, $args) {
 			$this->dbtextDao->changePlaceholders($key, $ns, $args);
 		});

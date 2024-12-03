@@ -34,7 +34,7 @@ class DbtextDao implements RequestScoped {
 	 * @param string $namespace
 	 * @param string $key
 	 */
-	public function insertKey(string $namespace, string $key, array $args = null) {
+	public function insertKey(string $namespace, string $key, ?array $args = null) {
 		$tx = $this->tm->createTransaction();
 
 		if (0 < (int) $this->em()->createCriteria()

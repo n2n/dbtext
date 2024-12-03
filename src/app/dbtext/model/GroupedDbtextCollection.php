@@ -25,7 +25,7 @@ class GroupedDbtextCollection implements DbtextCollection {
 	 * @param N2nLocale[] ...$n2nLocales
 	 * @return string
 	 */
-	public function t(string $key, array $args = null, N2nLocale ...$n2nLocales): string {
+	public function t(string $key, ?array $args = null, N2nLocale ...$n2nLocales): string {
 		$passedN2nLocales = $n2nLocales ?? $this->n2nLocales;
 		$passedN2nLocales[] = N2nLocale::getFallback();
 
@@ -64,7 +64,7 @@ class GroupedDbtextCollection implements DbtextCollection {
 	 * @param N2nLocale[] ...$n2nLocales
 	 * @return string
 	 */
-	public function tf(string $key, array $args = null, N2nLocale ...$n2nLocales): string {
+	public function tf(string $key, ?array $args = null, N2nLocale ...$n2nLocales): string {
 		foreach ($this->dbtextCollections as $dbtextCollection) {
 			if ($dbtextCollection->has($key)) {
 				return $dbtextCollection->tf($key, $args, ...$this->n2nLocales);
