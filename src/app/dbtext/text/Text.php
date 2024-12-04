@@ -65,7 +65,7 @@ class Text extends ObjectAdapter {
 	 * @param int $id
 	 * @param TextT[] $textTs
 	 */
-	public function __construct(string $key = null, Group $group = null, array $args = null, array $textTs = null) {
+	public function __construct(?string $key = null, ?Group $group = null, ?array $args = null, ?array $textTs = null) {
 		$this->key = $key;
 		$this->textTs = $textTs;
 		$this->group = $group;
@@ -92,7 +92,7 @@ class Text extends ObjectAdapter {
 	/**
 	 * @param string $key
 	 */
-	public function setKey(string $key = null) {
+	public function setKey(?string $key = null) {
 		$this->key = $key;
 	}
 

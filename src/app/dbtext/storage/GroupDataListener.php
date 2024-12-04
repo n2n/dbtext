@@ -14,5 +14,5 @@ interface GroupDataListener {
 	 * @param GroupData $groupData
 	 * @param array $args
 	 */
-	public function placeholdersChanged(string $key, string $ns, array $newArgs = null);
+	public function placeholdersChanged(string $key, string $ns, ?array $newArgs = null);
 }

@@ -44,7 +44,7 @@ class TextT extends ObjectAdapter implements Translatable {
 	 * @param string $str
 	 * @param Text $text
 	 */
-	public function __construct(int $id = null, N2nLocale $n2nLocale = null, string $str = null, Text $text = null) {
+	public function __construct(?int $id = null, ?N2nLocale $n2nLocale = null, ?string $str = null, ?Text $text = null) {
 		$this->id = $id;
 		$this->n2nLocale = $n2nLocale;
 		if ($str !== null) {
