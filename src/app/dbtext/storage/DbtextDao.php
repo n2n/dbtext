@@ -57,7 +57,10 @@ class DbtextDao implements RequestScoped {
 	 * @param string $namespace
 	 */
 	public function getGroupData(string $namespace) {
-		$tx = $this->tm->createTransaction(true);
+		$tx = null;
+		if (!$this->tm->hasOpenTransaction()) {
+			$tx = $this->tm->createTransaction(true);
+		}
 
 		$result = $this->em()->createNqlCriteria('
 				SELECT  t.key, t.textTs.n2nLocale, t.textTs.str, t.placeholdersJson
@@ -65,7 +68,7 @@ class DbtextDao implements RequestScoped {
 				WHERE t.group.namespace = :ns',
 				array('ns' => $namespace))->toQuery()->fetchArray();
 
-		$tx->commit();
+		$tx?->commit();
 
 		if (empty($result)) {
 			return new GroupData($namespace);
