@@ -3,27 +3,21 @@ namespace dbtext;
 
 use dbtext\text\Text;
 use n2n\impl\web\ui\view\html\HtmlElement;
-use n2n\impl\web\ui\view\html\HtmlView;
 use n2n\l10n\TextCollection;
 use n2n\util\type\CastUtils;
-use n2n\web\ui\UiComponent;
-use rocket\op\ei\util\Eiu;
-use rocket\op\ei\util\factory\EifGuiField;
-use rocket\si\content\impl\SiFields;
-use rocket\si\content\impl\meta\SiCrumb;
 use rocket\impl\ei\component\prop\adapter\DisplayableEiPropNatureAdapter;
+use rocket\ui\si\content\impl\SiFields;
+use rocket\ui\gui\field\BackableGuiField;
+use rocket\ui\gui\field\impl\GuiFields;
+use rocket\op\ei\util\Eiu;
+use rocket\ui\si\content\impl\meta\SiCrumb;
 
 class PlaceholderEiPropNature extends DisplayableEiPropNatureAdapter {
 	
 	protected function prepare() {
 	}
-	
-	/**
-	 * @param HtmlView $view
-	 * @param Eiu $eiu
-	 * @return UiComponent
-	 */
-	public function createOutEifGuiField(Eiu $eiu): EifGuiField {
+
+	public function buildOutGuiField(Eiu $eiu): ?BackableGuiField {
 		$dtc = $eiu->dtc('dbtext');
 		$text = $eiu->entry()->getEntityObj();
 		CastUtils::assertTrue($text instanceof Text);
@@ -31,14 +25,14 @@ class PlaceholderEiPropNature extends DisplayableEiPropNatureAdapter {
 		$placeholders = $text->getPlaceholders();
 
 		if ($placeholders === null || count($placeholders) === 0) {
-			return $eiu->factory()->newGuiField(SiFields::crumbOut(
+			return GuiFields::out(SiFields::crumbOut(
 					SiCrumb::createLabel($dtc->t('dbtext_no_placeholders_text'))));
 		}
 
-		if ($eiu->guiMaskDeclaration()->isCompact()) {
-			return $eiu->factory()->newGuiField(SiFields::crumbOut(
+		if ($eiu->guiDefinition()->isCompact()) {
+			return GuiFields::out(SiFields::crumbOut(
 					SiCrumb::createLabel(implode(', ', array_keys($placeholders)))));
-			
+
 		}
 
 		$placeholderDiv = new HtmlElement('div');
@@ -58,7 +52,7 @@ class PlaceholderEiPropNature extends DisplayableEiPropNatureAdapter {
 
 		$placeholderDiv->appendLn($helperDiv);
 
-		return $eiu->factory()->newGuiField(SiFields::iframeOut($placeholderDiv, $eiu->getN2nContext()));
+		return GuiFields::out(SiFields::iframeOut($placeholderDiv, $eiu->getN2nContext()));
 	}
 
 }
