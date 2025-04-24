@@ -22,7 +22,7 @@ class LcText implements StringValueObject {
 
 	function __construct(string $value) {
 		try {
-			$dataMap = new DataMap(StringUtils::jsonDecode($value));
+			$dataMap = new DataMap(StringUtils::jsonDecode($value, true));
 			if (null !== ($text = $dataMap->optString('text'))) {
 				$this->text = $text;
 			} else {
