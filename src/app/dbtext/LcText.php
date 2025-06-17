@@ -39,7 +39,7 @@ class LcText implements StringValueObject {
 		return self::serialize($this->text, $this->textCode, $this->args, $this->namespace);
 	}
 
-	function t(MagicContext $magicContext, N2nLocale $n2nLocale = null): string {
+	function t(MagicContext $magicContext, ?N2nLocale $n2nLocale = null): string {
 		if (null !== $this->text) {
 			return $this->text;
 		}

@@ -7,6 +7,7 @@ use n2n\context\RequestScoped;
 use n2n\core\container\TransactionManager;
 use n2n\persistence\orm\EntityManagerFactory;
 use n2n\util\StringUtils;
+use n2n\util\JsonDecodeFailedException;
 
 class DbtextDao implements RequestScoped {
 	/**
@@ -18,7 +19,7 @@ class DbtextDao implements RequestScoped {
 	 */
 	private $emf;
 
-	private function _init(EntityManagerFactory $emf, TransactionManager $tm) {
+	private function _init(EntityManagerFactory $emf, TransactionManager $tm): void {
 		$this->emf = $emf;
 		$this->tm = $tm;
 	}
@@ -26,7 +27,7 @@ class DbtextDao implements RequestScoped {
 	/**
 	 * @return \n2n\persistence\orm\EntityManager
 	 */
-	private function em() {
+	private function em(): \n2n\persistence\orm\EntityManager {
 		return $this->emf->getTransactional();
 	}
 
@@ -34,7 +35,7 @@ class DbtextDao implements RequestScoped {
 	 * @param string $namespace
 	 * @param string $key
 	 */
-	public function insertKey(string $namespace, string $key, ?array $args = null) {
+	public function insertKey(string $namespace, string $key, ?array $args = null): void {
 		$tx = $this->tm->createTransaction();
 
 		if (0 < (int) $this->em()->createCriteria()
@@ -56,7 +57,7 @@ class DbtextDao implements RequestScoped {
 	/**
 	 * @param string $namespace
 	 */
-	public function getGroupData(string $namespace) {
+	public function getGroupData(string $namespace): GroupData {
 		$tx = null;
 		if (!$this->tm->hasOpenTransaction()) {
 			$tx = $this->tm->createTransaction(true);
@@ -98,7 +99,7 @@ class DbtextDao implements RequestScoped {
 		return $group;
 	}
 
-	public function changePlaceholders(string $key, string $ns, array $args) {
+	public function changePlaceholders(string $key, string $ns, array $args): void {
 		$tx = $this->tm->createTransaction();
 
 		/**
@@ -119,7 +120,7 @@ class DbtextDao implements RequestScoped {
 	 * @param array $result
 	 * @return array
 	 */
-	private function formGroupDataResult(array $result) {
+	private function formGroupDataResult(array $result): array {
 		$formedResult = array();
 
 		foreach ($result as $item) {
@@ -139,7 +140,7 @@ class DbtextDao implements RequestScoped {
 	 * @param array $result
 	 * @return array
 	 */
-	private function formPlaceholdersFromResult(array $result) {
+	private function formPlaceholdersFromResult(array $result): array {
 		$formedResult = array();
 
 		foreach ($result as $item) {
@@ -147,7 +148,15 @@ class DbtextDao implements RequestScoped {
 				$formedResult[$item[0]] = array();
 			}
 
-			$formedResult[$item[0]] = (isset($item[3]) ? StringUtils::jsonDecode($item[3]) : []);
+			try {
+				if (empty($item[3])) {
+					$formedResult[$item[0]] = [];
+					continue;
+				}
+				$formedResult[$item[0]] = StringUtils::jsonDecode($item[3]);
+			} catch (JsonDecodeFailedException $e) {
+				$formedResult[$item[0]] = [];
+			}
 		}
 		
 		return $formedResult;
