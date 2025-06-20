@@ -148,11 +148,12 @@ class DbtextDao implements RequestScoped {
 				$formedResult[$item[0]] = array();
 			}
 
+			if (!isset($item[3])) {
+				$formedResult[$item[0]] = [];
+				continue;
+			}
+
 			try {
-				if (empty($item[3])) {
-					$formedResult[$item[0]] = [];
-					continue;
-				}
 				$formedResult[$item[0]] = StringUtils::jsonDecode($item[3]);
 			} catch (JsonDecodeFailedException $e) {
 				$formedResult[$item[0]] = [];
