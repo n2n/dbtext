@@ -32,7 +32,7 @@ class BasicDbtextCollection implements DbtextCollection {
 	public function t(string $key, ?array $args = null, N2nLocale ...$n2nLocales): string {
 		$n2nLocales = array_merge($n2nLocales, $this->n2nLocales);
 		$n2nLocales[] = N2nLocale::getFallback();
-		$args = (array) $args;
+		$args = $args ?? [];
 
 		if (!$this->has($key)) {
 			$this->groupData->add($key, $args);
@@ -64,6 +64,7 @@ class BasicDbtextCollection implements DbtextCollection {
 			return DbtextService::prettyKey($key, $args);
 		}
 
+		$args = $args ?? [];
 		$text = @sprintf($text, ...$args);
 
 		if (!!$text) {
