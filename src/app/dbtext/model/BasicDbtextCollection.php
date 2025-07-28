@@ -2,8 +2,10 @@
 namespace dbtext\model;
 
 use dbtext\storage\GroupData;
+use dbtext\util\PlaceholderUtils;
 use n2n\l10n\N2nLocale;
 use n2n\l10n\TextCollection;
+use n2n\util\StringUtils;
 
 /**
  * Manages {@see GroupData}.
@@ -45,7 +47,9 @@ class BasicDbtextCollection implements DbtextCollection {
 			return DbtextService::prettyKey($key, $args);
 		}
 
-		return TextCollection::fillArgs($text, $args);
+		$processedText = TextCollection::fillArgs($text, $args);
+		
+		return $this->appendUnusedArguments($processedText, $text, $args);
 	}
 
 	/**
@@ -65,10 +69,10 @@ class BasicDbtextCollection implements DbtextCollection {
 		}
 
 		$args = $args ?? [];
-		$text = @sprintf($text, ...$args);
+		$processedText = @sprintf($text, ...$args);
 
-		if (!!$text) {
-			return $text;
+		if (!!$processedText) {
+			return $this->appendUnusedArguments($processedText, $text, $args);
 		}
 
 		return $key;
@@ -92,5 +96,36 @@ class BasicDbtextCollection implements DbtextCollection {
 
 	public function getKeys(): array {
 		return $this->groupData->getKeys();
+	}
+
+	/**
+	 * @param string $processedText
+	 * @param string $originalText
+	 * @param array $args
+	 * @return string
+	 */
+	private function appendUnusedArguments(string $processedText, string $originalText, array $args): string {
+		$unusedArgs = PlaceholderUtils::getUnusedArguments($originalText, $args);
+		if (!empty($unusedArgs)) {
+			$processedText .= ' ' . $this->formatProvidedArguments($unusedArgs);
+		}
+		
+		return $processedText;
+	}
+
+	/**
+	 * Formats provided arguments with prettyfied keys.
+	 *
+	 * @param array $args
+	 * @return string
+	 */
+	private function formatProvidedArguments(array $args): string {
+		$formattedArgs = [];
+		foreach ($args as $key => $value) {
+			$prettyKey = StringUtils::pretty($key);
+			$formattedArgs[] = "[{$prettyKey}: {$value}]";
+		}
+		
+		return implode(' ', $formattedArgs);
 	}
 }
