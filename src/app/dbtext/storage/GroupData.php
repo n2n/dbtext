@@ -25,7 +25,7 @@ class GroupData extends ObjectAdapter {
 	 * @param string $namespace
 	 * @param string[][] $data
 	 */
-	public function __construct($namespace, array $data = array()) {
+	public function __construct(string $namespace, array $data = array()) {
 		$this->namespace = $namespace;
 		$this->data = $data;
 
