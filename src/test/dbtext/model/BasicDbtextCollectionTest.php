@@ -29,7 +29,7 @@ class BasicDbtextCollectionTest extends TestCase {
 		$this->assertEquals('My name is Fabian and I work at ZSC', $result);
 	}
 	
-	public function testSomeArgumentsUnused_UnusedShownInBrackets() {
+	public function testSomeArgumentsUnused_UnusedNotShown() {
 		$data = [
 			GroupData::TEXTS_KEY => [
 				'my_name_is_firstname_info' => [
@@ -49,8 +49,7 @@ class BasicDbtextCollectionTest extends TestCase {
 			'extra_param' => 'unused_value'
 		]);
 
-		$this->assertStringContainsString('My name is Fabian and I work at {organisation}', $result);
-		$this->assertStringContainsString('[Extra Param: unused_value]', $result);
+		$this->assertEquals('My name is Fabian and I work at {organisation}', $result);
 	}
 	
 	public function testNoArgumentsProvided_NoBracketsShown() {
@@ -73,7 +72,7 @@ class BasicDbtextCollectionTest extends TestCase {
 		$this->assertEquals('My name is {firstname} and I work at {organisation}', $result);
 	}
 	
-	public function testAllArgumentsUnused_AllShownInBrackets() {
+	public function testAllArgumentsUnused_UnusedNotShown() {
 		$data = [
 			GroupData::TEXTS_KEY => [
 				'simple_text' => [
@@ -94,13 +93,10 @@ class BasicDbtextCollectionTest extends TestCase {
 			'extra_param' => 'unused'
 		]);
 
-		$this->assertStringContainsString('This is a simple text without placeholders', $result);
-		$this->assertStringContainsString('[Firstname: Fabian]', $result);
-		$this->assertStringContainsString('[Organisation: ZSC]', $result);
-		$this->assertStringContainsString('[Extra Param: unused]', $result);
+		$this->assertEquals('This is a simple text without placeholders', $result);
 	}
 	
-	public function testArgumentsProvidedButNotInText_AllShownInBrackets() {
+	public function testArgumentsProvidedButNotInText_UnusedNotShown() {
 		$data = [
 			GroupData::TEXTS_KEY => [
 				'welcome_message' => [
@@ -120,12 +116,10 @@ class BasicDbtextCollectionTest extends TestCase {
 			'organisation' => 'ZSC'
 		]);
 
-		$this->assertStringContainsString('Welcome {user_name}!', $result);
-		$this->assertStringContainsString('[Firstname: Fabian]', $result);
-		$this->assertStringContainsString('[Organisation: ZSC]', $result);
+		$this->assertEquals('Welcome {user_name}!', $result);
 	}
 	
-	public function testMixedUsage_OnlyUnusedShownInBrackets() {
+	public function testMixedUsage_UnusedNotShown() {
 		$data = [
 			GroupData::TEXTS_KEY => [
 				'user_info' => [
@@ -147,7 +141,7 @@ class BasicDbtextCollectionTest extends TestCase {
 			'city' => 'Zurich'
 		]);
 
-		$this->assertEquals('User Fabian works at ZSC [Age: 30] [City: Zurich]', $result);
+		$this->assertEquals('User Fabian works at ZSC', $result);
 	}
 	
 	public function testEmptyArgumentsArray_NoBracketsShown() {
@@ -167,5 +161,24 @@ class BasicDbtextCollectionTest extends TestCase {
 
 		$result = $collection->t('my_name_is_firstname_info', []);
 		$this->assertEquals('My name is {firstname} and I work at {organisation}', $result);
+	}
+	
+	public function testNoTranslationFound_ArgumentsShownViaPrettyKey() {
+		$data = [
+			GroupData::TEXTS_KEY => [],
+			GroupData::PLACEHOLDER_JSON_KEY => []
+		];
+		
+		$groupData = new GroupData('test', $data);
+		$collection = new BasicDbtextCollection($groupData, new N2nLocale('en'));
+
+		$result = $collection->t('missing_key_txt', [
+			'firstname' => 'Fabian',
+			'organisation' => 'ZSC'
+		]);
+
+		$this->assertStringContainsString('Missing Key', $result);
+		$this->assertStringContainsString('Fabian', $result);
+		$this->assertStringContainsString('ZSC', $result);
 	}
 } 
