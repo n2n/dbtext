@@ -2,10 +2,10 @@
 namespace dbtext\model;
 
 use dbtext\storage\GroupData;
-use dbtext\util\PlaceholderUtils;
 use n2n\l10n\N2nLocale;
 use n2n\l10n\TextCollection;
 use n2n\util\StringUtils;
+use dbtext\util\PlaceholderUtils;
 
 /**
  * Manages {@see GroupData}.
@@ -44,12 +44,13 @@ class BasicDbtextCollection implements DbtextCollection {
 
 		$text = $this->groupData->find($key, ...$n2nLocales);
 		if ($text === null) {
-			return DbtextService::prettyKey($key, $args);
+			$prettyKey = DbtextService::prettyKey($key, $args);
+			return $this->appendUnusedArgumentsForMissingTranslation($prettyKey, $args);
 		}
 
 		$processedText = TextCollection::fillArgs($text, $args);
 		
-		return $this->appendUnusedArguments($processedText, $text, $args);
+		return $processedText;
 	}
 
 	/**
@@ -72,7 +73,7 @@ class BasicDbtextCollection implements DbtextCollection {
 		$processedText = @sprintf($text, ...$args);
 
 		if (!!$processedText) {
-			return $this->appendUnusedArguments($processedText, $text, $args);
+			return $processedText;
 		}
 
 		return $key;
@@ -99,6 +100,24 @@ class BasicDbtextCollection implements DbtextCollection {
 	}
 
 	/**
+	 * Append provided arguments for keys that are not translated.
+	 * Don't use on translated keys!
+	 *
+	 * @param string $prettyKey
+	 * @param array $args
+	 * @return string
+	 */
+	private function appendUnusedArgumentsForMissingTranslation(string $prettyKey, array $args): string {
+		if (empty($args)) {
+			return $prettyKey;
+		}
+
+		$prettyKey .= ' ' . $this->formatProvidedArguments($args);
+		
+		return $prettyKey;
+	}
+
+	/**
 	 * @param string $processedText
 	 * @param string $originalText
 	 * @param array $args
@@ -114,7 +133,7 @@ class BasicDbtextCollection implements DbtextCollection {
 	}
 
 	/**
-	 * Formats provided arguments with prettyfied keys.
+	 * Formats provided arguments with prettied keys.
 	 *
 	 * @param array $args
 	 * @return string
@@ -123,7 +142,7 @@ class BasicDbtextCollection implements DbtextCollection {
 		$formattedArgs = [];
 		foreach ($args as $key => $value) {
 			$prettyKey = StringUtils::pretty($key);
-			$formattedArgs[] = "[{$prettyKey}: {$value}]";
+			$formattedArgs[] = '[' . $prettyKey . ':' . $value . ']';
 		}
 		
 		return implode(' ', $formattedArgs);
