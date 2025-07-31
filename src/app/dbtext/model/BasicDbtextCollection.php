@@ -5,7 +5,6 @@ use dbtext\storage\GroupData;
 use n2n\l10n\N2nLocale;
 use n2n\l10n\TextCollection;
 use n2n\util\StringUtils;
-use dbtext\util\PlaceholderUtils;
 
 /**
  * Manages {@see GroupData}.
@@ -45,7 +44,7 @@ class BasicDbtextCollection implements DbtextCollection {
 		$text = $this->groupData->find($key, ...$n2nLocales);
 		if ($text === null) {
 			$prettyKey = DbtextService::prettyKey($key, $args);
-			return $this->appendUnusedArgumentsForMissingTranslation($prettyKey, $args);
+			return $this->appendArguments($prettyKey, $args);
 		}
 
 		$processedText = TextCollection::fillArgs($text, $args);
@@ -101,13 +100,13 @@ class BasicDbtextCollection implements DbtextCollection {
 
 	/**
 	 * Append provided arguments for keys that are not translated.
-	 * Don't use on translated keys!
+	 * !!!Don't use on translated keys!!!
 	 *
-	 * @param string $prettyKey
+	 * @param string $prettyKey∆
 	 * @param array $args
 	 * @return string
 	 */
-	private function appendUnusedArgumentsForMissingTranslation(string $prettyKey, array $args): string {
+	private function appendArguments(string $prettyKey, array $args): string {
 		if (empty($args)) {
 			return $prettyKey;
 		}
@@ -115,21 +114,6 @@ class BasicDbtextCollection implements DbtextCollection {
 		$prettyKey .= ' ' . $this->formatProvidedArguments($args);
 		
 		return $prettyKey;
-	}
-
-	/**
-	 * @param string $processedText
-	 * @param string $originalText
-	 * @param array $args
-	 * @return string
-	 */
-	private function appendUnusedArguments(string $processedText, string $originalText, array $args): string {
-		$unusedArgs = PlaceholderUtils::getUnusedArguments($originalText, $args);
-		if (!empty($unusedArgs)) {
-			$processedText .= ' ' . $this->formatProvidedArguments($unusedArgs);
-		}
-		
-		return $processedText;
 	}
 
 	/**
