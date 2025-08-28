@@ -31,7 +31,7 @@ class TextT extends ObjectAdapter implements Translatable {
 	/**
 	 * @var string $str
 	 */
-	#[EiPropString(multiline: true)]
+	#[EiPropString(multiline: true, maxlength: 8191)]
 	private string $str;
 	/**
 	 * @var Text $text
