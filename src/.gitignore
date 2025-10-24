@@ -2,3 +2,4 @@
 /var/tmp
 /var/log
 /huii.sql
+/.phpunit.result.cache
