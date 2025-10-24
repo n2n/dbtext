@@ -117,7 +117,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 
 		$groupData = null;
 		try {
-			$cacheItem = $this->cacheStore->get(self::APP_CACHE_PREFIX . $namespace, array());
+			$cacheItem = $this->cacheStore->get(self::APP_CACHE_PREFIX . $namespace, new CharacteristicsList(array()));
 			if ($cacheItem === null) return null;
 
 			if ($cacheItem->data instanceof GroupDataRecord) {
@@ -138,6 +138,6 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 //		if (!empty($groupData->getListeners())) {
 //			throw new \InvalidArgumentException('GroupData cannot have registered listeners while caching');
 //		}
-		$this->cacheStore->store(self::APP_CACHE_PREFIX . $groupData->getNamespace(), array(), $groupData->toRecord());
+		$this->cacheStore->store(self::APP_CACHE_PREFIX . $groupData->getNamespace(), new CharacteristicsList(array()), $groupData->toRecord());
 	}
 }
