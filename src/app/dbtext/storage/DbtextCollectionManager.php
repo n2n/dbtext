@@ -9,6 +9,7 @@ use n2n\cache\CacheStore;
 use n2n\cache\CorruptedCacheStoreException;
 use n2n\core\util\N2nUtil;
 use n2n\core\container\TransactionManager;
+use n2n\cache\CharacteristicsList;
 
 /**
  * Manages data for dbtext module.
@@ -77,7 +78,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 */
 	public function clearCache(?string $namespace = null) {
 		if (null !== $namespace) {
-			$this->cacheStore->remove(self::APP_CACHE_PREFIX . $namespace, array());
+			$this->cacheStore->remove(self::APP_CACHE_PREFIX . $namespace, new CharacteristicsList(array()));
 			return;
 		}
 		
