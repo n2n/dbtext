@@ -49,7 +49,7 @@ class LcText implements StringValueObject {
 	}
 
 	static function dbtext(string $namespace, string $textCode, array $args = []): LcText {
-		ArgUtils::valArray($args, 'string');
+		$args = array_map(fn ($arg) => StringUtils::strOf($arg), $args);
 		return ExUtils::try(fn () => new LcText(self::serialize(null, $textCode, $args, $namespace)));
 	}
 
