@@ -40,6 +40,9 @@ class LcText implements StringValueObject, LcStr {
 		return self::serialize($this->text, $this->textCode, $this->args, $this->namespace);
 	}
 
+	function __toString(): string {
+		return $this->toScalar();
+	}
 
 	function composeString(MagicContext $magicContext, ?N2nLocale $n2nLocale = null): string {
 		if (null !== $this->text) {
