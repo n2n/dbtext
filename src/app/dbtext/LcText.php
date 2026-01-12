@@ -13,8 +13,9 @@ use n2n\l10n\N2nLocale;
 use dbtext\model\DbtextService;
 use n2n\util\type\ArgUtils;
 use n2n\util\ex\ExUtils;
+use n2n\l10n\LcStr;
 
-class LcText implements StringValueObject {
+class LcText implements StringValueObject, LcStr {
 	private ?string $text = null;
 	private ?string $textCode = null;
 	private ?array $args = null;
@@ -39,13 +40,21 @@ class LcText implements StringValueObject {
 		return self::serialize($this->text, $this->textCode, $this->args, $this->namespace);
 	}
 
-	function t(MagicContext $magicContext, ?N2nLocale $n2nLocale = null): string {
+
+	function composeString(MagicContext $magicContext, ?N2nLocale $n2nLocale = null): string {
 		if (null !== $this->text) {
 			return $this->text;
 		}
 
 		return $magicContext->lookup(DbtextService::class)->t($this->namespace, $this->textCode, $this->args,
 				$n2nLocale ?? $magicContext->lookup(N2nLocale::class, false) ?? N2nLocale::getDefault());
+	}
+
+	/**
+	 * @deprecated use {@link self::composeString()}
+	 */
+	function t(MagicContext $magicContext, ?N2nLocale $n2nLocale = null): string {
+		return $this->composeString($magicContext, $n2nLocale);
 	}
 
 	static function dbtext(string $namespace, string $textCode, array $args = []): LcText {
