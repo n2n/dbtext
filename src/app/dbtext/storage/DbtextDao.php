@@ -8,6 +8,8 @@ use n2n\core\container\TransactionManager;
 use n2n\persistence\orm\EntityManagerFactory;
 use n2n\util\StringUtils;
 use n2n\util\JsonDecodeFailedException;
+use n2n\core\util\N2nUtil;
+use n2n\context\attribute\Inject;
 
 class DbtextDao implements RequestScoped {
 	/**
@@ -18,6 +20,9 @@ class DbtextDao implements RequestScoped {
 	 * @var EntityManagerFactory
 	 */
 	private $emf;
+
+	#[Inject]
+	private N2nUtil $n2nUtil;
 
 	private function _init(EntityManagerFactory $emf, TransactionManager $tm): void {
 		$this->emf = $emf;
@@ -36,26 +41,24 @@ class DbtextDao implements RequestScoped {
 	 * @param string $key
 	 */
 	public function insertKey(string $namespace, string $key, ?array $args = null): void {
-		$tx = $this->tm->createTransaction();
+		$this->n2nUtil->container()->execIsolated(function() use ($namespace, $key, $args) {
+			$tx = $this->tm->createTransaction();
 
-		if (0 < (int) $this->em()->createCriteria()
-				->select('COUNT(1)')
-				->from(Text::getClass(), 't')
-				->where(array('t.key' => $key, 't.group.namespace' => $namespace))->endClause()
-				->toQuery()->fetchSingle()) {
-			$tx->commit();	
-			return;
-		}
+			if ($this->existsKey($namespace, $key)) {
+				$tx->commit();
+				return;
+			}
 
-		$text = new Text($key, $this->getOrCreateGroup($namespace), $args);
-		$this->em()->persist($text);
-		$this->em()->flush();
-
-		$tx->commit();
+			$text = new Text($key, $this->getOrCreateGroup($namespace), $args);
+			$this->em()->persist($text);
+			$this->em()->flush();
+			$tx->commit();
+		});
 	}
 
 	/**
 	 * @param string $namespace
+	 * @return GroupData
 	 */
 	public function getGroupData(string $namespace): GroupData {
 		$tx = null;
@@ -97,6 +100,15 @@ class DbtextDao implements RequestScoped {
 		$group = new Group($namespace);
 		$this->em()->persist($group);
 		return $group;
+	}
+
+	private function existsKey(string $namespace, string $key): bool {
+		return null !== $this->em()->createCriteria()
+				->select('t.id')
+				->from(Text::getClass(), 't')
+				->where(array('t.key' => $key, 't.group.namespace' => $namespace))->endClause()
+				->limit(1)
+				->toQuery()->fetchSingle();
 	}
 
 	public function changePlaceholders(string $key, string $ns, array $args): void {

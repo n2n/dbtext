@@ -2,21 +2,14 @@
 namespace dbtext\storage;
 
 use PHPUnit\Framework\TestCase;
-use n2n\persistence\orm\EntityManagerFactory;
-use n2n\core\container\TransactionManager;
 use n2n\test\TestEnv;
 use dbtext\test\GeneralTestEnv;
 
 class DbtextDaoTest extends TestCase {
     private DbtextDao $dbtextDao;
-    private EntityManagerFactory $emf;
-    private TransactionManager $tm;
 
     protected function setUp(): void {
 		GeneralTestEnv::teardown();
-
-        $this->emf = $this->createMock(EntityManagerFactory::class);
-        $this->tm = $this->createMock(TransactionManager::class);
 
 		$this->dbtextDao = TestEnv::lookup(DbtextDao::class);
     }
