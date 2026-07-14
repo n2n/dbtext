@@ -5,8 +5,9 @@ use dbtext\config\DbtextConfig;
 use n2n\context\RequestScoped;
 use n2n\core\container\N2nContext;
 use n2n\core\N2N;
-use n2n\util\cache\CacheStore;
-use n2n\util\cache\CorruptedCacheStoreException;
+use n2n\cache\CharacteristicsList;
+use n2n\cache\CacheStore;
+use n2n\cache\CorruptedCacheStoreException;
 
 /**
  * Manages data for dbtext module.
@@ -67,9 +68,9 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * 
 	 * @param string $namespace
 	 */
-	public function clearCache(string $namespace = null) {
+	public function clearCache(?string $namespace = null) {
 		if (null !== $namespace) {
-			$this->cacheStore->remove(self::APP_CACHE_PREFIX . $namespace, array());
+			$this->cacheStore->remove(self::APP_CACHE_PREFIX . $namespace, new CharacteristicsList(array()));
 			return;
 		}
 		
@@ -82,12 +83,12 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * @param string $key
 	 * @param GroupData $groupData
 	 */
-	public function keyAdded(string $key, GroupData $groupData, array $args = null) {
+	public function keyAdded(string $key, GroupData $groupData, ?array $args = null) {
 		$this->dbtextDao->insertKey($groupData->getNamespace(), $key, $args);
 		$this->clearCache($groupData->getNamespace());
 	}
 
-	public function placeholdersChanged(string $key, string $ns, array $args = null) {
+	public function placeholdersChanged(string $key, string $ns, ?array $args = null) {
 		$this->dbtextDao->changePlaceholders($key, $ns, $args);
 	}
 
@@ -102,9 +103,8 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 		// Due to confusion, no cached items are returned during development
 		if (N2N::isDevelopmentModeOn()) return null;
 
-		$groupData = null;
 		try {
-			$cacheItem = $this->cacheStore->get(self::APP_CACHE_PREFIX . $namespace, array());
+			$cacheItem = $this->cacheStore->get(self::APP_CACHE_PREFIX . $namespace, new CharacteristicsList(array()));
 			if ($cacheItem === null) return null;
 
 			if ($cacheItem->data instanceof GroupData) {
@@ -124,6 +124,6 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 		if (!empty($groupData->getListeners())) {
 			throw new \InvalidArgumentException('GroupData cannot have registered listeners while caching');
 		}
-		$this->cacheStore->store(self::APP_CACHE_PREFIX . $groupData->getNamespace(), array(), $groupData);
+		$this->cacheStore->store(self::APP_CACHE_PREFIX . $groupData->getNamespace(), new CharacteristicsList(array()), $groupData);
 	}
 }
