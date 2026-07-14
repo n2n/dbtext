@@ -66,7 +66,7 @@ class DbtextHtmlBuilder {
 	 * @param string $key
 	 * @param array $args
 	 */
-	public function t(string $key, array $args = null, array $replacements = null, string ...$namespaces) {
+	public function t(string $key, ?array $args = null, ?array $replacements = null, string ...$namespaces) {
 		$this->view->getHtmlBuilder()->out($this->getT($key, $args, $replacements, ...$namespaces));
 	}
 
@@ -83,7 +83,7 @@ class DbtextHtmlBuilder {
 	 * @param string[] ...$namespaces
 	 * @return Raw
 	 */
-	public function getT(string $key, array $args = null, array $replacements = null, string ...$namespaces) {
+	public function getT(string $key, ?array $args = null, ?array $replacements = null, string ...$namespaces) {
 		if (empty($namespaces)) {
 			$namespaces = $this->meta->getNamespaces();
 		}
@@ -105,7 +105,7 @@ class DbtextHtmlBuilder {
 	 * @param string[] $replacements
 	 * @param string ...$namespaces
 	 */
-	public function tf(string $key, array $args = null, array $replacements = null, string ...$namespaces) {
+	public function tf(string $key, ?array $args = null, ?array $replacements = null, string ...$namespaces) {
 		$this->view->out($this->getTf($key, $args, $replacements, ...$namespaces));
 	}
 
@@ -118,7 +118,7 @@ class DbtextHtmlBuilder {
 	 * @param string ...$namespaces
 	 * @return UiComponent
 	 */
-	public function getTf(string $key, array $args = null, array $replacements = null, string ...$namespaces) {
+	public function getTf(string $key, ?array $args = null, ?array $replacements = null, string ...$namespaces) {
 		if (empty($namespaces)) {
 			$namespaces = $this->meta->getNamespaces();
 		}

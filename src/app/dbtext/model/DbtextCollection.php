@@ -13,7 +13,7 @@ interface DbtextCollection {
 	 * @param N2nLocale[] ...$n2nLocales
 	 * @return string
 	 */
-	public function t(string $key, array $args = null, N2nLocale ...$n2nLocales): string;
+	public function t(string $key, ?array $args = null, N2nLocale ...$n2nLocales): string;
 
 	/**
 	 * Finds {@see TextT} by locales provided and returns {@see TextT::$str}.
@@ -24,7 +24,7 @@ interface DbtextCollection {
 	 * @param N2nLocale[] ...$n2nLocales
 	 * @return string
 	 */
-	public function tf(string $key, array $args = null, N2nLocale ...$n2nLocales): string;
+	public function tf(string $key, ?array $args = null, N2nLocale ...$n2nLocales): string;
 
 	/**
 	 * True when DbtextCollection has a {@see Text}.

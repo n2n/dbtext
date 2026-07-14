@@ -36,7 +36,7 @@ class DbtextService implements RequestScoped {
 	 * @param N2nLocale[] ...$n2nLocales
 	 * @return string
 	 */
-	public function t($ns, string $key, array $args = null, N2nLocale ...$n2nLocales): string {
+	public function t($ns, string $key, ?array $args = null, N2nLocale ...$n2nLocales): string {
 		if (empty($n2nLocales)) {
 			$n2nLocales[] = $this->n2nContext->getN2nLocale();
 		}
@@ -58,7 +58,7 @@ class DbtextService implements RequestScoped {
 	 * @param N2nLocale[] ...$n2nLocale
 	 * @return string
 	 */
-	public function tf($ns, string $key, array $args = null, N2nLocale ...$n2nLocales): string {
+	public function tf($ns, string $key, ?array $args = null, N2nLocale ...$n2nLocales): string {
 		$namespaces = array();
 		if (!is_array($ns)) {
 			$namespaces[] = $ns;
@@ -101,7 +101,7 @@ class DbtextService implements RequestScoped {
 	 *
 	 * @param string $namespace Clears whole cache if no namespace provided.
 	 */
-	public function clearCache(string $namespace = null) {
+	public function clearCache(?string $namespace = null) {
 		$this->tcm->clearCache($namespace);
 	}
 
