@@ -102,7 +102,10 @@ class DbtextDao implements RequestScoped {
 	}
 
 	public function changePlaceholders(string $key, string $ns, array $args) {
-		$tx = $this->tm->createTransaction();
+		$tx = null;
+		if (!$this->tm->hasOpenTransaction()) {
+			$tx = $this->tm->createTransaction(true);
+		}
 
 		/**
 		 * @var Text $text
@@ -115,7 +118,7 @@ class DbtextDao implements RequestScoped {
 			$this->em()->persist($text);
 		}
 		
-		$tx->commit();
+		$tx?->commit();
 	}
 
 	/**
