@@ -69,6 +69,10 @@ class Text extends ObjectAdapter {
 		$this->key = $key;
 		$this->textTs = $textTs;
 		$this->group = $group;
+
+		if ($args !== null) {
+			$this->setPlaceholders($args);
+		}
 	}
 
 	private function _postUpdate(DbtextCollectionManager $dbtextCollectionManager) {

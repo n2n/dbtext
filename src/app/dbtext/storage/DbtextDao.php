@@ -36,22 +36,17 @@ class DbtextDao implements RequestScoped {
 	 * @param string $key
 	 */
 	public function insertKey(string $namespace, string $key, ?array $args = null): void {
-		$tx = $this->tm->createTransaction();
-
-		if (0 < (int) $this->em()->createCriteria()
-				->select('COUNT(1)')
-				->from(Text::getClass(), 't')
-				->where(array('t.key' => $key, 't.group.namespace' => $namespace))->endClause()
-				->toQuery()->fetchSingle()) {
-			$tx->commit();	
-			return;
-		}
-
 		$text = new Text($key, $this->getOrCreateGroup($namespace), $args);
 		$this->em()->persist($text);
 		$this->em()->flush();
+	}
 
-		$tx->commit();
+	public function keyExists(string $namespace, string $key): bool {
+		return 0 < (int) $this->em()->createCriteria()
+				->select('COUNT(1)')
+				->from(Text::getClass(), 't')
+				->where(array('t.key' => $key, 't.group.namespace' => $namespace))->endClause()
+				->toQuery()->fetchSingle();
 	}
 
 	/**
@@ -100,20 +95,14 @@ class DbtextDao implements RequestScoped {
 	}
 
 	public function changePlaceholders(string $key, string $ns, array $args): void {
-		$tx = $this->tm->createTransaction();
-
-		/**
-		 * @var Text $text
-		 */
 		$text = $this->em()->createSimpleCriteria(Text::getClass(),
 				array('key' => $key, 'group' => $this->em()->find(Group::getClass(), $ns)))->toQuery()->fetchSingle();
-		
+
 		if ($text !== null) {
 			$text->setPlaceholders($args);
 			$this->em()->persist($text);
+			$this->em()->flush();
 		}
-		
-		$tx->commit();
 	}
 
 	/**

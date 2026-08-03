@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS `dbtext_text` (
   `key` varchar(255) NOT NULL,
   `group_namespace` varchar(255) DEFAULT NULL,
   `placeholders` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci ;
-ALTER TABLE `dbtext_text_t` ADD UNIQUE INDEX `key_group_namespace_index_1` (`key`,`group_namespace`);
+ALTER TABLE `dbtext_text` ADD UNIQUE INDEX `key_group_namespace_index_1` (`key`,`group_namespace`);
 
 DROP TABLE IF EXISTS `dbtext_text_t`;
 -- Daten Export vom Benutzer nicht ausgewählt

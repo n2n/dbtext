@@ -39,12 +39,14 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * @var N2nUtil
 	 */
 	private $n2nUtil;
+	private TransactionManager $tm;
 
-	private function _init(DbtextDao $dbtextDao, N2nContext $n2nContext) {
+	private function _init(DbtextDao $dbtextDao, N2nContext $n2nContext, TransactionManager $tm) {
 		$this->dbtextDao = $dbtextDao;
 		$this->moduleConfig = $n2nContext->getModuleConfig(self::NS);
 		$this->cacheStore = $n2nContext->getAppCache()->lookupCacheStore(DbtextCollectionManager::class, true);
 		$this->n2nUtil = $n2nContext->util();
+		$this->tm = $tm;
 	}
 
 	/**
@@ -87,20 +89,43 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	
 	/**
 	 * Adds a {@see Text} to {@see Group} then clears cache for {@see Group::$groupdata::namespace}.
-	 * 
+	 *
 	 * @param string $key
 	 * @param GroupData $groupData
+	 * @param array|null $args
 	 */
-	public function keyAdded(string $key, GroupData $groupData, ?array $args = null) {
+	public function keyAdded(string $key, GroupData $groupData, ?array $args = null): void {
 		$this->n2nUtil->container()->outsideTransaction(function() use ($groupData, $key, $args) {
-			$this->dbtextDao->insertKey($groupData->getNamespace(), $key, $args);
-			$this->clearCache($groupData->getNamespace());
+			$namespace = $groupData->getNamespace();
+			for ($attempt = 1; $attempt <= 3; $attempt++) {
+				try {
+					$this->n2nUtil->container()->execIsolated(
+							fn () => $this->dbtextDao->insertKey($namespace, $key, $args), tries: 1);
+					break;
+				} catch (\Throwable $e) {
+					if ($this->tm->hasOpenTransaction()) {
+						$this->tm->getRootTransaction()->rollBack();
+					}
+
+					if ($this->n2nUtil->container()->execIsolated(
+							fn () => $this->dbtextDao->keyExists($namespace, $key), tries: 1, readOnly: true)) {
+						break;
+					}
+
+					if ($attempt === 3) {
+						throw $e;
+					}
+				}
+			}
+
+			$this->clearCache($namespace);
 		});
 	}
 
-	public function placeholdersChanged(string $key, string $ns, ?array $args = null) {
+	public function placeholdersChanged(string $key, string $ns, ?array $args = null): void {
 		$this->n2nUtil->container()->outsideTransaction(function() use ($ns, $key, $args) {
-			$this->dbtextDao->changePlaceholders($key, $ns, $args);
+			$this->n2nUtil->container()->execIsolated(
+					fn () => $this->dbtextDao->changePlaceholders($key, $ns, $args ?? []));
 		});
 	}
 
