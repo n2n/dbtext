@@ -8,6 +8,7 @@ use n2n\core\container\TransactionManager;
 use n2n\persistence\orm\EntityManagerFactory;
 use n2n\util\StringUtils;
 use n2n\util\JsonDecodeFailedException;
+use n2n\persistence\orm\criteria\LockMode;
 
 class DbtextDao implements RequestScoped {
 	/**
