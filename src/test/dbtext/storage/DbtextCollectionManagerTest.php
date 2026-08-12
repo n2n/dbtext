@@ -51,6 +51,17 @@ class DbtextCollectionManagerTest extends TestCase {
 		$tx->commit();
 	}
 
+	function testKeyAddedTwice(): void {
+		$this->dbTextCollectionManager->keyAdded($this->testKey, $this->groupData, ['placeholder']);
+		$this->dbTextCollectionManager->keyAdded($this->testKey, $this->groupData, ['placeholder']);
+
+		$tx = TestEnv::createTransaction(true);
+		$texts = TestEnv::tem()->createSimpleCriteria(Text::getClass(),
+				['key' => $this->testKey])->toQuery()->fetchArray();
+		$this->assertCount(1, $texts);
+		$tx->commit();
+	}
+
 	function testPlaceholdersChanged() {
 		$changedPlaceholders = ['changedPlaceholders'];
 		$ns = 'test';

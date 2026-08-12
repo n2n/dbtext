@@ -97,24 +97,20 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	public function keyAdded(string $key, GroupData $groupData, ?array $args = null): void {
 		$this->n2nUtil->container()->outsideTransaction(function() use ($groupData, $key, $args) {
 			$namespace = $groupData->getNamespace();
-			for ($attempt = 1; $attempt <= 3; $attempt++) {
-				try {
-					$this->n2nUtil->container()->execIsolated(
-							fn () => $this->dbtextDao->insertKey($namespace, $key, $args), tries: 1);
-					break;
-				} catch (\Throwable $e) {
-					if ($this->tm->hasOpenTransaction()) {
-						$this->tm->getRootTransaction()->rollBack();
+			try {
+				$this->n2nUtil->container()->execIsolated(function() use ($namespace, $key, $args) {
+					if (!$this->dbtextDao->keyExists($namespace, $key)) {
+						$this->dbtextDao->insertKey($namespace, $key, $args);
 					}
+				});
+			} catch (\Throwable $e) {
+				if ($this->tm->hasOpenTransaction()) {
+					$this->tm->getRootTransaction()->rollBack();
+				}
 
-					if ($this->n2nUtil->container()->execIsolated(
-							fn () => $this->dbtextDao->keyExists($namespace, $key), tries: 1, readOnly: true)) {
-						break;
-					}
-
-					if ($attempt === 3) {
-						throw $e;
-					}
+				if (!$this->n2nUtil->container()->execIsolated(
+						fn () => $this->dbtextDao->keyExists($namespace, $key), readOnly: true)) {
+					throw $e;
 				}
 			}
 
