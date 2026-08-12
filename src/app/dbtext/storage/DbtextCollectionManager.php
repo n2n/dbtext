@@ -110,10 +110,10 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 		});
 	}
 
-	public function placeholdersChanged(string $key, string $ns, ?array $args = null): void {
-		$this->n2nUtil->container()->outsideTransaction(function() use ($ns, $key, $args) {
+	public function placeholdersChanged(string $key, string $ns, ?array $newArgs = null): void {
+		$this->n2nUtil->container()->outsideTransaction(function() use ($ns, $key, $newArgs) {
 			$this->n2nUtil->container()->execIsolated(
-					fn () => $this->dbtextDao->changePlaceholders($key, $ns, $args ?? []));
+					fn () => $this->dbtextDao->changePlaceholders($key, $ns, $newArgs ?? []));
 		});
 	}
 
