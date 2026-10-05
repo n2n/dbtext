@@ -42,11 +42,12 @@ class DbtextDao implements RequestScoped {
 		$this->em()->flush();
 	}
 
-	public function keyExists(string $namespace, string $key): bool {
+	public function keyExists(string $namespace, string $key, ?LockMode $lockMode = null): bool {
 		return 0 < (int) $this->em()->createCriteria()
 				->select('COUNT(1)')
 				->from(Text::getClass(), 't')
 				->where(array('t.key' => $key, 't.group.namespace' => $namespace))->endClause()
+				->lock($lockMode)
 				->toQuery()->fetchSingle();
 	}
 

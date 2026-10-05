@@ -10,6 +10,7 @@ use n2n\cache\CorruptedCacheStoreException;
 use n2n\core\util\N2nUtil;
 use n2n\core\container\TransactionManager;
 use n2n\cache\CharacteristicsList;
+use n2n\persistence\orm\criteria\LockMode;
 
 /**
  * Manages data for dbtext module.
@@ -99,7 +100,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 			$namespace = $groupData->getNamespace();
 
 			$this->n2nUtil->container()->execIsolated(function() use ($namespace, $key, $args) {
-				if (!$this->dbtextDao->keyExists($namespace, $key)) {
+				if (!$this->dbtextDao->keyExists($namespace, $key, LockMode::PESSIMISTIC_WRITE)) {
 					$this->dbtextDao->insertKey($namespace, $key, $args);
 				} else {
 					$this->dbtextDao->changePlaceholders($namespace, $key, $args);
