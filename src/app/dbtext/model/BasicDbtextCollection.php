@@ -61,7 +61,7 @@ class BasicDbtextCollection implements DbtextCollection {
 		$n2nLocales[] = N2nLocale::getFallback();
 
 		if (!$this->has($key)) {
-			$this->groupData->add($key, $args);
+			$this->groupData->add($key, $args ?? []);
 		}
 
 		$text = $this->groupData->find($key, ...$n2nLocales);

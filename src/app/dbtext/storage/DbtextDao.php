@@ -96,7 +96,7 @@ class DbtextDao implements RequestScoped {
 		return $group;
 	}
 
-	public function changePlaceholders(string $key, string $ns, array $args): void {
+	public function changePlaceholders(string $ns, string $key, array $args): void {
 		$text = $this->em()->createSimpleCriteria(Text::getClass(),
 				array('key' => $key, 'group' => $this->em()->find(Group::getClass(), $ns)))->toQuery()->fetchSingle();
 

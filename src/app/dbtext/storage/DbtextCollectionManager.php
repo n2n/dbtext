@@ -103,7 +103,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 				if (!$this->dbtextDao->keyExists($namespace, $key, LockMode::PESSIMISTIC_WRITE)) {
 					$this->dbtextDao->insertKey($namespace, $key, $args);
 				} else {
-					$this->dbtextDao->changePlaceholders($namespace, $key, $args);
+					$this->dbtextDao->changePlaceholders($namespace, $key, $args ?? []);
 				}
 			});
 
@@ -114,7 +114,7 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	public function placeholdersChanged(string $key, string $ns, ?array $newArgs = null): void {
 		$this->n2nUtil->container()->outsideTransaction(function() use ($ns, $key, $newArgs) {
 			$this->n2nUtil->container()->execIsolated(
-					fn () => $this->dbtextDao->changePlaceholders($key, $ns, $newArgs ?? []));
+					fn () => $this->dbtextDao->changePlaceholders($ns, $key, $newArgs ?? []));
 		});
 	}
 
