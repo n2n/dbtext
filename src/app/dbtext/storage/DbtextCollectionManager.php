@@ -99,13 +99,16 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 		$this->n2nUtil->container()->outsideTransaction(function() use ($groupData, $key, $args) {
 			$namespace = $groupData->getNamespace();
 
+			// keyExists no longer uses LockMode::PESSIMISTIC_WRITE because gab lock from diffrent processes
+			// do not block each other but just the insert. So two processes would block each other.
+			// instead tries number is increased.
 			$this->n2nUtil->container()->execIsolated(function() use ($namespace, $key, $args) {
-				if (!$this->dbtextDao->keyExists($namespace, $key, LockMode::PESSIMISTIC_WRITE)) {
+				if (!$this->dbtextDao->keyExists($namespace, $key)) {
 					$this->dbtextDao->insertKey($namespace, $key, $args);
 				} else {
 					$this->dbtextDao->changePlaceholders($namespace, $key, $args ?? []);
 				}
-			});
+			}, tries: 7);
 
 			$this->clearCache($namespace);
 		});
