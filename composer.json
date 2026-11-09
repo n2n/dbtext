@@ -5,6 +5,8 @@
     "keywords": ["translation","n2n"],
     "homepage": "https://n2n.rocks/",
     "license": "GPL-3.0-or-later",
+    "minimum-stability" : "dev",
+    "prefer-stable" : true,
     "authors": [
         {
             "name": "Nikolai Schmid",
@@ -18,7 +20,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
+        "php": ">=8.2",
         "n2n/n2n-composer-module-installer" : "^7.1.5",
 		"n2n/n2n" : "^7.5",
 		"n2n/n2n-cache" : "^7.5",
@@ -32,5 +34,9 @@
         "psr-4": {
             "dbtext\\": "src/app/dbtext"
         }
+    },"config" : {
+      "allow-plugins" : {
+        "n2n/n2n-composer-module-installer" : true
+      }
     }
 }

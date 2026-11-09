@@ -8,6 +8,9 @@ use n2n\core\N2N;
 use n2n\cache\CharacteristicsList;
 use n2n\cache\CacheStore;
 use n2n\cache\CorruptedCacheStoreException;
+use n2n\core\util\N2nUtil;
+use n2n\core\container\TransactionManager;
+use n2n\persistence\orm\criteria\LockMode;
 
 /**
  * Manages data for dbtext module.
@@ -33,10 +36,18 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 */
 	private $cacheStore;
 
-	private function _init(DbtextDao $dbtextDao, N2nContext $n2nContext) {
+	/**
+	 * @var N2nUtil
+	 */
+	private $n2nUtil;
+	private TransactionManager $tm;
+
+	private function _init(DbtextDao $dbtextDao, N2nContext $n2nContext, TransactionManager $tm) {
 		$this->dbtextDao = $dbtextDao;
 		$this->moduleConfig = $n2nContext->getModuleConfig(self::NS);
-		$this->cacheStore = $n2nContext->getAppCache()->lookupCacheStore(DbtextCollectionManager::class);
+		$this->cacheStore = $n2nContext->getAppCache()->lookupCacheStore(DbtextCollectionManager::class, true);
+		$this->n2nUtil = $n2nContext->util();
+		$this->tm = $tm;
 	}
 
 	/**
@@ -83,13 +94,30 @@ class DbtextCollectionManager implements RequestScoped, GroupDataListener {
 	 * @param string $key
 	 * @param GroupData $groupData
 	 */
-	public function keyAdded(string $key, GroupData $groupData, ?array $args = null) {
-		$this->dbtextDao->insertKey($groupData->getNamespace(), $key, $args);
-		$this->clearCache($groupData->getNamespace());
+	public function keyAdded(string $key, GroupData $groupData, ?array $args = null): void {
+		$this->n2nUtil->container()->outsideTransaction(function() use ($groupData, $key, $args) {
+			$namespace = $groupData->getNamespace();
+
+			// keyExists no longer uses LockMode::PESSIMISTIC_WRITE because gab lock from diffrent processes
+			// do not block each other but just the insert. So two processes would block each other.
+			// instead tries number is increased.
+			$this->n2nUtil->container()->execIsolated(function() use ($namespace, $key, $args) {
+				if (!$this->dbtextDao->keyExists($namespace, $key)) {
+					$this->dbtextDao->insertKey($namespace, $key, $args);
+				} else {
+					$this->dbtextDao->changePlaceholders($namespace, $key, $args ?? []);
+				}
+			}, tries: 7);
+
+			$this->clearCache($namespace);
+		});
 	}
 
-	public function placeholdersChanged(string $key, string $ns, ?array $args = null) {
-		$this->dbtextDao->changePlaceholders($key, $ns, $args);
+	public function placeholdersChanged(string $key, string $ns, ?array $newArgs = null): void {
+		$this->n2nUtil->container()->outsideTransaction(function() use ($ns, $key, $newArgs) {
+			$this->n2nUtil->container()->execIsolated(
+					fn () => $this->dbtextDao->changePlaceholders($ns, $key, $newArgs ?? []));
+		});
 	}
 
 	/**

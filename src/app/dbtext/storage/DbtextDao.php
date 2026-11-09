@@ -7,6 +7,7 @@ use n2n\context\RequestScoped;
 use n2n\core\container\TransactionManager;
 use n2n\persistence\orm\EntityManagerFactory;
 use n2n\util\StringUtils;
+use n2n\concurrency\sync\LockMode;
 
 class DbtextDao implements RequestScoped {
 	/**
@@ -34,26 +35,19 @@ class DbtextDao implements RequestScoped {
 	 * @param string $namespace
 	 * @param string $key
 	 */
-	public function insertKey(string $namespace, string $key, ?array $args = null) {
-		$tx = null;
-		if (!$this->tm->hasOpenTransaction()) {
-			$tx = $this->tm->createTransaction(true);
-		}
-
-		if (0 < (int) $this->em()->createCriteria()
-				->select('COUNT(1)')
-				->from(Text::getClass(), 't')
-				->where(array('t.key' => $key, 't.group.namespace' => $namespace))->endClause()
-				->toQuery()->fetchSingle()) {
-			$tx->commit();	
-			return;
-		}
-
+	public function insertKey(string $namespace, string $key, ?array $args = null): void {
 		$text = new Text($key, $this->getOrCreateGroup($namespace), $args);
 		$this->em()->persist($text);
 		$this->em()->flush();
+	}
 
-		$tx?->commit();
+	public function keyExists(string $namespace, string $key, ?LockMode $lockMode = null): bool {
+		return 0 < (int) $this->em()->createCriteria()
+				->select('COUNT(1)')
+				->from(Text::getClass(), 't')
+				->where(array('t.key' => $key, 't.group.namespace' => $namespace))->endClause()
+				->lock($lockMode)
+				->toQuery()->fetchSingle();
 	}
 
 	/**
@@ -102,11 +96,6 @@ class DbtextDao implements RequestScoped {
 	}
 
 	public function changePlaceholders(string $key, string $ns, array $args) {
-		$tx = null;
-		if (!$this->tm->hasOpenTransaction()) {
-			$tx = $this->tm->createTransaction(true);
-		}
-
 		/**
 		 * @var Text $text
 		 */
@@ -116,9 +105,8 @@ class DbtextDao implements RequestScoped {
 		if ($text !== null) {
 			$text->setPlaceholders($args);
 			$this->em()->persist($text);
+			$this->em()->flush();
 		}
-		
-		$tx?->commit();
 	}
 
 	/**
