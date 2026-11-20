@@ -25,7 +25,6 @@ class DbtextDaoTest extends TestCase {
         $testData = [['key1', 'en', 'text1', null], ['key2', 'en', 'text2', '{"param1": "value1"}']];
 
         $method = new \ReflectionMethod(DbtextDao::class, 'formPlaceholdersFromResult');
-        $method->setAccessible(true);
 		$result = $method->invoke($this->dbtextDao, $testData);
 
         $this->assertIsArray($result);
@@ -40,7 +39,6 @@ class DbtextDaoTest extends TestCase {
         $testData = [];
         
         $method = new \ReflectionMethod(DbtextDao::class, 'formPlaceholdersFromResult');
-        $method->setAccessible(true);
         
         $result = $method->invoke($this->dbtextDao, $testData);
         
@@ -52,7 +50,6 @@ class DbtextDaoTest extends TestCase {
         $testData = [['key1', 'en', 'text1', '{invalid json}']];
         
         $method = new \ReflectionMethod(DbtextDao::class, 'formPlaceholdersFromResult');
-        $method->setAccessible(true);
         
         $result = $method->invoke($this->dbtextDao, $testData);
         
